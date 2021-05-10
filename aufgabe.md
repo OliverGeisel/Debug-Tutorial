@@ -1,4 +1,38 @@
  # Debug-Tutorial 
+ ## Grundlagen des Debuggen mit einer IDE
+ ### Debug-Modus
+    Der Debug-Modus ist das starten einer Anwendung, in der man in der Lage ist den Speicher auszulesen und Schritt für Schritt durch das Programm gehen kann.
+    Diese Modus ist deutlich langsamer als die normale Modus. In IDEs ist dieser Modus durch das klicken auf einen speziellen Button (meist ein Käfer-Symbol) startbar.
+    Meist änders sich dabei die Ansicht in der IDE oder ein extra Fenster erscheint. 
+    
+    **Aufgabe:** Finden Sie diesn Button zum starten des Debug-Modus in ihrer IDE. 
+
+
+ ### Breakpoints
+    Breakpoints sind Haltepunkte im Code, die der Entwickler selbständig setzt. Sie werden gesetzt, indem man links neben Zeile im Programmcode einfach oder doppelt klickt.
+    Dort sollte dan eine Markierung auftauchen. Dies ist dann ein gesetzter Breakpoint.
+    
+    Breakpoints lassen sich beliebig an und ausschalten oder auch wieder entfernen. Ein Breakpoint ist ausgeschaltet, wenn er (je nach IDE) ausgegraut oder durchgestrichen ist.
+    Viele IDEs besitzen einen Breakpoint-Übersicht, in der listenartig steht, wo welcher Breakpoint ist und ob dieser aktiviert ist.
+
+    **Aufgabe:** Setzen Sie an den Anfang eines Programms einen Breakpoint und starten Sie den Debug-Modus. Das Programm sollte an dieser Stelle halten und die Fenster des Debug-Modus sollenten nun gefüllt sein. 
+
+ ### Auslesen/Manipulation des Speichers
+    TODO
+
+ ### Im Code voran gehen
+    Es gibt viele verschiedene Möglichkeiten im Code vorran zu kommen. Die gängigsten sind:
+     - Step over -> geht zum nächsten Befehl der folgt
+     - Stepp into -> springt in die folgende Methode hinein und wird dort weiter geführt
+     - Step out -> Gegenteil zu step into. Spring aus der Methode und landet in der Methode die im Stack "darunter" liegt.
+     - Continue -> führt so lange fort bis der nächste Breakpoint kommt.
+
+    Weitere Optionen, die aber nur mache IDEs haben sind:
+    - Run to Cursor
+    - Drop Frame
+
+    Finden Sie diese Möglichkeiten in ihrer IDE ihrer Wahl.
+
  ## Situation 
     Die HelloLibrary wurde inzwischen um eine Mitarbeiterverwaltung und ein Kundenregister erweitert.
     Die Bibliothek ist inzwischen ziemlich groß geworden und wird deshalb von Personal verwaltet und hat weitere Räume bekommen. 
@@ -13,4 +47,4 @@
     Die HelloLibrary-Methoden können als korrekt angeshen werden. Auch die Tests sind korrekt. 
     Es gibt zwei Phasen dieser Aufgabe. Die erste ist es die Bugs anhand der Tests zu finden. In der zweiten Phase sollen dann durch die falschen Consolenoutputs gefunden werden. 
     Tests, die bereits zu Anfang erfolgreich sind, sollen als Hilfe dienen, wo der Fehler **nicht** ist.  
-    Da nicht alle Klassen getestet sind muss hier durch clevers Debuggen der Fehler gefunden werden. Implementiert sind
+    Da nicht alle Klassen getestet sind muss hier durch clevers Debuggen der Fehler gefunden werden. 

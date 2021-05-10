@@ -42,7 +42,7 @@ public class Bibliothek {
             regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT));
             i++;
         }
-        werkstadt = new Werkstadt();
+        werkstadt = new Werkstadt(this);
         terminals = new ArrayList<>();
         terminals.add(new Terminal(this));
         terminals.add(new Terminal(this));
@@ -120,6 +120,26 @@ public class Bibliothek {
         // Todo aus Regal nehmen
         return true;
     }
+
+    Regal ausRegalNehmen(Buch b){
+        // Todo implement
+        return null;
+    }
+
+    Regal insRegalStellen(Buch b){
+        // Todo implement
+        return null;
+    }
+
+    public boolean zurueckgeben(Buch buch){
+        // annehmen
+
+        // prüfen
+
+        // einlagern (Regal oder Werkstadt)
+        return true;
+    }
+
 
     public String getName() {
         return name;
