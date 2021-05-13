@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Kundenregister {
+
     private List<Besucher> alleBesucher;
 
     public Kundenregister (){

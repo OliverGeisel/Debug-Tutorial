@@ -12,6 +12,7 @@ public class Bibliothek {
 
     private final String name;
     private final List<Buch> bestand;
+    private final Bestandsverwaltung bestandsverwaltung;
     private final Angestellenverwaltung verwaltung;
     private final Kundenregister register;
     private final Leseraum[] raeume;
@@ -25,6 +26,7 @@ public class Bibliothek {
         for (Leseraum raum : raeume) { // ----
             raum = new Leseraum(2);
         }
+        bestandsverwaltung = new Bestandsverwaltung();
         verwaltung = new Angestellenverwaltung();
         register = new Kundenregister();
         switch (typ) {
@@ -64,14 +66,15 @@ public class Bibliothek {
         return null;
     }
 
-    Buch sucheNachAuthor(String author) {
+    Collection<Buch> sucheNachAuthor(String author) {
+        List<Buch> buecher = new LinkedList<>();
         for (int i = 0; i <= bestand.size(); i++) {// ----
             Buch b = bestand.get(i);
             if (b.getAutor().equals(author)) {
-                return b;
+                buecher.add(b);
             }
         }
-        return null;
+        return buecher;
     }
 
     Buch sucheNachTitel(String titel) {
@@ -88,50 +91,64 @@ public class Bibliothek {
         return register.addBesucher(besucher);
     }
 
-    public Buch einfuegen(Buch buch){
+    public Buch einfuegen(Buch buch) {
         bestand.add(buch);
-        for (Regal regal : regale){
-            if (regal.isVoll()){
+        Regal verweis = null;
+        for (Regal regal : regale) {
+            verweis = regal;
+            if (regal.isVoll()) {
                 continue;
             }
             regal.hineinStellen(buch);
         }
+        bestandsverwaltung.hinzufuegen(buch, verweis);
         return buch;
     }
 
-    public Buch sortiertesEinfuegen(Buch buch){
-        bestand.add(buch);
+    public Buch sortiertesEinfuegen(Buch buch) {
+        Buch back = einfuegen(buch);
         Collections.sort(bestand);
-        for (Regal regal : regale){
-            if (regal.isVoll()){
-                continue;
-            }
-            regal.hineinStellen(buch);
-        }
-        return buch;
+        return back;
     }
 
-    public boolean ausleihen(Buch buch){
-        if (buch.isAusgeliehen()){
+    public boolean ausleihen(Buch buch) {
+        if (buch.isAusgeliehen()) {
             return false;
         }
         buch.ausleihen();
-
+        ausRegalNehmen(buch);
         // Todo aus Regal nehmen
         return true;
     }
 
-    Regal ausRegalNehmen(Buch b){
-        // Todo implement
+    Regal ausRegalNehmen(Buch b) {
+        boolean success = false;
+        for (Regal regal : regale) {
+            try {
+                regal.herausnehmen(b);
+                success = true;
+                break;
+            } catch (NoMatchingBookException be) {
+                // Nothing to do
+            }
+
+        }
         return null;
     }
 
-    Regal insRegalStellen(Buch b){
-        // Todo implement
+    Regal insRegalStellen(Buch b) {
+        for ( Regal regal : regale){
+            if(regal.isVoll()){
+                continue;
+            }
+            regal.hineinStellen(b);
+            return regal;
+        }
         return null;
     }
 
-    public boolean zurueckgeben(Buch buch){
+    public boolean zurueckgeben(Buch buch) {
+        // Todo implement
         // annehmen
 
         // prüfen
@@ -143,5 +160,17 @@ public class Bibliothek {
 
     public String getName() {
         return name;
+    }
+
+    public List<Terminal> getTerminals(){
+        return terminals;
+    }
+
+    public Leseraum[] getLeseraeume(){
+        return raeume;
+    }
+
+    public Werkstadt getWerkstadt(){
+        return werkstadt;
     }
 }

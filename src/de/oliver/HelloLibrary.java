@@ -43,9 +43,9 @@ public class HelloLibrary {
 
         biblo1 = new Bibliothekar("Anna", Geschlecht.WEIBLICH, 25);
         biblo2 = new Bibliothekar("John", Geschlecht.MAENNLICH, 32);
-        reinigung1 = new Reinigungskraft();
-        reinigung2 = new Reinigungskraft();
-        restaurator = new Restaurator();
+        reinigung1 = new Reinigungskraft("Tom", Geschlecht.MAENNLICH,20);
+        reinigung2 = new Reinigungskraft("Andre", Geschlecht.MAENNLICH, 31 );
+        restaurator = new Restaurator("Lena", Geschlecht.WEIBLICH, 26);
 
         stu1 = new Studierender();
         stu2 = new Studierender();

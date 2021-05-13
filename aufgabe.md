@@ -18,7 +18,10 @@
     **Aufgabe:** Setzen Sie an den Anfang eines Programms einen Breakpoint und starten Sie den Debug-Modus. Das Programm sollte an dieser Stelle halten und die Fenster des Debug-Modus sollenten nun gefüllt sein. 
 
  ### Auslesen/Manipulation des Speichers
-    TODO
+    Wenn ein Breakpoint erreicht wurde, so können alle Objekte und variablen, die zu dieser Zeit existieren eingesehen werden und manipuliert werden.
+    Im Normalfall sollte nun ein "Variabln"-Fenster auftauchen. In diesem sind Bezeichnungen wie this, args usw zu finden. Das sind die Momentanen Objekte, die in dem aktuellen Scope aktiv sind. 
+    Der Scope ist dabei die aktuelle Methode. Ein weiters Fenster sollte "Frames" heißen und dort sollte als erstes die Momentane Methode auftauchen und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode sein.
+    
 
  ### Im Code voran gehen
     Es gibt viele verschiedene Möglichkeiten im Code vorran zu kommen. Die gängigsten sind:

@@ -1,5 +1,6 @@
 package de.oliver.structure;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class Buch implements Comparable<Buch>, Verschmutzbar{
@@ -8,7 +9,7 @@ public class Buch implements Comparable<Buch>, Verschmutzbar{
     private String isbn = "";
     private boolean ausgeliehen;
     private final long code;
-    private double beschaedigung;
+    private double beschaedigung; // muss vermutlich Double werden wegen Map
 
 
     public Buch(String titel){
@@ -26,7 +27,7 @@ public class Buch implements Comparable<Buch>, Verschmutzbar{
         ausgeliehen = true;
     }
 
-    public void verfuegbar(){
+    public void verfuegbar_machen(){
         ausgeliehen = false;
     }
 
@@ -41,17 +42,17 @@ public class Buch implements Comparable<Buch>, Verschmutzbar{
 
     @Override
     public boolean isDreckig() {
-        return true;
+        return false;
     }
 
     @Override
     public void saeubern() {
-
+    // complete
     }
 
     @Override
     public void verschmutzen() {
-
+        //done
     }
 
 
@@ -85,6 +86,19 @@ public class Buch implements Comparable<Buch>, Verschmutzbar{
 
     public boolean isAusgeliehen() {
         return ausgeliehen;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Buch buch = (Buch) o;
+        return isbn.equals(buch.isbn) && code == buch.code;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn, code);
     }
 
     /**

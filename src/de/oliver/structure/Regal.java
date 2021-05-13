@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-// Anzahl Bugs: |
+// Anzahl Bugs: ||
 public class Regal implements Verschmutzbar {
     public final static int REGALBRETTER_DEFAULT = 5;
     public final static int BUECHER_JE_BRETT_DEFAULT = 20;
 
-    private Buch[][] inhalt;
+    private final Buch[][] inhalt;
+    private double verschmutzung;
 
     public Regal(int regalbretter, int buecherJeBrett) {
         inhalt = new Buch[regalbretter][buecherJeBrett];
@@ -35,11 +36,41 @@ public class Regal implements Verschmutzbar {
         return true;
     }
 
-    public Buch hineinStellen(Buch buch){
-        for (Buch[] brett: inhalt){
-            for(Buch b: brett){
-                if (b == null){
+    public Buch hineinStellen(Buch buch) throws IllegalStateException {
+        if (isVoll()){
+            throw new IllegalStateException();
+        }
+        RegalSchleife:
+        for (Buch[] brett : inhalt) {
+            ReihenSchleife:
+            for (Buch b : brett) {
+                if (b == null) {
                     b = buch;
+                    break; // Bug hier Fehlet label sprung
+                }
+            }
+        }
+        // Simuliert verschmutung
+        verschmutzen();
+        return buch;
+    }
+
+
+    public boolean enthaelt(Buch buch) {
+        return alleBuecher().contains(buch);
+    }
+
+    public Buch herausnehmen(Buch buch) {
+        if (!enthaelt(buch)) {
+            throw new NoMatchingBookException();
+        }
+        for (int reihe=0; reihe<  inhalt.length;reihe++) {
+            Buch[] momentaneReihe = inhalt[reihe];
+            for (int buchIndex=0; buchIndex< momentaneReihe.length;buchIndex++) {
+                Buch momentanesBuch = momentaneReihe[buchIndex];
+                if (buch.equals(momentanesBuch)) {
+                    momentaneReihe[buchIndex]=null;
+                    break;
                 }
             }
         }
@@ -47,19 +78,22 @@ public class Regal implements Verschmutzbar {
     }
 
 
-
     @Override
     public boolean isDreckig() {
-        return false;
+        return verschmutzung > 0.5;
     }
 
     @Override
     public void saeubern() {
-
+        verschmutzung = 0.0;
     }
 
     @Override
     public void verschmutzen() {
-
+        verschmutzung += 0.03;
     }
+}
+
+class NoMatchingBookException extends RuntimeException {
+
 }
