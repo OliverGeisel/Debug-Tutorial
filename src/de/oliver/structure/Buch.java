@@ -27,7 +27,7 @@ public class Buch implements Comparable<Buch>, Verschmutzbar{
         ausgeliehen = true;
     }
 
-    public void verfuegbar_machen(){
+    public void verfuegbarMachen(){
         ausgeliehen = false;
     }
 

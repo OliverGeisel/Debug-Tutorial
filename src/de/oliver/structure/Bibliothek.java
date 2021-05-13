@@ -41,14 +41,13 @@ public class Bibliothek {
         regale = new HashSet<>();
         int i = 1;
         while (i < anzahlRegale) {
-            regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT));
+            regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT, Integer.toString(i)));
             i++;
         }
         werkstadt = new Werkstadt(this);
         terminals = new ArrayList<>();
         terminals.add(new Terminal(this));
         terminals.add(new Terminal(this));
-
     }
 
     public boolean anstellen(Angestellter neuerAngestellter) {
@@ -131,9 +130,15 @@ public class Bibliothek {
             } catch (NoMatchingBookException be) {
                 // Nothing to do
             }
-
+            bestandsverwaltung.entferneRegal(b);
         }
         return null;
+    }
+
+    boolean ausRegalNehmen(Buch buch, Regal regal){
+        regal.herausnehmen(buch);
+        bestandsverwaltung.entferneRegal(buch);
+        return true;
     }
 
     Regal insRegalStellen(Buch b) {
@@ -142,6 +147,7 @@ public class Bibliothek {
                 continue;
             }
             regal.hineinStellen(b);
+            bestandsverwaltung.neuesRegal(b,regal);
             return regal;
         }
         return null;

@@ -14,8 +14,10 @@ public class Regal implements Verschmutzbar {
 
     private final Buch[][] inhalt;
     private double verschmutzung;
+    private final String code;
 
-    public Regal(int regalbretter, int buecherJeBrett) {
+    public Regal(int regalbretter, int buecherJeBrett, String code) {
+        this.code = code;
         inhalt = new Buch[regalbretter][buecherJeBrett];
     }
 
@@ -52,6 +54,7 @@ public class Regal implements Verschmutzbar {
         }
         // Simuliert verschmutung
         verschmutzen();
+        buch.verfuegbarMachen();
         return buch;
     }
 
@@ -60,7 +63,7 @@ public class Regal implements Verschmutzbar {
         return alleBuecher().contains(buch);
     }
 
-    public Buch herausnehmen(Buch buch) {
+    public Buch herausnehmen(Buch buch) throws NoMatchingBookException {
         if (!enthaelt(buch)) {
             throw new NoMatchingBookException();
         }
@@ -77,6 +80,10 @@ public class Regal implements Verschmutzbar {
         return buch;
     }
 
+
+    public String toString(){
+       return "Das ist Regal: " + code;
+    }
 
     @Override
     public boolean isDreckig() {

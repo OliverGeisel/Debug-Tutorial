@@ -6,6 +6,7 @@ import de.oliver.staff.Bibliothekar;
 import java.util.LinkedList;
 import java.util.List;
 
+// Anzahl Bugs: |
 public class Werkstadt extends Arbeitsplatz {
     private List<Buch> beschaedigteBuecher;
     private final Bibliothek bibo;
@@ -26,12 +27,13 @@ public class Werkstadt extends Arbeitsplatz {
         if (nutzer == null) {
             throw new IllegalStateException();
         }
-        Buch buch = beschaedigteBuecher.remove(0);
+        Buch buch = beschaedigteBuecher.get(0); // --- fehlende Kontrolle
         buch.reparieren();
         return buch;
     }
 
-    private boolean zurückstellen(Buch b){
+    private boolean zurueckstellen(Buch b){
+        beschaedigteBuecher.remove(b);
         bibo.insRegalStellen(b);
         return true;
     }
