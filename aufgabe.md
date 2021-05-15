@@ -37,11 +37,14 @@
     Finden Sie diese Möglichkeiten in ihrer IDE ihrer Wahl.
 
  ## Situation 
-    Die HelloLibrary wurde inzwischen um eine Mitarbeiterverwaltung und ein Kundenregister erweitert.
+Die HelloLibrary wurde inzwischen um eine Mitarbeiterverwaltung und ein Kundenregister erweitert.
     Die Bibliothek ist inzwischen ziemlich groß geworden und wird deshalb von Personal verwaltet und hat weitere Räume bekommen. 
     Nun soll es auch möglich sein, dass Kunden Bücher ausleihen können und auch zurück geben können.
-    Es gibt drei Arten von Mitarbeitetn. Biblothekare arbeiten an Tresen, und vergeben die Leseräume der Biblothek und können am Terminal nach Büchern suchen.
-    Reinigungskräfte säubern freie Leseräume und reinigen Regale und die darin enthaltenen Bücher. Bei der Reinigung der Bücher prüfen die Reinigungskräfte auch die Bücher nach Beschädigung. Ist die Beschädigung über 80%, so wird es zur Restauration in die Werkstadt geschickt. 
+    Bücher werden dabei nun in Regale gestellt. Werden Bücher ausgeliehen, so werden sie aus dem entsprechenden Regal genommen.  
+    Bei der Rückgabe wird überprüft, ob ein Buch beschädigt ist und ob es rechtzeitig zurückgegeben wurde. Ist die Beschädigung über 80%, so wird es zur Restauration in die Werkstadt geschickt. Das Buch ist bis zur fertigen reparatur bzw bis es wieder in einem Regal ist nicht ausleihbar. 
+
+Es gibt drei Arten von Mitarbeitetn. Biblothekare arbeiten an Tresen, und vergeben die Leseräume der Biblothek und können am Terminal nach Büchern suchen.
+    Reinigungskräfte säubern freie Leseräume und reinigen Regale und die darin enthaltenen Bücher.  
     In der Werkstadt wird das Buch dann von einem Restaurator wieder in stand gesetzt und dann zurück in ein Regal gestellt.
  
 

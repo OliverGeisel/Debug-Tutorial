@@ -16,9 +16,9 @@ public class Regal implements Verschmutzbar {
     private double verschmutzung;
     private final String code;
 
-    public Regal(int regalbretter, int buecherJeBrett, String code) {
+    public Regal(int regalBretter, int buecherJeBrett, String code) {
         this.code = code;
-        inhalt = new Buch[regalbretter][buecherJeBrett];
+        inhalt = new Buch[regalBretter][buecherJeBrett];
     }
 
     public List<Buch> alleBuecher() { // ist korrekt implementiert
