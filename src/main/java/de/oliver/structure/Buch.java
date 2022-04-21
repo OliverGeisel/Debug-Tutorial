@@ -1,5 +1,6 @@
 package de.oliver.structure;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Random;
 
@@ -11,6 +12,7 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	private final long code;
 	private double beschaedigung; // muss vermutlich Double werden wegen Map
 
+	private LocalDate ausleihdatum;
 
 	public Buch(String titel, ISBN isbn) {
 		this(titel, "", isbn);
@@ -25,15 +27,21 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 
 	public void ausleihen() {
 		ausgeliehen = true;
+		ausleihdatum = LocalDate.now();
 	}
 
 	public void verfuegbarMachen() {
 		ausgeliehen = false;
+		ausleihdatum = null;
 	}
 
-	public void addBeschaedigung() {
+	public void beschaedigen() {
 		beschaedigung += Math.random() * 0.5;
 	}
+	public void starkBeschaedigen(){
+		beschaedigung = Math.max(0.8, beschaedigung);
+	}
+
 
 	public void reparieren() {
 		beschaedigung = 0.01;
@@ -78,6 +86,10 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 
 	public double getBeschaedigung() {
 		return beschaedigung;
+	}
+
+	public LocalDate getAusleihdatum() {
+		return ausleihdatum;
 	}
 
 	public boolean isAusgeliehen() {

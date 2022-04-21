@@ -1,14 +1,11 @@
 package de.oliver.structure;
 
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // Anzahl Bugs: ||
-public class Regal implements Verschmutzbar {
+public class Regal implements Verschmutzbar ,Iterable<Buch>{
 	public final static int REGALBRETTER_DEFAULT = 5;
 	public final static int BUECHER_JE_BRETT_DEFAULT = 20;
 
@@ -29,6 +26,10 @@ public class Regal implements Verschmutzbar {
 		return back;
 	}
 
+	public long anzahlBuecher(){
+		return alleBuecher().size();
+	}
+
 	public boolean isVoll() {
 		for (Buch[] regal : inhalt) {
 			if (regal.length < BUECHER_JE_BRETT_DEFAULT) {// ----
@@ -45,7 +46,7 @@ public class Regal implements Verschmutzbar {
 		RegalSchleife:
 		for (Buch[] brett : inhalt) {
 			ReihenSchleife:
-			for (Buch b : brett) {
+			for (Buch b : brett) {// ---- Hier muss mit der normalen Zählschleife gearbeitet werden
 				if (b == null) {
 					b = buch;
 					break; // Bug hier Fehlet label sprung
@@ -53,7 +54,6 @@ public class Regal implements Verschmutzbar {
 			}
 		}
 		// Simuliert verschmutung
-		verschmutzen();
 		buch.verfuegbarMachen();
 		return buch;
 	}
@@ -80,6 +80,13 @@ public class Regal implements Verschmutzbar {
 		return buch;
 	}
 
+	public List<Buch> leeren() {
+		List<Buch> back = alleBuecher();
+		for (Buch[] brett : inhalt) {
+			Arrays.fill(brett, null);
+		}
+		return back;
+	}
 
 	public String toString() {
 		return "Das ist Regal: " + code;
@@ -99,6 +106,12 @@ public class Regal implements Verschmutzbar {
 	public void verschmutzen() {
 		verschmutzung += 0.03;
 	}
+
+	@Override
+	public Iterator<Buch> iterator() {
+		return alleBuecher().iterator();
+	}
+
 }
 
 class NoMatchingBookException extends RuntimeException {

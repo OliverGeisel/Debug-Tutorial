@@ -6,6 +6,8 @@ import de.oliver.person.staff.Bereich;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Kundenregister;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.*;
 
 // Anzahl Bugs: ||
@@ -25,7 +27,7 @@ public class Bibliothek {
 	public Bibliothek(String name, int anzahlRaeume, Bestandtyp typ, int anzahlRegale) {
 		this.name = name;
 		raeume = new Leseraum[anzahlRaeume];
-		for (Leseraum raum : raeume) { // ----
+		for (Leseraum raum : raeume) { // ---- innere hat keine Wirkung
 			raum = new Leseraum(2);
 		}
 		verwaltung = new Angestelltenverwaltung();
@@ -129,28 +131,55 @@ public class Bibliothek {
 		return true;
 	}
 
-	Regal insRegalStellen(Buch b) {
+	Regal insRegalStellen(Buch buch) {
 		for (Regal regal : regale) {
 			if (regal.isVoll()) {
 				continue;
 			}
-			regal.hineinStellen(b);
-			bestandsverwaltung.hinzufuegen(b, regal);
+			regal.hineinStellen(buch);
+			bestandsverwaltung.hinzufuegen(buch, regal);
 			return regal;
 		}
 		return null;
 	}
 
 	public boolean zurueckgeben(Buch buch) {
-		// Todo implement
-		// annehmen
-
-		// prüfen
-
+		// prüfen/ kosten berechnen;
+		Double kosten = berechneKosten(buch);
+		if (kunde instanceof Dozent){
+			kosten = 0.0;
+		}
+		kundenregister.erhoeheStrafe(kunde, kosten);
 		// einlagern (Regal oder Werkstadt)
+		if (buch.getBeschaedigung() >= 0.5) {
+			werkstadt.zurReparaturHinzufuegen(buch);
+		} else {
+			insRegalStellen(buch);
+		}
 		return true;
 	}
 
+	private Double berechneKosten(Buch buch) {
+		LocalDate rueckgabeDatum = buch.getAusleihdatum().plusDays(28);
+		if (!rueckgabeDatum.isAfter(LocalDate.now())) {
+			return 0.0;
+		}
+		long ueberzogeneTage = Duration.between(rueckgabeDatum.atStartOfDay(), LocalDate.now()).toDays();
+
+		double kosten = 0.0;
+		long ersteTage = Math.min(7,ueberzogeneTage);
+		long restage = ueberzogeneTage-ersteTage;
+		kosten += ersteTage * 1.0;
+		// Für die Tage 1-7 wird jeden Tag 1€ berechnet.
+		long wochen = (restage) / 7; // Fehler - Es fehlt +6 um immer ab wochenbeginn zu zählen
+		// Ab dem 8. Tag wird jede Woche 5 € verlangt.
+		kosten += 5 * Math.min(6,wochen);
+		wochen -= Math.min(6,wochen);
+		// Ab 43 Tagen wird 2€ die Woche verlangt.
+		kosten += wochen*2;
+		// Die Strafe wird nie mehr als 100€ betragen
+		return Math.min(100.0, kosten);
+	}
 	public List<AngestellenComputer> getAngestellenComputer() {
 		return angestellenComputer;
 	}

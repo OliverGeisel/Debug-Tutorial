@@ -2,6 +2,9 @@ package de.oliver.structure;
 
 import de.oliver.person.visitor.Besucher;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Leseraum implements Verschmutzbar {
 	private final Besucher[] leser;
 	private boolean besetzt;
@@ -20,15 +23,18 @@ public class Leseraum implements Verschmutzbar {
 		besetzt = true;
 	}
 
-	public void verlassen() {
+	public List<Besucher> verlassen() {
 		besetzt = false;
+		List<Besucher> back = new LinkedList<>();
 		for (int i = 0; i < leser.length; i++) {
-			if (leser[i] == null) {
+			if (leser[i] == null){
 				break;
 			}
+			back.add(leser[i]);
 			leser[i] = null;
 			verschmutzen();
 		}
+		return back;
 	}
 
 
