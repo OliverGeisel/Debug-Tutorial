@@ -7,8 +7,8 @@ import de.oliver.structure.Verschmutzbar;
 public class Reinigungskraft extends Angestellter {
 
 
-    public Reinigungskraft(String name, Geschlecht geschlecht, int alter) {
-        super(name, geschlecht, alter);
+    public Reinigungskraft(String vorname, String nachname,Geschlecht geschlecht, int alter) {
+        super(vorname, nachname,geschlecht, alter);
     }
 
     public boolean saeubern(Verschmutzbar gegenstand){

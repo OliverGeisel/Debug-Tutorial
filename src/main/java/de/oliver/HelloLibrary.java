@@ -41,11 +41,11 @@ public class HelloLibrary {
     public HelloLibrary(){
         bib = new Bibliothek("SLUB", 20, Bestandtyp.Array,2);
 
-        biblo1 = new Bibliothekar("Anna", Geschlecht.WEIBLICH, 25);
-        biblo2 = new Bibliothekar("John", Geschlecht.MAENNLICH, 32);
-        reinigung1 = new Reinigungskraft("Tom", Geschlecht.MAENNLICH,20);
-        reinigung2 = new Reinigungskraft("Andre", Geschlecht.MAENNLICH, 31 );
-        restaurator = new Restaurator("Lena", Geschlecht.WEIBLICH, 26);
+        biblo1 = new Bibliothekar("Anna", "Kohl", Geschlecht.WEIBLICH, 25);
+        biblo2 = new Bibliothekar("John", "Zimmer",Geschlecht.MAENNLICH, 32);
+        reinigung1 = new Reinigungskraft("Tom","Müller", Geschlecht.MAENNLICH,20);
+        reinigung2 = new Reinigungskraft("Andre","Kellner", Geschlecht.MAENNLICH, 31 );
+        restaurator = new Restaurator("Lena","Büttner", Geschlecht.WEIBLICH, 26);
 
         stu1 = new Studierender();
         stu2 = new Studierender();
