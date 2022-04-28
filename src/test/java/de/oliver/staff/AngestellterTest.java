@@ -1,5 +1,7 @@
 package de.oliver.staff;
 
+import de.oliver.person.staff.Angestellter;
+import de.oliver.person.Geschlecht;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

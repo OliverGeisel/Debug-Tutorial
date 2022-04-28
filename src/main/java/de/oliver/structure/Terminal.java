@@ -1,64 +1,21 @@
 package de.oliver.structure;
 
-import de.oliver.staff.Arbeitsplatz;
-import de.oliver.structure.Bibliothek;
-
 import java.util.Collection;
-import java.util.Collections;
 
-// Anzahl Bugs:
-public class Terminal extends Arbeitsplatz {
-    private static int counter = 1;
-    private final int number;
-    private final Bibliothek bibo;
+public interface Terminal {
+	Buch sucheNachISBN(ISBN isbn);
 
-    public Terminal(Bibliothek bibo) {
-        this.bibo = bibo;
-        number = counter;
-        counter++;
-    }
+	Collection<Buch> sucheNachAuthor(String author);
 
-    public Buch sucheNachISBN(String isbn) {
-        return bibo.sucheNachISBN(isbn);
-    }
+	Buch sucheNachTitel(String titel);
 
-    public Collection<Buch> sucheNachAuthor(String author) {
-        return bibo.sucheNachAuthor(author);
-    }
+	Buch sucheNachTreffer(String text);
 
-    public Buch sucheNachTitel(String titel) {
-        return bibo.sucheNachTitel(titel);
-    }
+	boolean ausleihen(Buch buch);
 
-    public Buch sucheNachTreffer(String text) {
-        return bibo.sucheNachTreffer(text);
-    }
+	boolean zurueckgeben(Buch buch);
 
-    public boolean ausleihen(Buch buch) {
-        if (!isBesetzt()) {
-            return false;
-        }
-        return bibo.ausleihen(buch);
-    }
+	Regal findeRegal(Buch buch);
 
-    public boolean zurueckgeben(Buch buch) {
-        if (!isBesetzt()) {
-            return false;
-        }
-        return bibo.zurueckgeben(buch);
-
-    }
-
-    public boolean bezahlen() {
-        if (!isBesetzt()) {
-            return false;
-        }
-        return false;
-    }
-
-
-    public String toString() {
-        // VLT. besser einen StringBuilder
-        return "Das ist Terminal " + number + ". Und es ist mit " + (nutzer != null ? "niemanden" : nutzer) + " bestzt.";
-    }
+	double getMahngebuehren();
 }
