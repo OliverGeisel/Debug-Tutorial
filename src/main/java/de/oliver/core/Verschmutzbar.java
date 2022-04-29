@@ -1,4 +1,4 @@
-package de.oliver.structure;
+package de.oliver.core;
 
 public interface Verschmutzbar {
 

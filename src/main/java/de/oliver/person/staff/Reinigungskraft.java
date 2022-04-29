@@ -1,9 +1,9 @@
 package de.oliver.person.staff;
 
 import de.oliver.person.Geschlecht;
-import de.oliver.structure.Buch;
+import de.oliver.core.Buch;
 import de.oliver.structure.Regal;
-import de.oliver.structure.Verschmutzbar;
+import de.oliver.core.Verschmutzbar;
 
 public class Reinigungskraft extends Angestellter {
 

@@ -1,5 +1,6 @@
 package de.oliver.structure;
 
+import de.oliver.core.Verschmutzbar;
 import de.oliver.person.visitor.Besucher;
 
 import java.util.LinkedList;

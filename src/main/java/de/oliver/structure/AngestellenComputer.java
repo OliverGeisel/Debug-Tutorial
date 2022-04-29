@@ -1,5 +1,7 @@
 package de.oliver.structure;
 
+import de.oliver.core.Buch;
+import de.oliver.core.ISBN;
 import de.oliver.person.staff.Arbeitsplatz;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Kundenregister;
@@ -8,7 +10,7 @@ import java.util.Collection;
 
 public class AngestellenComputer extends Arbeitsplatz implements Terminal {
 
-	private Kundenregister kunden;
+	private final Kundenregister kunden;
 
 	public AngestellenComputer(Kundenregister kunden) {
 		this.kunden = kunden;
@@ -56,7 +58,22 @@ public class AngestellenComputer extends Arbeitsplatz implements Terminal {
 		return 0;
 	}
 
+	@Override
+	public Leseraum reservieren(Besucher... besucher) {
+		return null;
+	}
+
+	@Override
+	public boolean bezahlen(Besucher besucher, double betrag) {
+		return false;
+	}
+
 	public boolean besucherHinzufuegen(Besucher besucher) {
 		return kunden.addBesucher(besucher);
+	}
+
+	@Override
+	public void verschmutzen() {
+
 	}
 }

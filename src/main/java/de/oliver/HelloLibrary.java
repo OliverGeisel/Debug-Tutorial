@@ -3,14 +3,13 @@ package de.oliver;
 
 import de.oliver.person.Geschlecht;
 import de.oliver.person.staff.*;
-import de.oliver.person.staff.*;
 import de.oliver.structure.Bestandtyp;
 import de.oliver.structure.Bibliothek;
-import de.oliver.structure.Buch;
+import de.oliver.core.Buch;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Dozent;
 import de.oliver.person.visitor.Studierender;
-import de.oliver.structure.ISBN;
+import de.oliver.core.ISBN;
 
 import java.util.List;
 
@@ -53,10 +52,10 @@ public class HelloLibrary {
 		reinigung2 = new Reinigungskraft("Andre", "Kellner", Geschlecht.MAENNLICH, 31);
 		restaurator = new Restaurator("Lena", "Büttner", Geschlecht.WEIBLICH, 26);
 
-		stu1 = new Studierender();
-		stu2 = new Studierender();
-		stu3 = new Studierender();
-		dozent = new Dozent();
+		stu1 = new Studierender(1);
+		stu2 = new Studierender(2);
+		stu3 = new Studierender(3);
+		dozent = new Dozent(4);
 	}
 
 	private void init() {

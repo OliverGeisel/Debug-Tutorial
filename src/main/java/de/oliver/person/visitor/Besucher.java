@@ -1,25 +1,35 @@
 package de.oliver.person.visitor;
 
 import de.oliver.person.Person;
-import de.oliver.structure.Buch;
+import de.oliver.core.Buch;
 import de.oliver.structure.Terminal;
 
-public interface Besucher extends Person {
+public abstract class Besucher implements Person {
+
+	private final int ID;
+
+	public Besucher(int id) {
+		ID = id;
+	}
 
 	/**
 	 * @param buch
 	 * @return
 	 */
-	boolean ausleihen(Buch buch, Terminal terminal);
+	abstract boolean ausleihen(Buch buch, Terminal terminal);
 
 	/**
 	 * @param buch
 	 * @return
 	 */
-	boolean zurueckgeben(Buch buch, Terminal terminal);
+	abstract boolean zurueckgeben(Buch buch, Terminal terminal);
 
 	/**
 	 * @return true wenn keine Probleme beim bezahlen gab, sonst false
 	 */
-	boolean bezahlen(Terminal terminal);
+	abstract boolean bezahlen(Terminal terminal);
+
+	public int getID() {
+		return ID;
+	}
 }

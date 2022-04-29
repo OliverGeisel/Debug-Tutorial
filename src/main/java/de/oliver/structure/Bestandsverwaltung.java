@@ -1,14 +1,16 @@
 package de.oliver.structure;
 
+import de.oliver.core.Buch;
+import de.oliver.core.ISBN;
 import de.oliver.person.visitor.Kundenregister;
 
 import java.util.*;
 
 public class Bestandsverwaltung {
 
-	private Map<ISBN, List<Regal>> buchRegalMapping;
-	private List<Buch> alleBuecher = new LinkedList<>();
-	private Kundenregister kundenregister;
+	private final Map<ISBN, List<Regal>> buchRegalMapping;
+	private final List<Buch> alleBuecher = new LinkedList<>();
+	private final Kundenregister kundenregister;
 
 
 	public Bestandsverwaltung(Kundenregister kundenregister) {

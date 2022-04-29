@@ -1,4 +1,4 @@
-package de.oliver.structure;
+package de.oliver.core;
 
 import java.time.LocalDate;
 import java.util.Objects;

@@ -1,9 +1,13 @@
 package de.oliver.person.visitor;
 
-import de.oliver.structure.Buch;
+import de.oliver.core.Buch;
 import de.oliver.structure.Terminal;
 
-public class Dozent implements Besucher {
+public class Dozent extends Besucher {
+
+	public Dozent(int id) {
+		super(id);
+	}
 
 	@Override
 	public boolean ausleihen(Buch buch, Terminal terminal) {

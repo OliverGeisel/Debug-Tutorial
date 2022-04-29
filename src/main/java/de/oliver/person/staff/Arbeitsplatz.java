@@ -1,13 +1,14 @@
 package de.oliver.person.staff;
 
-import de.oliver.structure.Verschmutzbar;
+import de.oliver.core.Verschmutzbar;
 
 public abstract class Arbeitsplatz implements Verschmutzbar {
 
 	protected Angestellter nutzer;
+	protected double verschmutzung;
 
-	protected final void chekState() throws IllegalStateException{
-		if (!isBesetzt()){
+	protected final void checkState() throws IllegalStateException {
+		if (!isBesetzt()) {
 			throw new IllegalStateException("Der Arbeitsplatz ist nicht besetzt");
 		}
 	}
@@ -41,11 +42,11 @@ public abstract class Arbeitsplatz implements Verschmutzbar {
 
 	@Override
 	public boolean isDreckig() {
-		return verschmutzung>0.7;
+		return verschmutzung > 0.7;
 	}
 
 	@Override
 	public void saeubern() {
-		verschmutzung=0;
+		verschmutzung = 0;
 	}
 }

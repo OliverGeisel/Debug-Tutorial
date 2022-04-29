@@ -1,11 +1,12 @@
 package de.oliver.person.staff;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class Angestelltenverwaltung {
-	private Map<Bereich, Set<Angestellter>> angestellte;
+	private final Map<Bereich, Set<Angestellter>> angestellte = new HashMap<>();
 
 	public boolean isAngestellt(Angestellter angestellter) {
 		for (Set<Angestellter> runSet : angestellte.values()) {

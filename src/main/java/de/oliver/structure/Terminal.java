@@ -1,5 +1,8 @@
 package de.oliver.structure;
 
+import de.oliver.core.Buch;
+import de.oliver.core.ISBN;
+import de.oliver.core.Verschmutzbar;
 import de.oliver.person.visitor.Besucher;
 
 import java.util.Collection;
@@ -23,5 +26,5 @@ public interface Terminal extends Verschmutzbar {
 
 	Leseraum reservieren(Besucher... besucher);
 
-	public boolean bezahlen(Besucher besucher, double betrag);
+	boolean bezahlen(Besucher besucher, double betrag);
 }

@@ -1,6 +1,9 @@
 package de.oliver.structure;
 
+import de.oliver.core.Buch;
+import de.oliver.core.ISBN;
 import de.oliver.person.staff.Arbeitsplatz;
+import de.oliver.person.visitor.Besucher;
 
 import java.util.Collection;
 
@@ -61,9 +64,24 @@ public class BesucherComputer extends Arbeitsplatz implements Terminal {
 		return 0;
 	}
 
+	@Override
+	public Leseraum reservieren(Besucher... besucher) {
+		return null;
+	}
+
+	@Override
+	public boolean bezahlen(Besucher besucher, double betrag) {
+		return false;
+	}
+
 
 	public String toString() {
 		// VLT. besser einen StringBuilder
 		return "Das ist Terminal " + number + ". Und es ist mit " + (nutzer != null ? "niemanden" : nutzer) + " bestzt.";
+	}
+
+	@Override
+	public void verschmutzen() {
+
 	}
 }

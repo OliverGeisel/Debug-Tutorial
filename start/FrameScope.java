@@ -10,10 +10,13 @@ public class FrameScope {
 
 
 	public void method2(){
-	 int result = method3();
+	 	int a = 13;
+		int result = method3();
+		a=result;
 	}
 
 	private int method3(){
+		int a = 3;
 		return 0;
 	}
 

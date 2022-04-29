@@ -1,6 +1,5 @@
 package de.oliver.person;
 
-import de.oliver.person.staff.Angestellter;
 
 import java.util.Random;
 

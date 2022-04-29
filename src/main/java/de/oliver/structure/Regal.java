@@ -1,38 +1,48 @@
 package de.oliver.structure;
 
 
+import de.oliver.core.Buch;
+import de.oliver.core.Verschmutzbar;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 // Anzahl Bugs: ||
-public class Regal implements Verschmutzbar ,Iterable<Buch>{
+public class Regal implements Verschmutzbar, Iterable<Buch> {
 	public final static int REGALBRETTER_DEFAULT = 5;
 	public final static int BUECHER_JE_BRETT_DEFAULT = 20;
 
 	private final Buch[][] inhalt;
+	public final int kapazitaet;
 	private double verschmutzung;
 	private final String code;
 
 	public Regal(int regalBretter, int buecherJeBrett, String code) {
 		this.code = code;
 		inhalt = new Buch[regalBretter][buecherJeBrett];
+		kapazitaet = regalBretter * buecherJeBrett;
 	}
+
+	public long anzahlBuecherImRegal() {
+		return Arrays.stream(inhalt)
+				.mapToLong(it ->
+						Arrays.stream(it).filter(Objects::nonNull).count())
+				.sum();
+	}
+
 
 	public List<Buch> alleBuecher() { // ist korrekt implementiert
 		List<Buch> back = new LinkedList<>();
 		for (Buch[] regal : inhalt) {
-			back.addAll(Arrays.stream(regal).filter(Objects::nonNull).collect(Collectors.toList()));
+			back.addAll(Arrays.stream(regal).filter(Objects::nonNull).toList());
 		}
 		return back;
 	}
 
-	public long anzahlBuecher(){
-		return alleBuecher().size();
-	}
 
 	public boolean isVoll() {
 		for (Buch[] regal : inhalt) {
-			if (regal.length < BUECHER_JE_BRETT_DEFAULT) {// ----
+			if (regal.length < BUECHER_JE_BRETT_DEFAULT) {// ---- Macht keinen sinn
 				return false;
 			}
 		}
@@ -41,7 +51,7 @@ public class Regal implements Verschmutzbar ,Iterable<Buch>{
 
 	public Buch hineinStellen(Buch buch) throws IllegalStateException {
 		if (isVoll()) {
-			throw new IllegalStateException();
+			throw new IllegalStateException("Volle Regale können nicht befüllt werden");
 		}
 		RegalSchleife:
 		for (Buch[] brett : inhalt) {
@@ -54,10 +64,10 @@ public class Regal implements Verschmutzbar ,Iterable<Buch>{
 			}
 		}
 		// Simuliert verschmutung
+		verschmutzen();
 		buch.verfuegbarMachen();
 		return buch;
 	}
-
 
 	public boolean enthaelt(Buch buch) {
 		return alleBuecher().contains(buch);

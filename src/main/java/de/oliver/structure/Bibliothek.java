@@ -1,9 +1,11 @@
 package de.oliver.structure;
 
+import de.oliver.core.Buch;
 import de.oliver.person.staff.Angestelltenverwaltung;
 import de.oliver.person.staff.Angestellter;
 import de.oliver.person.staff.Bereich;
 import de.oliver.person.visitor.Besucher;
+import de.oliver.person.visitor.Dozent;
 import de.oliver.person.visitor.Kundenregister;
 
 import java.time.Duration;
@@ -14,12 +16,11 @@ import java.util.*;
 public class Bibliothek {
 
 	private final String name;
-	private final List<Buch> bestand;
 	private final Bestandsverwaltung bestandsverwaltung;
 	private final Angestelltenverwaltung verwaltung;
 	private final Kundenregister register;
 	private final Leseraum[] raeume;
-	private final Werkstadt werkstadt;
+	private final Werkstatt werkstatt;
 	private final List<BesucherComputer> besucherComputer;
 	private final List<AngestellenComputer> angestellenComputer;
 	private final Set<Regal> regale;
@@ -33,25 +34,15 @@ public class Bibliothek {
 		verwaltung = new Angestelltenverwaltung();
 		register = new Kundenregister();
 		bestandsverwaltung = new Bestandsverwaltung(register);
-		switch (typ) {
-			case Linked:
-				bestand = new LinkedList<>();
-				break;
-			case Array:
-
-			default:
-				bestand = new ArrayList<>();
-		}
 		regale = new HashSet<>();
 		int i = 1;
 		while (i < anzahlRegale) {
 			regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT, Integer.toString(i)));
 			i++;
 		}
-		werkstadt = new Werkstadt(this);
+		werkstatt = new Werkstatt(this);
 		angestellenComputer = new ArrayList<>();
 		for (i = 0; i < 2; i++) {
-
 			angestellenComputer.add(new AngestellenComputer(register));
 		}
 		besucherComputer = new ArrayList<>();
@@ -66,22 +57,14 @@ public class Bibliothek {
 		return true;
 	}
 
-	Buch sucheNachISBN(String isbn) {
-		for (Buch buch : bestand) {
-			if (buch.getIsbn().equals(isbn)) {
-				return buch;
-			}
-		}
-		return null;
-	}
-
 
 	public boolean neuerBesucher(Besucher besucher) {
 		return register.addBesucher(besucher);
 	}
 
 	public Buch einfuegen(Buch buch) {
-		bestand.add(buch);
+		// Todo fix
+		bestandsverwaltung.hinzufuegen(buch,null);
 		Regal verweis = null;
 		for (Regal regal : regale) {
 			verweis = regal;
@@ -94,11 +77,6 @@ public class Bibliothek {
 		return buch;
 	}
 
-	public Buch sortiertesEinfuegen(Buch buch) {
-		Buch back = einfuegen(buch);
-		Collections.sort(bestand);
-		return back;
-	}
 
 	public boolean ausleihen(Buch buch) {
 		if (buch.isAusgeliehen()) {
@@ -143,16 +121,16 @@ public class Bibliothek {
 		return null;
 	}
 
-	public boolean zurueckgeben(Buch buch) {
+	public boolean zurueckgeben(Buch buch, Besucher kunde) {
 		// prüfen/ kosten berechnen;
 		Double kosten = berechneKosten(buch);
 		if (kunde instanceof Dozent){
 			kosten = 0.0;
 		}
-		kundenregister.erhoeheStrafe(kunde, kosten);
+		register.erhoeheStrafe(kunde, kosten);
 		// einlagern (Regal oder Werkstadt)
 		if (buch.getBeschaedigung() >= 0.5) {
-			werkstadt.zurReparaturHinzufuegen(buch);
+			werkstatt.zurReparaturHinzufuegen(buch);
 		} else {
 			insRegalStellen(buch);
 		}
@@ -196,7 +174,7 @@ public class Bibliothek {
 		return raeume;
 	}
 
-	public Werkstadt getWerkstadt() {
-		return werkstadt;
+	public Werkstatt getWerkstadt() {
+		return werkstatt;
 	}
 }
