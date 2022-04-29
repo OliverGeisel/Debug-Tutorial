@@ -16,6 +16,7 @@ public class Studierender implements Besucher {
 
 	@Override
 	public boolean bezahlen(Terminal terminal) {
-		return terminal.bezahlen();
+		// Todo implement
+		return true;
 	}
 }

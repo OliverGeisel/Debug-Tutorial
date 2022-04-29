@@ -3,13 +3,14 @@ package de.oliver;
 
 import de.oliver.person.Geschlecht;
 import de.oliver.person.staff.*;
-import de.oliver.staff.*;
+import de.oliver.person.staff.*;
 import de.oliver.structure.Bestandtyp;
 import de.oliver.structure.Bibliothek;
 import de.oliver.structure.Buch;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Dozent;
 import de.oliver.person.visitor.Studierender;
+import de.oliver.structure.ISBN;
 
 import java.util.List;
 
@@ -77,9 +78,9 @@ public class HelloLibrary {
 		bib.neuerBesucher(stu2);
 		bib.neuerBesucher(stu3);
 		bib.neuerBesucher(dozent);
-
+		var isbn = new ISBN(123, 2, 34, 234, 2);
 		for (int i = 0; i < 100; i++) {
-			bib.einfuegen(new Buch(Integer.toString(i)));
+			bib.einfuegen(new Buch(Integer.toString(i), isbn));
 		}
 	}
 

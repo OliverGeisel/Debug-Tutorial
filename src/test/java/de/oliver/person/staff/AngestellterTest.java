@@ -1,4 +1,4 @@
-package de.oliver.staff;
+package de.oliver.person.staff;
 
 import de.oliver.person.staff.Angestellter;
 import de.oliver.person.Geschlecht;
