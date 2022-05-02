@@ -3,14 +3,14 @@ package de.oliver.core;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Random;
-
+// Anzahl Bugs: ||
 public class Buch implements Comparable<Buch>, Verschmutzbar {
 	private final String titel;
 	private String autor = "";
 	private final ISBN isbn;
 	private boolean ausgeliehen;
 	private final long code;
-	private double beschaedigung; // muss vermutlich Double werden wegen Map
+	private double beschaedigung;
 
 	private LocalDate ausleihdatum;
 
@@ -26,11 +26,13 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	}
 
 	public void ausleihen() {
+		// Bug check felt.
 		ausgeliehen = true;
 		ausleihdatum = LocalDate.now();
 	}
 
 	public void verfuegbarMachen() {
+		// Bug check fehlt .
 		ausgeliehen = false;
 		ausleihdatum = null;
 	}
@@ -38,8 +40,9 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	public void beschaedigen() {
 		beschaedigung += Math.random() * 0.5;
 	}
-	public void starkBeschaedigen(){
-		beschaedigung = Math.max(0.8, beschaedigung);
+
+	public void starkBeschaedigen() {
+		beschaedigung = Math.max(0.8, beschaedigung+0.1);
 	}
 
 
