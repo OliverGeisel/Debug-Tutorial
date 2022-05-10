@@ -19,20 +19,23 @@ Zeile im Programmcode einfach oder doppelt klickt.
 Dort sollte dan eine Markierung auftauchen. Dies ist dann ein gesetzter Breakpoint.
 Breakpoints lassen sich beliebig an und ausschalten oder auch wieder entfernen. Ein Breakpoint ist ausgeschaltet, wenn
 er (je nach IDE) ausgegraut oder durchgestrichen ist.
-Viele IDEs besitzen einen Breakpoint-Übersicht, in der listenartig steht, wo welcher Breakpoint ist und ob dieser
+Viele IDEs besitzen eine Breakpoint-Übersicht, in der listen artig steht, wo welcher Breakpoint ist und ob dieser
 aktiviert ist.
 
-**Aufgabe:** Setzen Sie an den Anfang eines Programms einen Breakpoint und starten Sie den Debug-Modus. Das Programm
-sollte an dieser Stelle halten und die Fenster des Debug-Modus sollenten nun gefüllt sein.
+**Aufgabe:** Setzen Sie an den Anfang eines Programms (Breakpoint.java) einen Breakpoint und starten Sie den Debug-Modus. Das Programm
+sollte an dieser Stelle halten und die Fenster des Debug-Modus sollten nun gefüllt sein.
+
+### FrameStack
+
 
 ### Auslesen/Manipulation des Speichers
 
 Wenn ein Breakpoint erreicht wurde, so können alle Objekte und variablen, die zu dieser Zeit existieren eingesehen
 werden und manipuliert werden.
-Im Normalfall sollte nun ein "Variabln"-Fenster auftauchen. In diesem sind Bezeichnungen wie this, args usw zu finden.
-Das sind die Momentanen Objekte, die in dem aktuellen Scope aktiv sind.
+Im Normalfall sollte nun ein "Variablen"-Fenster auftauchen. In diesem sind Bezeichnungen wie this, args usw zu finden.
+Das sind die momentanen Objekte, die in dem aktuellen Scope aktiv sind.
 Der Scope ist dabei die aktuelle Methode. Ein weiters Fenster sollte "Frames" heißen und dort sollte als erstes die
-Momentane Methode auftauchen und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode
+momentane Methode auftauchen und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode
 sein.
 
 ### Im Code voran gehen
