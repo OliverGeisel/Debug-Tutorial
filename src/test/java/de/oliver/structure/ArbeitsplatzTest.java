@@ -2,7 +2,6 @@ package de.oliver.structure;
 
 import de.oliver.person.Geschlecht;
 import de.oliver.person.staff.Angestellter;
-import de.oliver.person.staff.Arbeitsplatz;
 import de.oliver.person.staff.Bibliothekar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

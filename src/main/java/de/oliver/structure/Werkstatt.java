@@ -2,7 +2,6 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ZuSchmutzigException;
-import de.oliver.person.staff.Arbeitsplatz;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +32,7 @@ public class Werkstatt extends Arbeitsplatz {
 		}
 		Buch buch = beschaedigteBuecher.get(0); // --- fehlende Kontrolle
 		buch.reparieren();
+		verschmutzen();
 		return buch;
 	}
 

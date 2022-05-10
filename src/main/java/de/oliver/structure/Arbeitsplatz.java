@@ -1,6 +1,7 @@
-package de.oliver.person.staff;
+package de.oliver.structure;
 
 import de.oliver.core.Verschmutzbar;
+import de.oliver.person.staff.Angestellter;
 
 public abstract class Arbeitsplatz implements Verschmutzbar {
 

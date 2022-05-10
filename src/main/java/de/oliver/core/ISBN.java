@@ -19,6 +19,8 @@ import java.util.Arrays;
 // records sind spezielle Klassen. Sie haben nur (default-)getter. equals, toString und hashCode sind bereits überschrieben
 public record ISBN(int praefix, int gruppe, int verlagnr, int titelnr, int pruefziffer) implements Comparable<ISBN> {
 
+	public static final ISBN NullISBN = new ISBN(978,0,0,0,0);
+
 	/**
 	 * @param praefix     Präfix der ISBN. Entweder 978 oder 979
 	 * @param gruppe      Eine einstellige Zahl, die die Gruppe repräsentiert

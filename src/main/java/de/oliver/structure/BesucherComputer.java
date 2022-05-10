@@ -2,7 +2,6 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
-import de.oliver.person.staff.Arbeitsplatz;
 import de.oliver.person.visitor.Besucher;
 
 import java.util.Collection;

@@ -2,7 +2,6 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
-import de.oliver.person.staff.Arbeitsplatz;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Kundenregister;
 
@@ -11,6 +10,7 @@ import java.util.Collection;
 public class AngestellenComputer extends Arbeitsplatz implements Terminal {
 
 	private final Kundenregister kunden;
+	// todo implement
 
 	public AngestellenComputer(Kundenregister kunden) {
 		this.kunden = kunden;

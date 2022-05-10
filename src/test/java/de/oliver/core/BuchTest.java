@@ -22,24 +22,25 @@ class BuchTest {
 	}
 
 	@Test
-	void ausleihenFehlschlag() {
+	void ausleihenFehlschlagWennAusgeliehen() {
 		ausleihenErfolgreich();
 		assertThrows(IllegalStateException.class, () -> buch.ausleihen(), "Die Ausleihe eines Buches darf nicht gelingen, wenn es bereits augeliehen ist");
 	}
 
 	@Test
 	void verfuegbarMachen() {
+		fail();
 	}
 
 	@Test
-	void beschaedigen() {
+	void beschaedigenAenderungTest() {
 		assertEquals(0, buch.getBeschaedigung(), "Die Beschädigung muss am Anfang 0 sein!");
 		buch.beschaedigen();
 		assertNotEquals(0, buch.getBeschaedigung(), "Es muss eine Beschädigung vorhanden sein.");
 	}
 
 	@Test
-	void starkBeschaedigenTest() {
+	void starkBeschaedigenAenderungTest() {
 		assertEquals(0, buch.getBeschaedigung(), "Die Beschädigung muss am Anfang 0 sein!");
 		buch.starkBeschaedigen();
 		assertTrue(buch.getBeschaedigung() >= 0.8, "Bei starkBeschädigen muss die Beschädigung mindesten 0.8 betragen.");
@@ -55,11 +56,18 @@ class BuchTest {
 	}
 
 	@Test
-	void isDreckig() {
+	void isDreckigFalseNachErstellen() {
+		assertFalse(buch.isDreckig(), "Ein neues Buch darf nicht gleich dreckig sein");
 	}
 
 	@Test
-	void saeubern() {
+	void isDreckigTrueNachVerschmutzung() {
+
+	}
+
+	@Test
+	void saeubernWennDreckig() {
+		assertTrue(buch.isDreckig());
 	}
 
 	@Test
@@ -75,11 +83,19 @@ class BuchTest {
 	}
 
 	@Test
-	void isAusgeliehenFalse () {
-		ass
+	void isAusgeliehenFalse() {
+
 	}
 
 	@Test
-	void compareTo() {
+	void compareToKleiner() {
+	}
+
+	@Test
+	void compareToGleich() {
+	}
+
+	@Test
+	void compareToGrößer() {
 	}
 }
