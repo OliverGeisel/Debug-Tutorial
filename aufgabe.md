@@ -1,16 +1,20 @@
 # Debug-Tutorial
 
+## Wie es nicht geht!
+
+
+
 ## Grundlagen des Debuggen mit einer IDE
 
 ### Debug-Modus
 
-Der Debug-Modus ist das starten einer Anwendung, in der man in der Lage ist den Speicher auszulesen und Schritt für
+Der Debug-Modus ist das Starten einer Anwendung, in der man in der Lage ist den Speicher auszulesen und Schritt für
 Schritt durch das Programm gehen kann.
-Diese Modus ist deutlich langsamer als die normale Modus. In IDEs ist dieser Modus durch das klicken auf einen
+Dieser Modus ist deutlich langsamer, als der normale Modus. In IDEs ist dieser Modus durch das Klicken auf einen
 speziellen Button (meist ein Käfer-Symbol) startbar.
-Meist änders sich dabei die Ansicht in der IDE oder ein extra Fenster erscheint.
+Überwiegend ändert sich dabei die Ansicht in der IDE oder ein extra Fenster erscheint.
 
-**Aufgabe:** Finden Sie diesn Button zum starten des Debug-Modus in ihrer IDE.
+**Aufgabe:** Finden Sie diesen Button zum Starten des Debug-Modus in ihrer IDE.
 
 ### Breakpoints
 
@@ -25,18 +29,24 @@ aktiviert ist.
 **Aufgabe:** Setzen Sie an den Anfang eines Programms (Breakpoint.java) einen Breakpoint und starten Sie den Debug-Modus. Das Programm
 sollte an dieser Stelle halten und die Fenster des Debug-Modus sollten nun gefüllt sein.
 
-### FrameStack
 
 
 ### Auslesen/Manipulation des Speichers
 
-Wenn ein Breakpoint erreicht wurde, so können alle Objekte und variablen, die zu dieser Zeit existieren eingesehen
+Wenn ein Breakpoint erreicht wurde, so können alle Objekte und Variablen, die zu dieser Zeit existieren eingesehen
 werden und manipuliert werden.
 Im Normalfall sollte nun ein "Variablen"-Fenster auftauchen. In diesem sind Bezeichnungen wie this, args usw zu finden.
-Das sind die momentanen Objekte, die in dem aktuellen Scope aktiv sind.
-Der Scope ist dabei die aktuelle Methode. Ein weiters Fenster sollte "Frames" heißen und dort sollte als erstes die
-momentane Methode auftauchen und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode
-sein.
+Das sind die momentanen Objekte, die in dem aktuellen Scope genutzt werden können. 
+Diese Variablen können nach Belieben ausgelesen und auch verändert werden.
+
+**Aufgabe:** Öffnen Sie WerteManipulation.java. Dieser Code darf *nicht* verändert werden. 
+Wählen Sie ein Level durch die Angabe eines zusätzlichen Programmargumentes. Ziel ist es das Level zu absolvieren, indem durch den Debugger die Werte der Variablen geändert werden.
+
+
+
+### Framestack
+Ein weiters Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen 
+und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode sein.
 
 ### Im Code voran gehen
 
