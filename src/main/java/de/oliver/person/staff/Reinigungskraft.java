@@ -13,8 +13,7 @@ public class Reinigungskraft extends Angestellter {
 	}
 
 	public boolean saeubern(Verschmutzbar gegenstand) {
-		if (gegenstand instanceof Regal) {
-			Regal regal = (Regal) gegenstand;
+		if (gegenstand instanceof Regal regal) {
 			for (Buch buch : regal.alleBuecher()) {
 				buch.saeubern();
 			}

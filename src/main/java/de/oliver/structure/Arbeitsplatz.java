@@ -1,11 +1,12 @@
 package de.oliver.structure;
 
 import de.oliver.core.Verschmutzbar;
+import de.oliver.person.Person;
 import de.oliver.person.staff.Angestellter;
 
-public abstract class Arbeitsplatz implements Verschmutzbar {
+public abstract class Arbeitsplatz<T extends Person> implements Verschmutzbar {
 
-	protected Angestellter nutzer;
+	protected T nutzer;
 	protected double verschmutzung;
 
 	protected final void checkState() throws IllegalStateException {
@@ -19,7 +20,7 @@ public abstract class Arbeitsplatz implements Verschmutzbar {
 	}
 
 
-	public boolean hinsetzen(Angestellter nutzer) {
+	public boolean hinsetzen(T nutzer) {
 		if (this.nutzer == null) {
 			this.nutzer = nutzer;
 			return true;
@@ -28,8 +29,8 @@ public abstract class Arbeitsplatz implements Verschmutzbar {
 		}
 	}
 
-	public Angestellter aufstehen() {
-		Angestellter back = nutzer;
+	public T aufstehen() {
+		T back = nutzer;
 		if (back == null) {
 			throw new IllegalStateException();
 		}
@@ -37,7 +38,7 @@ public abstract class Arbeitsplatz implements Verschmutzbar {
 		return back;
 	}
 
-	public Angestellter getNutzer() {
+	public T getNutzer() {
 		return nutzer;
 	}
 

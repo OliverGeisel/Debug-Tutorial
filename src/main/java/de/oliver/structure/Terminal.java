@@ -7,6 +7,9 @@ import de.oliver.person.visitor.Besucher;
 
 import java.util.Collection;
 
+/**
+ *
+ */
 public interface Terminal extends Verschmutzbar {
 	Buch sucheNachISBN(ISBN isbn);
 
@@ -20,9 +23,9 @@ public interface Terminal extends Verschmutzbar {
 
 	boolean zurueckgeben(Buch buch);
 
-	Regal findeRegal(Buch buch);
+	String findeRegalCode(Buch buch);
 
-	double getMahngebuehren();
+	double getMahngebuehren(Besucher besucher);
 
 	Leseraum reservieren(Besucher... besucher);
 

@@ -6,6 +6,28 @@ import de.oliver.structure.Terminal;
 
 public abstract class Besucher implements Person {
 
+	private String vorname,nachname;
+
+	@Override
+	public String getVorname() {
+		return vorname;
+	}
+
+	@Override
+	public String getNachname() {
+		return nachname;
+	}
+
+	@Override
+	public String getVollerName() {
+		return null;
+	}
+
+	@Override
+	public int getAlter() {
+		return 0;
+	}
+
 	private final int ID;
 
 	public Besucher(int id) {

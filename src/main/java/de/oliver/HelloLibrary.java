@@ -3,7 +3,8 @@ package de.oliver;
 
 import de.oliver.person.Geschlecht;
 import de.oliver.person.staff.*;
-import de.oliver.structure.Bestandtyp;
+import de.oliver.person.visitor.Kundenregister;
+import de.oliver.structure.BestandsVerwaltung;
 import de.oliver.structure.Bibliothek;
 import de.oliver.core.Buch;
 import de.oliver.person.visitor.Besucher;
@@ -11,6 +12,7 @@ import de.oliver.person.visitor.Dozent;
 import de.oliver.person.visitor.Studierender;
 import de.oliver.core.ISBN;
 
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -44,7 +46,7 @@ public class HelloLibrary {
 	}
 
 	public HelloLibrary() {
-		bib = new Bibliothek("SLUB", 20, Bestandtyp.Array, 2);
+		bib = new Bibliothek("SLUB", 20, 2, LocalTime.of(8, 0), LocalTime.of(23, 0));
 
 		biblo1 = new Bibliothekar("Anna", "Kohl", Geschlecht.WEIBLICH, 25);
 		biblo2 = new Bibliothekar("John", "Zimmer", Geschlecht.MAENNLICH, 32);
@@ -59,11 +61,13 @@ public class HelloLibrary {
 	}
 
 	private void init() {
-		bib.anstellen(biblo1, Bereich.KUNDENBETREUUNG);
-		bib.anstellen(biblo2, Bereich.KUNDENBETREUUNG);
-		bib.anstellen(reinigung1, Bereich.REINIGUNG);
-		bib.anstellen(reinigung2, Bereich.REINIGUNG);
-		bib.anstellen(restaurator, Bereich.WERKSTATT);
+		System.out.println("❤lich Willkommen in der " + bib.getName() + "!");
+		AngestelltenVerwaltung angestelltenVerwaltung = bib.getVerwaltung();
+		angestelltenVerwaltung.angestelltenHinzufuegen(biblo1, Bereich.KUNDENBETREUUNG);
+		angestelltenVerwaltung.angestelltenHinzufuegen(biblo2, Bereich.KUNDENBETREUUNG);
+		angestelltenVerwaltung.angestelltenHinzufuegen(reinigung1, Bereich.REINIGUNG);
+		angestelltenVerwaltung.angestelltenHinzufuegen(reinigung2, Bereich.REINIGUNG);
+		angestelltenVerwaltung.angestelltenHinzufuegen(restaurator, Bereich.WERKSTATT);
 
 
 		var arbeitsplatz1 = bib.getAngestellenComputer().get(0);
@@ -73,13 +77,17 @@ public class HelloLibrary {
 			arbeitsplatz1.besucherHinzufuegen(besucher);
 		}
 
-		bib.neuerBesucher(stu1);
-		bib.neuerBesucher(stu2);
-		bib.neuerBesucher(stu3);
-		bib.neuerBesucher(dozent);
-		var isbn = new ISBN(123, 2, 34, 234, 2);
+		Kundenregister kunden = bib.getRegister();
+
+		kunden.addBesucher(stu1);
+		kunden.addBesucher(stu2);
+		kunden.addBesucher(stu3);
+		kunden.addBesucher(dozent);
+
+		BestandsVerwaltung bestand = bib.getBestandsverwaltung();
 		for (int i = 0; i < 100; i++) {
-			bib.einfuegen(new Buch(Integer.toString(i), isbn));
+			var isbn = new ISBN(978, i, 34, 234, 2);
+			bestand.einfuegen(new Buch(Integer.toString(i), isbn));
 		}
 	}
 

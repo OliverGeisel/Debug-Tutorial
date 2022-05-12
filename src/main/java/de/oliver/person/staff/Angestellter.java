@@ -22,7 +22,7 @@ public abstract class Angestellter implements Person {
 		this.nachname = nachname;
 	}
 
-	int getAlter() {
+	public int getAlter() {
 		return alter;
 	}
 
@@ -37,7 +37,7 @@ public abstract class Angestellter implements Person {
 		return vorname;
 	}
 
-	Geschlecht getGeschlecht() {
+	public Geschlecht getGeschlecht() {
 		return geschlecht;
 	}
 

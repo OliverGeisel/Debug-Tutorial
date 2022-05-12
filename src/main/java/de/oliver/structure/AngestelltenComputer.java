@@ -2,70 +2,82 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
+import de.oliver.person.staff.Angestellter;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Kundenregister;
 
 import java.util.Collection;
 
-public class AngestellenComputer extends Arbeitsplatz implements Terminal {
+public class AngestelltenComputer extends Arbeitsplatz<Angestellter> implements Terminal {
 
 	private final Kundenregister kunden;
+	private final BestandsVerwaltung bestand;
+
+	private final Leseraum[] raeume;
 	// todo implement
 
-	public AngestellenComputer(Kundenregister kunden) {
+	public AngestelltenComputer(Kundenregister kunden, BestandsVerwaltung bestand, Leseraum[] raeume) {
 		this.kunden = kunden;
+		this.bestand = bestand;
+		this.raeume = raeume;
 	}
 
 
 	@Override
 	public Buch sucheNachISBN(ISBN isbn) {
-		return null;
+		return bestand.sucheNachISBN(isbn);
 	}
 
 	@Override
 	public Collection<Buch> sucheNachAuthor(String author) {
-		return null;
+		return bestand.sucheNachAuthor(author) ;
 	}
 
 	@Override
 	public Buch sucheNachTitel(String titel) {
-		return null;
+		return bestand.sucheNachTitel(titel);
 	}
 
 	@Override
 	public Buch sucheNachTreffer(String text) {
-		return null;
+		return bestand.sucheNachTreffer(text);
 	}
 
 	@Override
 	public boolean ausleihen(Buch buch) {
+		// todo fix
 		return false;
 	}
 
 	@Override
 	public boolean zurueckgeben(Buch buch) {
-		return false;
+		// Todo fix
+		return bestand.zurueckgeben(buch);
 	}
 
 	@Override
-	public Regal findeRegal(Buch buch) {
-		return null;
+	public String findeRegalCode(Buch buch) {
+		return bestand.getRegalCode(buch);
 	}
 
 
 	@Override
-	public double getMahngebuehren() {
-		return 0;
+	public double getMahngebuehren(Besucher besucher) {
+
+
+		return kunden.getStrafe(besucher);
 	}
 
 	@Override
 	public Leseraum reservieren(Besucher... besucher) {
-		return null;
+
+		// todo  fix
+		return raeume[0];
 	}
 
 	@Override
 	public boolean bezahlen(Besucher besucher, double betrag) {
-		return false;
+		return kunden.bezahlen(besucher);
 	}
 
 	public boolean besucherHinzufuegen(Besucher besucher) {

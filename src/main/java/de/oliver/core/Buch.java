@@ -3,7 +3,7 @@ package de.oliver.core;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Random;
-// Anzahl Bugs: ||
+// todo Anzahl Bugs: ||
 public class Buch implements Comparable<Buch>, Verschmutzbar {
 	private final String titel;
 	private String autor = "";
@@ -26,13 +26,13 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	}
 
 	public void ausleihen() {
-		// Bug check felt.
+		//todo Bug check felt.
 		ausgeliehen = true;
 		ausleihdatum = LocalDate.now();
 	}
 
 	public void verfuegbarMachen() {
-		// Bug check fehlt .
+		//todo  Bug check fehlt .
 		ausgeliehen = false;
 		ausleihdatum = null;
 	}

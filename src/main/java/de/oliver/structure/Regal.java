@@ -15,6 +15,7 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 	private final Buch[][] inhalt;
 	public final int kapazitaet;
 	private double verschmutzung;
+
 	private final String code;
 
 	public Regal(int regalBretter, int buecherJeBrett, String code) {
@@ -31,7 +32,7 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 	}
 
 
-	public List<Buch> alleBuecher() { // ist korrekt implementiert
+	public List<Buch> alleBuecher() {
 		List<Buch> back = new LinkedList<>();
 		for (Buch[] regal : inhalt) {
 			back.addAll(Arrays.stream(regal).filter(Objects::nonNull).toList());
@@ -59,7 +60,7 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 			for (Buch b : brett) {// ---- Hier muss mit der normalen Zählschleife gearbeitet werden
 				if (b == null) {
 					b = buch;
-					break; // Bug hier Fehlet label sprung
+					break; //Todo Bug hier Fehlet label sprung
 				}
 			}
 		}
@@ -98,8 +99,8 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 		return back;
 	}
 
-	public String toString() {
-		return "Das ist Regal: " + code;
+	public String getCode() {
+		return code;
 	}
 
 	@Override
@@ -120,6 +121,11 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 	@Override
 	public Iterator<Buch> iterator() {
 		return alleBuecher().iterator();
+	}
+
+	@Override
+	public String toString() {
+		return "Das ist Regal: " + code;
 	}
 
 }

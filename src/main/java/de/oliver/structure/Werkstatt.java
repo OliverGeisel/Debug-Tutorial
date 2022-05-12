@@ -2,18 +2,19 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ZuSchmutzigException;
+import de.oliver.person.staff.Angestellter;
 
 import java.util.LinkedList;
 import java.util.List;
 
 // Anzahl Bugs: |
-public class Werkstatt extends Arbeitsplatz {
+public class Werkstatt extends Arbeitsplatz<Angestellter> {
 	private final List<Buch> beschaedigteBuecher;
-	private final Bibliothek bibo;
+	private final BestandsVerwaltung bestand;
 
 
-	public Werkstatt(Bibliothek bibo) {
-		this.bibo = bibo;
+	public Werkstatt(BestandsVerwaltung bestand) {
+		this.bestand = bestand;
 		beschaedigteBuecher = new LinkedList<>();
 
 	}
@@ -38,7 +39,7 @@ public class Werkstatt extends Arbeitsplatz {
 
 	private boolean zurueckstellen(Buch b) {
 		beschaedigteBuecher.remove(b);
-		bibo.insRegalStellen(b);
+		bestand.insRegalStellen(b);
 		return true;
 	}
 

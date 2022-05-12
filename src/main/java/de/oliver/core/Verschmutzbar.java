@@ -5,7 +5,7 @@ public interface Verschmutzbar {
 	/**
 	 * Überprüft ob das Objekt dreckig ist und gesäubert werden muss.
 	 *
-	 * @return true wenn die Verschmutzung hoch genug ist um als dreckig bezeichnet zu werden, sonst false.
+	 * @return true, wenn die Verschmutzung hoch genug ist um als dreckig bezeichnet zu werden, sonst false.
 	 */
 	boolean isDreckig();
 
@@ -15,7 +15,7 @@ public interface Verschmutzbar {
 	void saeubern();
 
 	/**
-	 * Eine Methode, die das Objekt zu einem gewissen Anteil verschmutzt. Nach einer gewisser Verschmutzung muss isDreckig()
+	 * Eine Methode, die das Objekt zu einem gewissen Anteil verschmutzt. Nach einer gewissen Verschmutzung muss isDreckig()
 	 * true zurück geben.
 	 */
 	void verschmutzen();

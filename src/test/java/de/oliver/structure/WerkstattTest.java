@@ -6,6 +6,7 @@ import de.oliver.core.ZuSchmutzigException;
 import de.oliver.person.Geschlecht;
 import de.oliver.person.staff.Angestellter;
 import de.oliver.person.staff.Restaurator;
+import de.oliver.person.visitor.Besucher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
@@ -21,14 +22,15 @@ class WerkstattTest {
 
 	private Werkstatt werkstatt;
 	private Angestellter restaurator;
+
 	@Mock
-	private Bibliothek bib;
+	private BestandsVerwaltung bestand;
 
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		when(bib.insRegalStellen(any())).thenReturn(new Regal(1, 1, "Test"));
-		werkstatt = new Werkstatt(bib);
+		when(bestand.insRegalStellen(any())).thenReturn(new Regal(1, 1, "Test"));
+		werkstatt = new Werkstatt(bestand);
 		restaurator = new Restaurator("John", "Auerbach", Geschlecht.DIVERS, 45);
 		werkstatt.hinsetzen(restaurator);
 	}

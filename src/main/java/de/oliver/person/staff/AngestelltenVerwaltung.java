@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Angestelltenverwaltung {
+public class AngestelltenVerwaltung {
 	private final Map<Bereich, Set<Angestellter>> angestellte = new HashMap<>();
 
 	public boolean isAngestellt(Angestellter angestellter) {

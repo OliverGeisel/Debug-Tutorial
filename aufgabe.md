@@ -1,3 +1,8 @@
+
+---
+title: "Debug-Tutorial"
+---
+
 # Debug-Tutorial
 
 ## Wie es nicht geht!
@@ -62,7 +67,7 @@ Weitere Optionen, die aber nur mache IDEs haben sind:
 - Run to Cursor
 - Drop Frame
 
-Finden Sie diese Möglichkeiten in ihrer IDE ihrer Wahl.
+Finden Sie diese Möglichkeiten in der IDE ihrer Wahl.
 
 ## Situation
 

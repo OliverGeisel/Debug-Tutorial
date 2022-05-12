@@ -10,9 +10,9 @@ import java.util.Collection;
 public class BesucherComputer extends Arbeitsplatz implements Terminal {
 	private static int counter = 1;
 	private final int number;
-	private final Bestandsverwaltung bestand;
+	private final BestandsVerwaltung bestand;
 
-	public BesucherComputer(Bestandsverwaltung bestand) {
+	public BesucherComputer(BestandsVerwaltung bestand) {
 		this.bestand = bestand;
 		number = counter;
 		counter++;
@@ -54,12 +54,13 @@ public class BesucherComputer extends Arbeitsplatz implements Terminal {
 	}
 
 	@Override
-	public Regal findeRegal(Buch buch) {
-		return bestand.getRegal(buch);
+	public String findeRegalCode(Buch buch) {
+		return bestand.getRegalCode(buch);
 	}
 
 	@Override
-	public double getMahngebuehren() {
+	public double getMahngebuehren(Besucher besucher) {
+		// Todo fix
 		return 0;
 	}
 

@@ -6,14 +6,15 @@ import de.oliver.person.visitor.Kundenregister;
 
 import java.util.*;
 
-public class Bestandsverwaltung {
+public class BestandsVerwaltung {
 
 	private final Map<ISBN, List<Regal>> buchRegalMapping;
 	private final List<Buch> alleBuecher = new LinkedList<>();
 	private final Kundenregister kundenregister;
+	private Regal[] regale;
 
 
-	public Bestandsverwaltung(Kundenregister kundenregister) {
+	public BestandsVerwaltung(Kundenregister kundenregister) {
 		this.kundenregister = kundenregister;
 		buchRegalMapping = new HashMap<>();
 	}
@@ -31,13 +32,13 @@ public class Bestandsverwaltung {
 	/**
 	 * Sucht nach dem Regal, das das gesuchte Buch enthält.
 	 * <p>
-	 * Das Buch wird
 	 *
 	 * @param buch
-	 * @return
+	 * @return Regal in dem das Buch ist.
+	 * @throws NoSuchElementException wenn das Buch in keinem Regal ist.
 	 */
-	public Regal getRegal(Buch buch) {
-		return buchRegalMapping.get(buch.getIsbn()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow();
+	public String getRegalCode(Buch buch) {
+		return buchRegalMapping.get(buch.getIsbn()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow().getCode();
 	}
 
 	public boolean entferneAusRegal(Buch buch) {
@@ -89,6 +90,54 @@ public class Bestandsverwaltung {
 
 		// Todo implement
 		return false;
+	}
+
+	boolean ausRegalNehmen(Buch buch, Regal regal) {
+		regal.herausnehmen(buch);
+		return true;
+	}
+
+	Regal insRegalStellen(Buch buch) {
+		for (Regal regal : regale) {
+			if (regal.isVoll()) {
+				continue;
+			}
+			regal.hineinStellen(buch);
+			hinzufuegen(buch, regal);
+			return regal;
+		}
+		return null;
+	}
+
+
+	public Buch einfuegen(Buch buch) {
+		// Todo fix
+		hinzufuegen(buch, null);
+		Regal verweis = null;
+		for (Regal regal : regale) {
+			verweis = regal;
+			if (regal.isVoll()) {
+				continue;
+			}
+			regal.hineinStellen(buch);
+		}
+		hinzufuegen(buch, verweis);
+		return buch;
+	}
+
+	Regal ausRegalNehmen(Buch b) {
+		boolean success = false;
+		for (Regal regal : regale) {
+			try {
+				regal.herausnehmen(b);
+				success = true;
+				break;
+			} catch (NoMatchingBookException be) {
+				// Nothing to do
+			}
+			entferneAusRegal(b);
+		}
+		return null;
 	}
 }
 
