@@ -7,7 +7,7 @@ import de.oliver.person.visitor.Besucher;
 import java.util.Collection;
 
 // Anzahl Bugs:
-public class BesucherComputer extends Arbeitsplatz implements Terminal {
+public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal {
 	private static int counter = 1;
 	private final int number;
 	private final BestandsVerwaltung bestand;
@@ -82,6 +82,6 @@ public class BesucherComputer extends Arbeitsplatz implements Terminal {
 
 	@Override
 	public void verschmutzen() {
-
+		verschmutzung += 0.1;
 	}
 }

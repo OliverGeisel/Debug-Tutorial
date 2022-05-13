@@ -3,16 +3,25 @@ package de.oliver.core;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Random;
-// todo Anzahl Bugs: ||
+
+
+/**
+ * Repräsentiert ein Buch in einer Bibliothek.
+ * Wenn es mehrere Instanzen des gleichen physischen Buches gibt, so werden diese durch einen Code unterschieden.
+ */
+
 public class Buch implements Comparable<Buch>, Verschmutzbar {
+	// todo Anzahl Bugs: ||
 	private final String titel;
-	private String autor = "";
+	private String autor;
 	private final ISBN isbn;
 	private boolean ausgeliehen;
 	private final long code;
 	private double beschaedigung;
 
 	private LocalDate ausleihdatum;
+
+	private double verschmutzung;
 
 	public Buch(String titel, ISBN isbn) {
 		this(titel, "", isbn);
@@ -25,45 +34,71 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 		this.isbn = isbn;
 	}
 
+	/**
+	 * Setzt den Status auf ausgeliehen. Kann nicht ausgeliehen werden, wenn es nicht verfügbar ist.
+	 */
 	public void ausleihen() {
 		//todo Bug check felt.
 		ausgeliehen = true;
 		ausleihdatum = LocalDate.now();
 	}
 
+	/**
+	 * Erlaubt das Ausleihen des Buches.
+	 */
 	public void verfuegbarMachen() {
 		//todo  Bug check fehlt .
 		ausgeliehen = false;
 		ausleihdatum = null;
 	}
 
+	/**
+	 * Fügt eine kleine Beschädigung hinzu.
+	 */
 	public void beschaedigen() {
 		beschaedigung += Math.random() * 0.5;
 	}
 
+	/**
+	 * Das Buch wird stark beschädigt und ist zur Reparatur zu bringen.
+	 */
 	public void starkBeschaedigen() {
-		beschaedigung = Math.max(0.8, beschaedigung+0.1);
+		beschaedigung = Math.max(0.8, beschaedigung + 0.1);
 	}
 
 
+	/**
+	 * Repariert das Buch wieder und macht es wieder nutzbar.
+	 */
 	public void reparieren() {
 		beschaedigung = 0.01;
 	}
 
 
+	/**
+	 * Gibt Auskunft, ob ein Buch gereinigt werden sollte.
+	 *
+	 * @return true, wenn die Verschmutzung größer als 0.5 ist.
+	 */
 	@Override
 	public boolean isDreckig() {
-		return false;
+		return verschmutzung > 0.5;
 	}
 
+	/**
+	 * Reinigt das Buch vollständig.
+	 */
 	@Override
 	public void saeubern() {
-		// complete
+		verschmutzung = 0.0;
 	}
 
+	/**
+	 * Verschmutzt das Buch etwas.
+	 */
 	@Override
 	public void verschmutzen() {
-		//done
+		verschmutzung += 0.07;
 	}
 
 

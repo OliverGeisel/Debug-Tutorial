@@ -5,7 +5,10 @@ import de.oliver.person.visitor.Kundenregister;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 // Anzahl Bugs: ||
 public class Bibliothek {
@@ -29,7 +32,7 @@ public class Bibliothek {
 		raeume = new Leseraum[anzahlRaeume];
 		this.oeffnung = oeffnung;
 		this.schliessung = schliessung;
-		for (Leseraum raum : raeume) { // ---- innere hat keine Wirkung
+		for (Leseraum raum : raeume) { // Todo ---- innere hat keine Wirkung
 			raum = new Leseraum(2);
 		}
 		verwaltung = new AngestelltenVerwaltung();
@@ -97,6 +100,7 @@ public class Bibliothek {
 			this.start = start;
 			this.ende = ende;
 		}
+
 
 		public LocalTime getEnde() {
 			return ende;
