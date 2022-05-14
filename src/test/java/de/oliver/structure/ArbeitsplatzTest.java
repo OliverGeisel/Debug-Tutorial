@@ -24,18 +24,6 @@ class ArbeitsplatzTest {
 		angestellter = new Bibliothekar("John", "Böhmer", Geschlecht.DIVERS, 23);
 	}
 
-	@Test
-	void chekStateOkay() {
-		arbeitsplatz.hinsetzen(angestellter);
-		//assertDoesNotThrow(arbeitsplatz::chekState);
-		assertTrue(arbeitsplatz.isBesetzt());
-	}
-
-	@Test
-	void chekStateException() {
-		// assertThrows(IllegalStateException.class, arbeitsplatz::chekState);
-		assertFalse(arbeitsplatz.isBesetzt());
-	}
 
 	@Test
 	void isBesetztFalse() {
@@ -76,5 +64,29 @@ class ArbeitsplatzTest {
 		assertFalse(arbeitsplatz.isBesetzt(), "Es darf am Anfang nicht besetzt sein");
 		assertThrowsExactly(IllegalStateException.class, () -> arbeitsplatz.aufstehen(), "Wenn kein Nutzer am Platz ist, dann muss aufstehen() eine Exception werfen.");
 		assertNull(arbeitsplatz.getNutzer(), "Es muss null geben, wenn der Platz unbesetzt ist");
+	}
+
+	@Test
+	void getNutzerOkay() {
+		arbeitsplatz.hinsetzen(angestellter);
+		assertEquals(angestellter, arbeitsplatz.getNutzer(), "Der Nutzer muss zurück gegeben werden!");
+	}
+
+	@Test
+	void getNutzerNull() {
+		assertFalse(arbeitsplatz.isBesetzt(), "Der Arbeitsplatz darf nicht besetzt sein!");
+		assertNull(arbeitsplatz.getNutzer(), "Der Nutzer muss null sein, wenn der Platz nicht besetzt ist!");
+	}
+
+
+	@Test
+	void isDreckigTrue() {
+		assertFalse(arbeitsplatz.isDreckig(), "Am Anfang darf es nicht dreckig sein");
+		var t = arbeitsplatz.verschmutzung;
+		arbeitsplatz.verschmutzen();
+		arbeitsplatz.verschmutzen();
+		assertFalse(arbeitsplatz.isDreckig(), "Noch darf der Arbeitsplatz nicht dreckig sein!");
+		arbeitsplatz.verschmutzen();
+		assertTrue(arbeitsplatz.isDreckig(), "Der Arbeitsplatz muss dreckig sein!");
 	}
 }

@@ -10,7 +10,7 @@ import java.util.*;
  * Beinhaltet Bücher. Diese Bücher sind in auf Brettern platziert.
  */
 public class Regal implements Verschmutzbar, Iterable<Buch> {
-	// Anzahl Bugs: |||
+	// Todo Anzahl Bugs: |||
 	public final static int REGALBRETTER_DEFAULT = 5;
 	public final static int BUECHER_JE_BRETT_DEFAULT = 20;
 

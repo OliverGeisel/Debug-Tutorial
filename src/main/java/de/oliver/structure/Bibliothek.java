@@ -1,44 +1,44 @@
 package de.oliver.structure;
 
+import de.oliver.person.Person;
 import de.oliver.person.staff.AngestelltenVerwaltung;
 import de.oliver.person.visitor.Kundenregister;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-// Anzahl Bugs: ||
+
 public class Bibliothek {
+	// Todo Anzahl Bugs: |||
 
 	private final String name;
 
 	private final BestandsVerwaltung bestandsverwaltung;
-
+	private final List<Person> personenInBib;
 	private final AngestelltenVerwaltung verwaltung;
 	private final Kundenregister register;
-
 	private final Leseraum[] raeume;
-
 	private final Werkstatt werkstatt;
 	private final List<BesucherComputer> besucherComputer;
 	private final List<AngestelltenComputer> angestelltenComputer;
 	private final Set<Regal> regale;
 	private LocalTime oeffnung, schliessung;
+
+
 	public Bibliothek(String name, int anzahlRaeume, int anzahlRegale, LocalTime oeffnung, LocalTime schliessung) {
 		this.name = name;
 		raeume = new Leseraum[anzahlRaeume];
 		this.oeffnung = oeffnung;
 		this.schliessung = schliessung;
-		for (Leseraum raum : raeume) { // Todo ---- innere hat keine Wirkung
+		for (Leseraum raum : raeume) { // Todo Bug ---- innere hat keine Wirkung
 			raum = new Leseraum(2);
 		}
 		verwaltung = new AngestelltenVerwaltung();
 		register = new Kundenregister();
 		bestandsverwaltung = new BestandsVerwaltung(register);
 		regale = new HashSet<>();
+		personenInBib = new LinkedList<>();
 		int i = 1;
 		while (i < anzahlRegale) {
 			regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT, Integer.toString(i)));
@@ -55,6 +55,9 @@ public class Bibliothek {
 		}
 	}
 
+	public Person[] getPersonenInBib() {
+		return personenInBib.toArray(new Person[1]);
+	}
 
 	public List<AngestelltenComputer> getAngestellenComputer() {
 		return angestelltenComputer;
@@ -88,9 +91,33 @@ public class Bibliothek {
 		return register;
 	}
 
-	OeffnungsZeiten getOefffnungsZeiten() {
-		return new OeffnungsZeiten(oeffnung,schliessung);
+	public void betreten(Person person, LocalTime zeit) {
+		if (zeit == null)
+			throw new IllegalArgumentException();
+		if (person == null)
+			return;
+		if (zeit.isBefore(oeffnung) || zeit.isAfter(schliessung)) // Todo Bug Zeit vertauscht
+			System.out.printf("%s betritt um %s die %s.%n", person.getVollerName(), zeit, getName());
+		personenInBib.add(person); // Todo Bug Klammer fehlt
+
 	}
+
+	public void verlassen(Person person, LocalTime zeit) {
+		System.out.printf("%s verlässt um %s die %s.%n", person.getVollerName(), zeit, getName());
+		personenInBib.remove(person);
+	}
+
+	public void schliessen() {
+		for (Person p : personenInBib) {
+			personenInBib.remove(p);
+			System.out.printf("%s verlässt um %s die %s.%n", p.getVollerName(), LocalTime.now(), getName());
+		}
+	}
+
+	OeffnungsZeiten getOefffnungsZeiten() {
+		return new OeffnungsZeiten(oeffnung, schliessung);
+	}
+
 	static class OeffnungsZeiten {
 
 		private final LocalTime start;
@@ -101,6 +128,9 @@ public class Bibliothek {
 			this.ende = ende;
 		}
 
+		public boolean isInOeffnungszeit(LocalTime zeit) {
+			return getEnde().isBefore(zeit) && getStart().isAfter(zeit);
+		}
 
 		public LocalTime getEnde() {
 			return ende;
@@ -110,9 +140,26 @@ public class Bibliothek {
 			return start;
 		}
 
-		public Duration getOeffnungsDauer(){
-			return Duration.between(start,ende);
+		public Duration getOeffnungsDauer() {
+			return Duration.between(start, ende);
 		}
 
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof OeffnungsZeiten)) return false;
+
+			OeffnungsZeiten that = (OeffnungsZeiten) o;
+
+			if (!start.equals(that.start)) return false;
+			return ende.equals(that.ende);
+		}
+
+		@Override
+		public int hashCode() {
+			int result = start.hashCode();
+			result = 31 * result + ende.hashCode();
+			return result;
+		}
 	}
 }

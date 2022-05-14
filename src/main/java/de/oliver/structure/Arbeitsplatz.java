@@ -13,11 +13,6 @@ public abstract class Arbeitsplatz<T extends Person> implements Verschmutzbar {
 	protected T nutzer;
 	protected double verschmutzung;
 
-	protected final void checkState() throws IllegalStateException {
-		if (!isBesetzt()) {
-			throw new IllegalStateException("Der Arbeitsplatz ist nicht besetzt");
-		}
-	}
 
 	/**
 	 * Gibt Auskunft, ob der Platz besetzt ist oder nicht.

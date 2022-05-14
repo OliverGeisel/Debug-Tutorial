@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Kundenregister {
-	// Todo Anzahl Bugs: |
+	//todo Anzahl Bugs: |
 
 	private final Map<Integer, BesucherStatus> alleBesucher;
 
@@ -86,7 +86,7 @@ public class Kundenregister {
 	}
 
 	private class BesucherStatus {
-		private List<Buch> ausgelieheneBuecher; // Todo Nicht intiialisiert
+		private List<Buch> ausgelieheneBuecher; // Todo Bug Nicht intiialisiert
 		private Double strafe = 0.0;
 
 		private BesucherStatus() {
