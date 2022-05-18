@@ -15,6 +15,7 @@ public class WerteManipulation {
 			level = 5;
 		}
 		// Breakpoint hier darunter setzen!
+		// Todo wechsel auf Java 8
 		switch (level) {
 			case 1 -> level1();
 			case 2 -> level2();
@@ -47,11 +48,11 @@ public class WerteManipulation {
 	}
 
 	public static void level3() {
-
+		// Todo
 	}
 
 	public static void level4() {
-
+		// Todo
 	}
 
 	private static void levelFehlschlag() {

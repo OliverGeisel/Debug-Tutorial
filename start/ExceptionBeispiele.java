@@ -19,7 +19,7 @@ public class ExceptionBeispiele {
 	}
 
 	public static Integer tiefeException() {
-		Optional<String> meinString = Optional.of(null);
+		Optional<String> meinString = Optional.ofNullable(null);
 		meinString.get();
 		return -1;
 	}
@@ -30,14 +30,13 @@ public class ExceptionBeispiele {
 			aufstehen(tom);
 			arbeiten(tom);
 			freizeit(tom);
-		} catch (NullPointerException npe) {
+		} catch (NullPointerException | NoSuchElementException npe) {
 			throw new IllegalArgumentException(npe);
 		}
 	}
 
 	private static void aufstehen(Person person) {
 		System.out.printf("Guten Morgen %s! Es ist Zeit fürs Frühstück.🥞🥓\n", person.getVollerName());
-
 	}
 
 	private static void arbeiten(Person person) {
@@ -53,6 +52,10 @@ public class ExceptionBeispiele {
 	}
 
 	public static void main(String[] args) {
+		if (args.length < 1) {
+			System.out.println("Bitte gib eine Zahl von 0 bis 3 an!");
+			System.exit(1);
+		}
 		switch (args[0]) {
 			case "0":
 				NullPointerBeispiel();

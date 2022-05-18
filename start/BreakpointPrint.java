@@ -1,6 +1,4 @@
-
 public class BreakpointPrint {
-
 
 	public static int summeVonBis(int a, int b) {
 		if (a > b) {
@@ -14,7 +12,7 @@ public class BreakpointPrint {
 			summe += run;
 			System.out.println("Summe ist: " + summe);
 		}
-		System.out.println("Summe am Ende der Methode: "+ summe);
+		System.out.println("Summe am Ende der Methode: " + summe);
 		return summe;
 	}
 

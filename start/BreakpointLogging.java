@@ -3,7 +3,8 @@ import java.util.logging.Logger;
 public class BreakpointLogging {
 
 
-	private static Logger log= Logger.getLogger("Debug-Logger");
+	private static Logger log = Logger.getLogger("Debug-Logger");
+
 	public static int summeVonBis(int a, int b) {
 		if (a > b) {
 			int temp = a;
@@ -16,7 +17,7 @@ public class BreakpointLogging {
 			summe += run;
 			log.info("Summe ist: " + summe);
 		}
-		log.info("Summe am Ende der Methode: "+ summe);
+		log.info("Summe am Ende der Methode: " + summe);
 		return summe;
 	}
 

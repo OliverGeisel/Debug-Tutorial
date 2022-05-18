@@ -9,7 +9,7 @@ public class BrekpointBedingung {
 	public static void piNaehern() {
 		int i;
 		for (i = 2; i <= 100; i++) {
-			if (i != 97) { // Setze bedingten Breakpoint, der das letzte berechnete Ergebnis zeigt.
+			if (i != 97) { // Setze hier bedingten Breakpoint, der das letzte berechnete Ergebnis vor boeseAktion() zeigt.
 				guteAktion(i);
 			} else {
 				boeseAktion();
@@ -24,7 +24,7 @@ public class BrekpointBedingung {
 	}
 
 	private static void guteAktion(int factor) {
-		final int wiederholungen = 100_000 * factor;
+		final int wiederholungen = 100_000 * factor; // Eventuell anpassen!
 		double x;
 		double y;
 		int treffer = 0;
