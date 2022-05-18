@@ -1,12 +1,12 @@
 package de.oliver.person.visitor;
 
-import de.oliver.person.Person;
 import de.oliver.core.Buch;
+import de.oliver.person.Person;
 import de.oliver.structure.Terminal;
 
 public abstract class Besucher implements Person {
 
-	private String vorname,nachname;
+	private String vorname, nachname;
 
 	@Override
 	public String getVorname() {

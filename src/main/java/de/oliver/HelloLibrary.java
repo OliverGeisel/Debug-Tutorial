@@ -1,16 +1,16 @@
 package de.oliver;
 
 
+import de.oliver.core.Buch;
+import de.oliver.core.ISBN;
 import de.oliver.person.Geschlecht;
 import de.oliver.person.staff.*;
-import de.oliver.person.visitor.Kundenregister;
-import de.oliver.structure.BestandsVerwaltung;
-import de.oliver.structure.Bibliothek;
-import de.oliver.core.Buch;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Dozent;
+import de.oliver.person.visitor.Kundenregister;
 import de.oliver.person.visitor.Studierender;
-import de.oliver.core.ISBN;
+import de.oliver.structure.BestandsVerwaltung;
+import de.oliver.structure.Bibliothek;
 
 import java.time.LocalTime;
 import java.util.List;

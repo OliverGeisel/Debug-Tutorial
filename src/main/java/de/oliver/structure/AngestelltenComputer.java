@@ -29,7 +29,7 @@ public class AngestelltenComputer extends Arbeitsplatz<Bibliothekar> implements 
 
 	@Override
 	public Collection<Buch> sucheNachAuthor(String author) {
-		return bestand.sucheNachAuthor(author) ;
+		return bestand.sucheNachAuthor(author);
 	}
 
 	@Override

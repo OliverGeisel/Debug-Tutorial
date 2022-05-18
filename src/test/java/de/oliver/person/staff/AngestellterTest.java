@@ -1,6 +1,5 @@
 package de.oliver.person.staff;
 
-import de.oliver.person.staff.Angestellter;
 import de.oliver.person.Geschlecht;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +56,7 @@ class AngestellterTest {
 		} catch (NoSuchMethodException nsme) {
 			fail("Die Methode \"getAlter()\" existiert nicht");
 		}
-		assertTrue(result,"Die Methode \"getAlter()\" sollte nur im package sichtbar sein");
+		assertTrue(result, "Die Methode \"getAlter()\" sollte nur im package sichtbar sein");
 	}
 
 
@@ -83,16 +82,16 @@ class AngestellterTest {
 		} catch (NoSuchMethodException nsme) {
 			fail("Die Methode \"getGeschlecht()\" existiert nicht");
 		}
-		assertTrue(result,"Die Methode \"getGeschlecht()\" sollte nur im package sichtbar sein");
+		assertTrue(result, "Die Methode \"getGeschlecht()\" sollte nur im package sichtbar sein");
 	}
 
 	@Test
 	void getNachnameOkay() {
-		assertEquals("Geisel",angestellter.getNachname(),"Nachname passt nicht!");
+		assertEquals("Geisel", angestellter.getNachname(), "Nachname passt nicht!");
 	}
 
 	@Test
 	void getVollerNameOkay() {
-		assertEquals(angestellter.getVorname()+" "+angestellter.getNachname(), angestellter.getVollerName(), "Der volle Name passt nicht. Erst der Vorname dann der Nachname!");
+		assertEquals(angestellter.getVorname() + " " + angestellter.getNachname(), angestellter.getVollerName(), "Der volle Name passt nicht. Erst der Vorname dann der Nachname!");
 	}
 }
