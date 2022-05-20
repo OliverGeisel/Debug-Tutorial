@@ -1,6 +1,7 @@
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class WerteManipulation {
@@ -61,7 +62,65 @@ public class WerteManipulation {
 	}
 
 	public static void level3() {
-		// Todo
+		// Aufgabe: Verhindere den Trojanischen Krieg.
+		System.out.println("Start Level 3!\nViel Erfolg!");
+		System.out.println("Paris sollte entscheiden welche der drei Göttinnen Athene, Hera und Aphrodite die schönste ist.\n" +
+				"Die Göttinnen beeinflussten Paris indem Sie ihm Geschenke anboten!\n" +
+				"Hera: Ich mache die zum mächtigsten König des größten Königreichs!\n" +
+				"Athene: Ich mache dich zum unbesiegbar und zum größten Helden!\n" +
+				"Aphrodite: Ich gebe dir die Frau, die du über alles liebst!\n" +
+				"Paris entschied sich für die Liebe und stahl die Frau Helena aus Sparta.\n" +
+				"Die löste den Trojanischen Krieg aus.\n\n"
+		);
+		System.out.println("So sagen es die Mythen.\nDoch sehen wir, ob man den Lauf der Geschichte ändern kann!");
+
+		Level3ObjektGott athene = new Level3ObjektGott("Athene", Geschenk.Ruhm);
+		Level3ObjektGott hera = new Level3ObjektGott("Hera", Geschenk.Koenigreich);
+		Level3ObjektGott aphrodite = new Level3ObjektGott("Aphrodite", Geschenk.Liebe);
+		Level3ObjektPerson menelaos = new Level3ObjektPerson("Menelaos", null);
+		Level3ObjektPerson helena = new Level3ObjektPerson("Helena", menelaos);
+		menelaos.setLiebe(helena);
+		Level3ObjektPerson paris = new Level3ObjektPerson("Paris", helena);
+		System.out.println("Paris hütet seine Schafherde. Hermes brachte die drei Göttinnen Hera, Athene und Aphrodite. \nSie wollen wissen, wer die Schönste ist. Paris soll dies entscheiden!\n " +
+				"Paris soll der Schönsten einen goldenen Apfel geben!");
+		paris.angebotAnhoeren(hera);
+		paris.angebotAnhoeren(athene);
+		paris.angebotAnhoeren(aphrodite);
+		System.out.println("Paris begehrte am meisten " + paris.begehren());
+
+		Geschenk entscheidung = paris.entscheiden();
+		göttlicherWille(entscheidung, helena, paris);
+		raubDerHelena(helena, paris);
+		String text = entscheidung == Geschenk.Ruhm ? "großer Held. Er besiegte Achilles und brachte der Welt frieden!" : "ein großer König! Sein Königreich Troja wurde das größte, das die Menschheit je gesehen hat. Alle Länder leben in Frieden miteinander.";
+		System.out.println("Im laufe seines Leben wird Paris ein " + text);
+		levelErfolg(3);
+	}
+
+
+	private static void göttlicherWille(Geschenk geschenk, Level3ObjektPerson helena, Level3ObjektPerson paris) {
+		switch (geschenk) {
+			case Koenigreich:
+				break;
+			case Ruhm:
+				break;
+			case Liebe:
+				helena.setLiebe(paris);
+				break;
+			default:
+				System.out.println("Es geschieht nichts");
+		}
+
+	}
+
+	private static void raubDerHelena(Level3ObjektPerson helena, Level3ObjektPerson paris) {
+		System.out.println("Paris begibt sich nach Sparta und trifft die Frau des Königs von Sparta.");
+		if (helena.begehren().equals(paris.toString()) && paris.begehren().equals(helena.toString())) {
+			System.out.println("Helena verliebt sich auf den ersten Blick in Paris!\n" +
+					"Paris entführt Helena mit nach Troja. Der trojanische Krieg beginnt!");
+			levelFehlschlag();
+		}
+		System.out.println("Helena ignoriert Paris und geht zu ihrem Mann!" +
+				"Paris kehrt nach Troja allein zurück");
 	}
 
 	public static void level4() {
@@ -103,7 +162,6 @@ public class WerteManipulation {
 			pbe.printStackTrace();
 			levelFehlschlag();
 		}
-
 	}
 
 	private static void levelFehlschlag() {
@@ -172,6 +230,75 @@ class Level2Objekt {
 	}
 }
 
+class Level3ObjektPerson {
+	private final String name;
+	private final List<Geschenk> angebote;
+
+	private Level3ObjektPerson liebe;
+
+	public Level3ObjektPerson(String name, Level3ObjektPerson liebe) {
+		this.name = name;
+		angebote = new LinkedList<>();
+		this.liebe = liebe;
+	}
+
+	public void angebotAnhoeren(Level3ObjektGott goettin) {
+		angebote.add(goettin.anbieten());
+	}
+
+	public Geschenk entscheiden() {
+		return angebote.stream().sorted().findFirst().orElse(Geschenk.Nichts);
+	}
+
+	public String begehren() {
+		return liebe.toString();
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	public void setLiebe(Level3ObjektPerson person) {
+		System.out.println(name + " hat sich unsterblich in " + person + "verliebt");
+		liebe = person;
+	}
+}
+
+class Level3ObjektGott {
+	private final String name;
+	private Geschenk geschenk;
+
+	Level3ObjektGott(String name, Geschenk geschenk) {
+		this.name = name;
+		this.geschenk = geschenk;
+	}
+
+	public Geschenk anbieten() {
+		System.out.println(name + ": Ich schenke dir " + geschenk);
+		return geschenk;
+	}
+}
+
+enum Geschenk implements Comparable<Geschenk> {
+
+	Liebe("Liebe", 3),
+	Ruhm("Ruhm", 2),
+	Koenigreich("Koenigreich", 1),
+	Nichts("Nichts", 0);
+
+	private final String bezeichnung;
+
+	private final int wert;
+
+	Geschenk(String bezeichnung, int wert) {
+		this.bezeichnung = bezeichnung;
+		this.wert = wert;
+	}
+
+
+}
+
 class Level4Objekt {
 	final private String name;
 	final private String sein;
@@ -237,7 +364,6 @@ class Level4Objekt {
 				return inhalt1 && inhalt2 && inhalt3 && inhalt4 && inhalt5;
 			}
 		}
-
 	}
 }
 

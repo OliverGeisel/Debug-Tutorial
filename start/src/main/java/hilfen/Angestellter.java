@@ -10,7 +10,7 @@ public abstract class Angestellter implements Person {
 		if (name == null || nachname == null || alter < 18) {
 			throw new IllegalArgumentException("Ungültige Namen bzw. Alter!");
 		}
-		if (name.isBlank() || nachname.isBlank()) {
+		if (name.isEmpty() || nachname.isEmpty()) {
 			throw new IllegalArgumentException("Der Vor-/Name darf nicht leer sein");
 		}
 		this.vorname = name;
