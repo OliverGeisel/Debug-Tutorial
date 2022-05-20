@@ -1,7 +1,7 @@
-import de.oliver.person.Geschlecht;
-import de.oliver.person.Person;
-import de.oliver.person.staff.Angestellter;
-import de.oliver.person.staff.Bibliothekar;
+import hilfen.Angestellter;
+import hilfen.Bibliothekar;
+import hilfen.Geschlecht;
+import hilfen.Person;
 
 import java.util.Optional;
 import java.util.stream.Stream;
