@@ -1,7 +1,7 @@
 import java.time.Duration;
 import java.time.Instant;
 
-public class BrekpointBedingung {
+public class BreakpointBedingung {
 
 	static double pi = 1.0;
 	static boolean aendern = true;
@@ -46,6 +46,6 @@ public class BrekpointBedingung {
 		piNaehern();
 		Instant end = Instant.now();
 		Duration zeit = Duration.between(start, end);
-		System.out.printf("Benötigte Zeit: %d,%9d sec.%n", zeit.getSeconds(), zeit.getNano());
+		System.out.printf("Benötigte Zeit: %d,%09d sec.%n", zeit.getSeconds(), zeit.getNano());
 	}
 }

@@ -3,6 +3,7 @@ import hilfen.Bibliothekar;
 import hilfen.Geschlecht;
 import hilfen.Person;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -30,7 +31,7 @@ public class ExceptionBeispiele {
 			aufstehen(tom);
 			arbeiten(tom);
 			freizeit(tom);
-		} catch (NullPointerException | NoSuchElementException npe) {
+		} catch (NoSuchElementException npe) {
 			throw new IllegalArgumentException(npe);
 		}
 	}
