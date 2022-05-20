@@ -7,7 +7,7 @@ import de.oliver.person.visitor.Kundenregister;
 import java.util.*;
 
 public class BestandsVerwaltung {
-
+	// Todo Bugs rein bauen
 	private final Map<ISBN, List<Regal>> buchRegalMapping;
 	private final List<Buch> alleBuecher = new LinkedList<>();
 	private final Kundenregister kundenregister;

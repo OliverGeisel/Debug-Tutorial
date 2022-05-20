@@ -2,8 +2,7 @@ package de.oliver.core;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ISBNTest {
 
@@ -33,11 +32,21 @@ class ISBNTest {
 	}
 
 	@Test
-	void fromString() {
+	void fromStringOkay() {
 		String isbnString = "978-1-00005-003-1";
 		var isbn = ISBN.fromString(isbnString);
 		assertEquals(new ISBN(978, 1, 5, 3, 1), isbn, "Die ISBN muss mit einer ISBN aus den gleichen Zahlen passen");
 		assertEquals(isbnString, isbn.mitTrennstrich(), "Die Methode mitTrennstrich() muss den gleichen String, wie den, der für die Erzeugung genutzt wurde zurückgeben");
+	}
+	@Test
+	void fromStringException() {
+		String isbnString = "978-1-00005-1";
+		assertThrows(IllegalArgumentException.class,()->ISBN.fromString(isbnString));
+	}
+@Test
+	void fromStringOhneZahl() {
+		String isbnString = "-";
+		assertThrows(IllegalArgumentException.class,()->ISBN.fromString(isbnString));
 	}
 
 	@Test

@@ -3,7 +3,7 @@ import java.util.stream.Stream;
 public class WeiterBeispiele {
 
 	public static void chainStreamWatch() {
-		var test = Stream.of(1, 2, 3, 4, 5, 6, 4, 1, 4, 7);
+		Stream<Integer> test = Stream.of(1, 2, 3, 4, 5, 6, 4, 1, 4, 7);
 		test.mapToInt(it -> it)
 				.distinct()
 				.sorted()

@@ -76,9 +76,9 @@ public record ISBN(int praefix, int gruppe, int verlagnr, int titelnr, int pruef
 	 *
 	 * @param isbn String der eine ISBN-13 ist.
 	 * @return ISBN die zu dem angegeben String passt
-	 * @throws IllegalArgumentException wenn der String eine ungültige ISBN-13 ist.
+	 * @throws IllegalArgumentException, wenn der String keine gültige ISBN-13 ist.
 	 */
-	public static ISBN fromString(String isbn) {
+	public static ISBN fromString(String isbn) throws IllegalArgumentException{
 		var numbers = isbn.split("-");
 		var intNumbers = Arrays.stream(numbers).mapToInt(Integer::parseInt).toArray();
 		if (intNumbers.length < 5) {
