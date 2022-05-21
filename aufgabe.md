@@ -11,7 +11,7 @@ Die Einführung, mit den entsprechenden Java-Dateien, ist in dem Ordner "start" 
 
 
 ## Wie es nicht geht!
-In der Datei Breakpoint.java enthält eine Funktion summeVonBis(a,b). Diese Funktion soll die Summe von a bis b (inklusive beider Zahlen) zurückgeben.
+In der Datei *Breakpoint.java* enthält eine Funktion summeVonBis(a,b). Diese Funktion soll die Summe von a bis b (inklusive beider Zahlen) zurückgeben.
 Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch. Auch die dazugehörigen Tests (test.java.BreakpointTest.java) schlagen fehl.
 ### Was man instinktiv tut.
 Wenn der Fehler jetzt nicht ersichtlich ist, würde ein erster Gedanke sein, die Werte, die sich in der Schleife verändern, auf der Konsole auszugeben.
@@ -28,12 +28,12 @@ Dieser Modus ist deutlich langsamer, als der normale Modus. In IDEs ist dieser M
 speziellen Button (meist ein Käfer-Symbol) startbar.
 Überwiegend ändert sich dabei die Ansicht in der IDE oder ein extra Fenster erscheint.
 
-**Aufgabe:** Finden Sie diesen Button zum Starten des Debug-Modus in ihrer IDE. Hier kann wieder die Datei Breakpoint.java genommen werden.
+**Aufgabe:** Finden Sie diesen Button zum Starten des Debug-Modus in ihrer IDE. Hier kann wieder die Datei *Breakpoint.java* genommen werden.
 
 ### Breakpoints
 Wenn der Debug-Modus gestartet wurde, dann sollte nix besonders passieren. Lediglich in der Konsole stehen zwei extra Zeilen.
-Das liegt daran, dass der Debugger nicht weiß wann er was tun soll. So läuft er einfach ganz normal durch das Programm.\
-Es benötigt also eine Markierung, die dem Debugger sagt: "Hier bitte halten!" Das erledigt ein Breakpoint
+Das liegt daran, dass der Debugger nicht weiß, wann er was tun soll. So läuft er einfach ganz normal durch das Programm.\
+Es wird also eine Markierung benötigt, die dem Debugger sagt: "Hier bitte halten!" Das erledigt ein Breakpoint.
 
 Breakpoints sind Haltepunkte im Code, die der Entwickler selbständig setzt. Sie werden gesetzt, indem man links neben
 Zeile im Programmcode einfach oder doppelt klickt.
@@ -54,26 +54,13 @@ Es gibt aber auch andere Breakpoints, die nur bei einem Lambda-Ausdruck halten.
 Auch die Methode kann einen Breakpoint besitzen. Jedoch verlangsamen Methoden-Breakpoints das System sehr und sollten deswegen nur begrenzt eingesetzt werden. 
 Ein normaler Line-Breakpoint in der ersten Zeile des Rumpfes funktioniert genauso.
 Die letzte Art sind bedingte Breakpoints. Diese können beispielsweise bei einem Schleifendurchlauf erst nach fünfmaligem passieren aktiv werden und eben erst den sechsten Lauf pausieren. 
+**Aufgabe:** In der Datei *BreakpointArten.java* ist eine Methode mit Kommentaren. Diese Kommentare beschreiben die Breakpoint Arten. Setzen Sie diese in die entsprechende Zeile ein. Testen Sie die Breakpoints. 
+Für bedingte-Breakpoints gibt es eine extra Datei. In "BreakpointBedingung.java" ist es das Ziel sich pi zu näheren. Jedoch ist ein Fehler im Programm.
+Um zumindest das letzte Ergebnis vor dem Fehler zu erhalten, soll der Breakpoint nur vor dem Ausführen der bösen Aktion halten. 
+Es könnte auch anders gelöst werden, jedoch soll hier ein bedingter Breakpoint genutzt werden, der nur ein mal hält und sonst ignoriert wird.
 
 
-### Auslesen/Manipulation des Speichers
-
-Wenn ein Breakpoint erreicht wurde, so können alle Objekte und Variablen, die zu dieser Zeit existieren eingesehen
-werden und manipuliert werden.
-Im Normalfall sollte nun ein "Variablen"-Fenster auftauchen. In diesem sind Bezeichnungen wie this, args usw zu finden.
-Das sind die momentanen Objekte, die in dem aktuellen Scope genutzt werden können. 
-Diese Variablen können nach Belieben ausgelesen und auch verändert werden.
-
-**Aufgabe:** Öffnen Sie WerteManipulation.java. Dieser Code darf *nicht* verändert werden. 
-Wählen Sie ein Level durch die Angabe eines zusätzlichen Programmargumentes. Ziel ist es das Level zu absolvieren, indem durch den Debugger die Werte der Variablen geändert werden.
-
-
-
-### Frame stack
-Ein weiters Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen 
-und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode sein.
-
-### Im Code voran gehen
+### Im Code vorangehen
 
 Es gibt viele verschiedene Möglichkeiten im Code voranzukommen. Die gängigsten sind:
 
@@ -82,12 +69,38 @@ Es gibt viele verschiedene Möglichkeiten im Code voranzukommen. Die gängigsten
 - Step out → Gegenteil zu step into. Spring aus der Methode und landet in der Methode die im Stack "darunter" liegt.
 - Continue → führt so lange fort bis der nächste Breakpoint kommt.
 
-Weitere Optionen, die aber nur mache IDEs haben sind:
+Weitere Optionen, die aber nur manche IDEs haben, sind:
 
-- Run to Cursor
-- Drop Frame
+- Run to Cursor → Das Programm läuft bis zum Cursor weiter (oder zum nächsten Breakpoint)
+- Drop Frame → Dies verwirft eine Methode und "resetet" sie. Es startet also die Methode neu. 
 
-Finden Sie diese Möglichkeiten in der IDE ihrer Wahl.
+**Aufgabe:** Finden Sie diese Möglichkeiten in der IDE ihrer Wahl. Die Datei *Breakpoint.java* kann dabei helfen die Funktion dieser Buttons zu verstehen 
+
+
+### Auslesen/Manipulation des Speichers
+
+Wenn ein Breakpoint erreicht wurde, so können alle Objekte und Variablen, die zu dieser Zeit existieren eingesehen
+und manipuliert werden.
+#### Auslesen
+Im Normalfall sollte nun ein "Variablen"-Fenster auftauchen. In diesem sind Bezeichnungen wie this, args usw zu finden.
+Das sind die momentanen Objekte, die in dem aktuellen Scope genutzt werden können. 
+Da Objekte, aus mehreren Teilen bestehen, können auch diese in dem Variablen-Fenster angesehen werden. 
+
+#### Manipulation
+Manchmal ist es sinnvoll die Objekte während des Debugging zu ändern. Damit kann beispielsweise ein ```assert condition;``` geprüft werden.
+Eine andere Möglichkeit wäre es in einem if-Statement die Variablen in der condition zu ändern und damit in den anderen Zweig zu gehen, als eigentlich vorgesehen.
+Leider lassen sich nicht alle Variablen ändern. Variablen/Attribute, die mit ```final``` gekennzeichnet sind, können nicht geändert werden. Auch ein Debugger kann das nicht umgehen. 
+
+**Aufgabe:** Öffnen Sie WerteManipulation.java. Dieser Code darf *nicht* verändert werden. 
+Wählen Sie ein Level durch die Angabe eines zusätzlichen Programmargumentes. Ziel ist es das Level zu absolvieren, indem durch den Debugger die Werte der Variablen geändert werden.
+Ein Level ist geschafft, wenn am Ende "Glückwunsch! Du hast Level X abgeschlossen!" auf der Konsole ausgegeben wird. 
+**Achtung** Level 4 ist sehr schwer und benötigt deswegen etwas an Überlegung.
+
+
+### Frame stack
+Ein weiters Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen 
+und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode sein.
+
 
 
 
