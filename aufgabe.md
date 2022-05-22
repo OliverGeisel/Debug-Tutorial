@@ -7,18 +7,70 @@ title: "Debug-Tutorial"
 Dies ist eine Einführung in das Debugging mit IDEs. Es soll anhand mehrerer kleiner Beispiele die Grundlagen verständlich beigebracht werden.
 Wenn diese Grundlagen abgeschlossen wurden, dann ist in einem großen Beispiel das Erlernte geübt. 
 
-Die Einführung, mit den entsprechenden Java-Dateien, ist in dem Ordner "start" zu finden.
+Die Einführung, mit den entsprechenden Java-Dateien, ist in dem Ordner "start/src/main/java" zu finden.
 
 
 ## Wie es nicht geht!
 In der Datei *Breakpoint.java* enthält eine Funktion summeVonBis(a,b). Diese Funktion soll die Summe von a bis b (inklusive beider Zahlen) zurückgeben.
-Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch. Auch die dazugehörigen Tests (test.java.BreakpointTest.java) schlagen fehl.
+Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch. Auch die dazugehörigen Tests (src/test/java/java.BreakpointTest.java) schlagen fehl.
+Analysiert man jetzt den Code, so findet man ziemlich schnell den Fehler. Doch um den zu verstehen, wozu ein Debugger gebraucht wird, sei jetzt mal angenommen der Fehler wird nicht
+auf den ersten Blick gefunden.
+
 ### Was man instinktiv tut.
 Wenn der Fehler jetzt nicht ersichtlich ist, würde ein erster Gedanke sein, die Werte, die sich in der Schleife verändern, auf der Konsole auszugeben.
 Das wäre beispielsweise ```System.out.println("run ist: " + run);``` 
+*BreakpointPrint.java* zeigt eine Möglichkeit, wie "print" zur Fehlersuche genutzt werden kann.
+In der Konsole fällt auf, dass "run" höchstens 6 ist. Damit fehlt ein Durchlauf und es ist klar, wo der Fehler ist. Es ist im Schleifenkopf. Es handelt sich um einen sogenannten "Off by one"-Fehler.
+Das bedeutet, das große Ganze ist korrekt, nur ist die Berechnung um eins falsch. Eine Lösung wäre demnach entweder die Bedingung in ```i < b+1``` oder ```i <= b``` zu ändern.
 
+#### Probleme
+Diese Lösung ist für kleine Beispiele noch vertretbar. Wenn jedoch Projekte mit tausenden Zeilen Code einen Fehler haben, dann ist diese Lösung sehr suboptimal.
+Da überall print-Statements gesetzt werden müssen, ist das der Code damit überschwemmt und nachdem der Fehler behoben wurde müssen alle print-Statements entfernt werden.\
+Zudem sind alle print-Anweisungen mit extra Informationen zu versehen, damit der Entwickler überhaupt weiß, welche Variable jetzt ausgegeben wurde. 
+
+Ein weiteres Problem ist, dass das Programm durchläuft und nicht angehalten werden kann. Es muss die gesamte Ausgabe durchsucht und verstanden werden, um zu wissen, was an welcher Stelle etwas passiert ist. Es wäre also gut auf Wunsch anzuhalten und dann Schritt für Schritt voranzugehen. 
+Das Könnte mit einer Input-Abfrage programmiert werden, aber auch das muss am Ende wieder entfernt werden. 
+Das nächste Problem ist, dass die Werte nicht verändert werden können. Das klingt erst mal nutzlos, aber es gibt Situationen, in denen man den Wert einer Variable ändern möchte, um ein anderes Verhalten als normal zu erhalten. 
+Durch die vielen Ausgaben ist die Übersicht sehr schwer. Eine Filterung der Ausgaben muss deshalb mit programmiert werden. 
+
+### Etwas besser aber...
+Zumindest zwei Probleme lassen sich mit Loggern lösen. Durch Logger kann die Filterung deutlich einfacher programmiert werden. Auch durch die Nutzung mehrerer Logger bzw. durch die Nutzung der verschiedenen Level ist die zusätzliche Information und Filterung kein Problem mehr.
+Ein Beispiel für das Nutzen eines Loggers ist in der Datei "BreakpointLogging.java" zu finden.
+
+Es bleiben aber die Probleme, dass Code geschrieben und wieder entfernt werden muss und das Programm nicht unterbrechbar ist.
+
+### Ort des Fehlers finden.
+Wenn eine nicht gefangene Exception in Java auftritt, dann wird ein sogenannter Stack Trace ausgegeben. 
+Dieser enthält 4 wichtige Informationen:
+1. Name des Threads in dem die Exception auftrat
+2. Typ der Exception
+3. Beschreibung/ Grund der Exception
+4. Methoden Stack
+
+Der Name des Threads ist bei single threaded-Anwendungen immer der main-Thread (Java). Er ist nur wichtig, wenn die Anwendung mehrere Threads nutzt.\
+Der Typ der Exception ist schon wichtiger. Er soll eine Einordnung geben, wieso der Fehler auftrat. Deswegen sollten auch immer die Typen der Exception gut gewählt und beschreibend sein.\
+Die konkrete Information, warum der Fehler auftrat, soll dann die Beschreibung der Exception geben. In "ExceptionBeispiele.java" gibt es ein Beispiel, das keine Informationen über die Ursache gibt. Deshalb sollte immer gut überlegt werden, welche Exception geworfen wird und welche Information mitgegeben wird.  
+Beispielsweise gibt es in der Datei "ExceptionBeispiele.java", wenn man die Anwendung mit dem Argument 2 startet, einen Stack Trace der eine NoSuchElementException wirft und als Grund "No value Present!" ausgibt.
+Beide Informationen zusammen sagen, dass ein bestimmtes Element gesucht wurde (Exception), es aber nicht gefunden wurde, da in dem genutzten Objekt kein Wert verfügbar war.
+Das lässt darauf schließen irgendwo muss ```null``` einer Variable zugewiesen worden sein. 
+
+Die Information, in welcher Zeile der Fehler geworfen wurde, steht im Methoden Stack. Und zwar steht die Information nicht am Ende des Stackes, sonder ganz oben. Direkt nach dem Grund der Exception.
+In dem zuvor genannten Beispiel ist es die Zeile 143 in der Klasse Optional des JDK. Dort findet man auch die entsprechende Zeile ```throw new NoSuchElementException("No value present!");```.
+Das sagt uns jetzt aber nur wo sie geworfen wurde. Das ist aber nicht die Zeile, die den Fehler verursacht. Deshalb muss eine Zeile weiter unten im Methoden Stack geschaut werden. 
+Dort sieht man, dass in Zeile 24 der ExceptionBeispiele in der Methode "tiefeException" der Aufruf des Optionals war. Da man im Normalfall davon ausgehen kann, dass die Klassen im JDK korrekt sind, muss der Fehler in der Nähe dieser Zeile 24 liegen.\
+Eine weitere Hilfe bietet hier die JavaDoc von Optional.get(). In dieser steht, dass die Exception nur geworfen wird, wenn der Wert innerhalb des Optionals ```null``` ist.
+Nun schaut man sich den Code an und sieht, dass ein paar Zeilen darüber ```Optional.ofNullable(null)``` aufgerufen wird. Damit ist der Fehler gefunden.
+
+Das letzte Beispiel der "ExceptionBeispiele.java" ist etwas schwerer. Hier wird eine Exception geworfen, die durch eine Exception verursacht wurde. Den Fehler hier zu finden ist deutlich schwerer und benötigt etwas Bedenkzeit.
+Jedoch lässt sich der Fehler auch finden, wenn die verursachende Exception analysiert wird. Wieder ist es eine NoSuchElementException und wieder ist es das Optional.get(). Es muss also wieder irgendwie mit dem Optional zu tun haben.
+
+**Aufgabe:** Führen Sie die "ExceptionBeispiele.java" aus und probieren Sie in allen Fällen die Ursache zu finden.\
+*Hinweis!* Das Beispiel mit dem Programmargument 1 ist nur ein Demonstrationsbeispiel, wie Exceptions nicht aussehen sollten. 
 
 ## Grundlagen des Debuggen mit einer IDE
+Da die Änderungen direkt am Code nicht ideal sind, um Fehler zu finden, muss eine ander Lösung gefunden werden. 
+Anstatt das Programm normal laufen zu lassen, wäre es doch cleverer das Programm in eine Umgebung zu setzen, in der der Nutzer bestimmt, wann etwas geschieht und alles überwachen zu können.
+Genau das macht ein Debugger.
 
 ### Debug-Modus
 
