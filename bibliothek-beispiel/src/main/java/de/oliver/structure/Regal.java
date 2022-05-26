@@ -44,8 +44,8 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 
 
 	public boolean isVoll() {
-		for (Buch[] regal : inhalt) {
-			if (regal.length < BUECHER_JE_BRETT_DEFAULT) {// Todo Bug ---- Macht keinen sinn
+		for (Buch[] reihe : inhalt) {
+			if (Arrays.stream(reihe).anyMatch(Objects::isNull)) { // Todo Bug Lösung
 				return false;
 			}
 		}
@@ -59,16 +59,16 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 		RegalSchleife:
 		for (Buch[] brett : inhalt) {
 			ReihenSchleife:
-			for (Buch b : brett) {// Todo Bug ---- Hier muss mit der normalen Zählschleife gearbeitet werden
+			for (int i = 0; i < brett.length; i++) {// Todo Bug  Lösung
+				Buch b = brett[i];
 				if (b == null) {
-					b = buch;
-					break; //Todo Bug hier fehlt label sprung
+					brett[i] = buch;
+					break RegalSchleife; //Todo Bug Lösung
 				}
 			}
 		}
 		// Simuliert verschmutung
 		verschmutzen();
-		buch.verfuegbarMachen();
 		return buch;
 	}
 

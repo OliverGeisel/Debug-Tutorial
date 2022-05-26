@@ -22,6 +22,7 @@ public abstract class Angestellter implements Person {
 		this.nachname = nachname;
 	}
 
+	@Override
 	public int getAlter() {
 		return alter;
 	}

@@ -65,8 +65,8 @@ public class BestandsVerwaltung {
 	 * @return Regal in dem das Buch ist.
 	 * @throws NoSuchElementException wenn das Buch in keinem Regal ist.
 	 */
-	public String getRegalCode(Buch buch) {
-		return buchRegalMapping.get(buch.getIsbn()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow().getCode();
+	public String getRegalCode(Buch buch) throws NoSuchElementException {
+		return buchRegalMapping.getOrDefault(buch.getIsbn(), List.of()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow().getCode();
 	}
 
 
@@ -109,6 +109,7 @@ public class BestandsVerwaltung {
 			buchRegalMapping.put(buch.getIsbn(), regale);
 		}
 		regale.add(regal);
+		regal.hineinStellen(buch);
 	}
 
 	public void neuesBuchHinzufuegen(Buch buch) {
@@ -136,7 +137,9 @@ public class BestandsVerwaltung {
 	 * @throws IllegalStateException, wenn das Buch noch nicht registriert ist.
 	 */
 	Regal inEinRegalStellen(Buch buch) throws VerwaltungsException, IllegalStateException {
-		// Todo Bug - kein Check ob bereits in Bestand.
+		// Todo Bug Lösung
+		if (!buch.isAusgeliehen() && !alleBuecher.contains(buch))
+			throw new IllegalStateException();
 		Regal verweis = null;
 		for (Regal regal : regale) {
 			if (!regal.isVoll()) {
@@ -196,7 +199,6 @@ public class BestandsVerwaltung {
 		if (back == null) {
 			throw new NoSuchElementException("Es gab leider kein Regal, das das Buch enthält.");
 		}
-		ausRegalNehmen(buch, back);
 		return back;
 	}
 

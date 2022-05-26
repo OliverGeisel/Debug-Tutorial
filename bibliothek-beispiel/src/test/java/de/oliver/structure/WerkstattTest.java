@@ -27,7 +27,7 @@ class WerkstattTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		when(bestand.insRegalStellen(any())).thenReturn(regal);
+		when(bestand.inEinRegalStellen(any())).thenReturn(regal);
 
 		werkstatt = new Werkstatt(bestand);
 		restaurator = new Restaurator("John", "Auerbach", Geschlecht.DIVERS, 45);
@@ -173,7 +173,7 @@ class WerkstattTest {
 		werkstatt.zurReparaturHinzufuegen(b);
 		werkstatt.reparieren();
 		werkstatt.alleRepariertenZurueckstellen();
-		verify(bestand).insRegalStellen(b);
+		verify(bestand).inEinRegalStellen(b);
 
 	}
 

@@ -12,18 +12,25 @@ public class Leseraum implements Verschmutzbar {
 	private boolean besetzt;
 	private double verschmutzung;
 
+	private int imRaum;
+
 	public Leseraum(int leserSitze) {
+		if (leserSitze < 1) {
+			throw new IllegalArgumentException("Es muss mindestens eine Person in den Raum passen");
+		}
 		leser = new Besucher[leserSitze];
 	}
 
+
 	public Besucher[] betreten(Besucher... besucher) {
 		// todo Bug fehlender Schutz vor überfüllung
-		// todo Bug da es immer überschreibt.
 		int i = 0;
+		int offset = imRaum;
 		List<Besucher> back = new LinkedList<>();
-		for (Besucher b : besucher) {
-			leser[i] = b;
+		for (Besucher b : besucher) {    // todo Bug Lösung
+			leser[offset + i] = b;
 			back.add(b);
+			imRaum++;
 			i++;
 		}
 		besetzt = true;
@@ -40,6 +47,16 @@ public class Leseraum implements Verschmutzbar {
 			back.add(leser[i]);
 			leser[i] = null;
 			verschmutzen();
+		}
+		return back;
+	}
+
+	public List<Besucher> getPersonenImRaum() {
+		List<Besucher> back = new LinkedList<>();
+		for (int i = 0; i < leser.length; i++) {
+			if (leser[i] != null) {
+				back.add(leser[i]);
+			}
 		}
 		return back;
 	}

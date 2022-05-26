@@ -35,7 +35,7 @@ public class Werkstatt extends Arbeitsplatz<Restaurator> {
 		if (isDreckig()) {
 			throw new ZuSchmutzigException("Die Werkstatt ist zu schmutzig um Bücher zu reparieren!");
 		}
-		Buch buch = beschaedigteBuecher.get(0); // Todo Bug --- fehlende Kontrolle bzw. remove muss genommen werden
+		Buch buch = beschaedigteBuecher.remove(0); // Todo Bug Lösung
 		buch.reparieren();
 		verschmutzen();
 		reparierteBuecher.add(buch);

@@ -30,8 +30,8 @@ public class Bibliothek {
 		raeume = new Leseraum[anzahlRaeume];
 		this.oeffnung = oeffnung;
 		this.schliessung = schliessung;
-		for (Leseraum raum : raeume) { // Todo Bug ---- innere hat keine Wirkung
-			raum = new Leseraum(2);
+		for (int i = 0; i < raeume.length; i++) { // Todo Bug Lösung
+			raeume[i] = new Leseraum(2);
 		}
 		verwaltung = new AngestelltenVerwaltung();
 		register = new Kundenregister();
@@ -41,10 +41,9 @@ public class Bibliothek {
 			regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT, Integer.toString(i)));
 			i++;
 		}
-		bestandsverwaltung = new BestandsVerwaltung(register,regale);
+		bestandsverwaltung = new BestandsVerwaltung(register, regale);
 		werkstatt = bestandsverwaltung.getWerkstatt();
 		personenInBib = new LinkedList<>();
-
 
 
 		angestelltenComputer = new ArrayList<>();

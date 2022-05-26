@@ -3,6 +3,10 @@ package de.oliver.core;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuchTest {
@@ -28,8 +32,19 @@ class BuchTest {
 	}
 
 	@Test
-	void verfuegbarMachen() {
-		fail();
+	void verfuegbarMachenErfolgreich() {
+		ausleihenErfolgreich();
+		assertDoesNotThrow(() -> buch.verfuegbarMachen(), "Das Buch muss wieder ausleihbar sein!");
+	}
+
+	@Test
+	void verfuegbarMachenFehlschlagWennNichtAusgeliehen() {
+		assertThrows(IllegalStateException.class, () -> buch.verfuegbarMachen(), "Das Buch darf nicht erneut verfügbar gemacht werden.");
+	}
+
+	@Test
+	void getBeschaedigungAmAnfang() {
+		assertEquals(0, buch.getBeschaedigung(), "Beschädigung muss am Anfang 0 sein");
 	}
 
 	@Test
@@ -62,40 +77,53 @@ class BuchTest {
 
 	@Test
 	void isDreckigTrueNachVerschmutzung() {
-
+		buch.verschmutzen();
+		assertTimeout(Duration.of(1, ChronoUnit.SECONDS), () -> {
+			while (!buch.isDreckig()) {
+				buch.verschmutzen();
+			}
+		}, "Die Verschmutzung muss sich ändern!");
 	}
 
 	@Test
 	void saeubernWennDreckig() {
-		assertTrue(buch.isDreckig());
+		assertFalse(buch.isDreckig(), "Buch darf nicht dreckig sein!");
+		isDreckigTrueNachVerschmutzung();
+		buch.saeubern();
+		assertFalse(buch.isDreckig(), "Nach der Säuberung darf das Buch nicht mehr dreckig sein!");
+	}
+
+
+	@Test
+	void getAusleihdatumNachErstellung() {
+		assertNull(buch.getAusleihdatum(), "Es darf kein Ausleihdatum geben!");
 	}
 
 	@Test
-	void verschmutzen() {
+	void getAusleihdatumNachAusgeliehen() {
+		buch.ausleihen();
+		assertEquals(LocalDate.now(), buch.getAusleihdatum(), "Das Ausleihdatum muss heute sein!");
 	}
 
 	@Test
-	void getBeschaedigung() {
-	}
-
-	@Test
-	void getAusleihdatum() {
-	}
-
-	@Test
-	void isAusgeliehenFalse() {
-
+	void getAusleihdatumNachRueckgabe() {
+		buch.ausleihen();
+		buch.verfuegbarMachen();
+		assertNull(buch.getAusleihdatum(), "Es darf kein Ausleihdatum geben, nachdem das Buch zurück gegeben wurde!");
 	}
 
 	@Test
 	void compareToKleiner() {
+		assertTrue(buch.compareTo(new Buch("Anderes Buch", ISBN.fromString("978-1-123-123-3"))) < 0, "Das Buch muss kleiner sein als das andere!");
 	}
 
 	@Test
 	void compareToGleich() {
+		assertTrue(buch.compareTo(new Buch("Anderes Buch", ISBN.fromString("978-1-123-123-2"))) == 0, "Das Buch muss gleich sein!");
 	}
 
 	@Test
-	void compareToGrößer() {
+	void compareToGroesser() {
+		assertTrue(buch.compareTo(new Buch("Anderes Buch", ISBN.NullISBN)) > 0, "Das Buch muss größer sein als das andere");
 	}
 }

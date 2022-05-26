@@ -37,8 +37,11 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	/**
 	 * Setzt den Status auf ausgeliehen. Kann nicht ausgeliehen werden, wenn es nicht verfügbar ist.
 	 */
-	public void ausleihen() {
-		// Todo Bug check felt.
+	public void ausleihen() throws IllegalStateException {
+		// Todo Bug Lösung
+		if(isAusgeliehen()){
+			throw new IllegalStateException("Ein Buch kann nicht erneut ausgeliehen werden!");
+		}
 		ausgeliehen = true;
 		ausleihdatum = LocalDate.now();
 	}
@@ -46,8 +49,11 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	/**
 	 * Erlaubt das Ausleihen des Buches.
 	 */
-	public void verfuegbarMachen() {
-		// Todo  Bug check fehlt .
+	public void verfuegbarMachen() throws IllegalStateException{
+		// Todo  Bug Lösung
+		if(!isAusgeliehen()){
+			throw new IllegalStateException("Ein Buch kann nicht verfügbar werden, wenn es nicht ausgeliehen ist!");
+		}
 		ausgeliehen = false;
 		ausleihdatum = null;
 	}
@@ -189,7 +195,7 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 
 	@Override
 	public int compareTo(Buch o) {
-		return this.isbn.compareTo(o.isbn);
+		return isbn.compareTo(o.isbn);
 	}
 
 

@@ -4,13 +4,10 @@ import de.oliver.core.Buch;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Kundenregister {
-	//todo Anzahl Bugs: |||
+	//todo Anzahl Bugs: ||
 
 	private final Map<Integer, BesucherStatus> alleBesucher;
 
@@ -43,7 +40,7 @@ public class Kundenregister {
 		if (element == null) {
 			return false;
 		}
-		boolean back = element.entferneBuchAusAusgelieheneBuecher(buch); // Todo Bug Typ passt nicht
+		boolean back = element.entferneBuchAusAusgelieheneBuecher(buch);
 		if (element.getBesucherTyp() != BesucherTyp.Dozent) {
 			erhoeheStrafeIntern(id, berechneKosten(buch));
 		}
@@ -92,7 +89,7 @@ public class Kundenregister {
 		long restTage = ueberzogeneTage - ersteTage;
 		// Für die Tage 1-7 wird jeden Tag 1€ berechnet.
 		kosten += ersteTage * 1.0;
-		long wochen = (restTage) / 7; // Todo Bug - Es fehlt +6 um immer ab wochenbeginn zu zählen
+		long wochen = (restTage+6) / 7; // Todo Bug Lösung
 		// Ab dem 8. Tag wird jede Woche 5 € verlangt.
 		kosten += 5 * Math.min(5, wochen);
 		wochen -= Math.min(5, wochen);
@@ -131,7 +128,7 @@ public class Kundenregister {
 	 * Speichert den Staus des Kunden in der Bibliothek.
 	 */
 	private static final class BesucherStatus {
-		private List<Buch> ausgelieheneBuecher; // Todo Bug Nicht intiialisiert
+		private List<Buch> ausgelieheneBuecher =new LinkedList<>(); // Todo Bug Lösung
 		private Double strafe = 0.0;
 		private final BesucherTyp besucherTyp;
 
