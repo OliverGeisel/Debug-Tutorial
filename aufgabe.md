@@ -12,7 +12,7 @@ Die Einführung, mit den entsprechenden Java-Dateien, ist in dem Ordner "start/s
 
 ## Wie es nicht geht!
 In der Datei *Breakpoint.java* enthält eine Funktion summeVonBis(a,b). Diese Funktion soll die Summe von a bis b (inklusive beider Zahlen) zurückgeben.
-Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch. Auch die dazugehörigen Tests (src/test/java/java.BreakpointTest.java) schlagen fehl.
+Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch. Auch die dazugehörigen Tests (src/test/java/BreakpointTest.java) schlagen fehl.
 Analysiert man jetzt den Code, so findet man ziemlich schnell den Fehler. Doch um den zu verstehen, wozu ein Debugger gebraucht wird, sei jetzt mal angenommen der Fehler wird nicht
 auf den ersten Blick gefunden.
 
@@ -207,8 +207,8 @@ können am Terminal nach Büchern suchen. Sie können auch neue Besucher in der 
 Bücher können immer 28 Tage ausgeliehen werden. Danach fallen Mahngebühren an.
 Die Kosten der Rückgabe berechnen sich wie folgt. 
 1. Für die Tage 1-7 wird jeden Tag 1€ berechnet.
-2. Ab dem 8. Tag wird jede Woche 5 € verlangt.
-3. Ab 43 Tagen wird 2€ die Woche verlangt.
+2. Ab dem 8. Tag wird jede angefangene Woche 5 € verlangt.
+3. Ab 43 Tagen wird 2€ pro angefangener Woche verlangt.
 4. Die Strafe darf nie mehr als 100€ betragen
 5. Dozenten können das Buch so lange sie wollen ausleihen. Sie zahlen keine Gebühren.
 
