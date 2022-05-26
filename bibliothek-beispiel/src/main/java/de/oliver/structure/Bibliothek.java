@@ -22,7 +22,6 @@ public class Bibliothek {
 	private final Werkstatt werkstatt;
 	private final List<BesucherComputer> besucherComputer;
 	private final List<AngestelltenComputer> angestelltenComputer;
-	private final Set<Regal> regale;
 	private LocalTime oeffnung, schliessung;
 
 
@@ -36,15 +35,18 @@ public class Bibliothek {
 		}
 		verwaltung = new AngestelltenVerwaltung();
 		register = new Kundenregister();
-		bestandsverwaltung = new BestandsVerwaltung(register);
-		regale = new HashSet<>();
-		personenInBib = new LinkedList<>();
+		Set<Regal> regale = new HashSet<>();
 		int i = 1;
 		while (i < anzahlRegale) {
 			regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT, Integer.toString(i)));
 			i++;
 		}
-		werkstatt = new Werkstatt(bestandsverwaltung);
+		bestandsverwaltung = new BestandsVerwaltung(register,regale);
+		werkstatt = bestandsverwaltung.getWerkstatt();
+		personenInBib = new LinkedList<>();
+
+
+
 		angestelltenComputer = new ArrayList<>();
 		for (i = 0; i < 2; i++) {
 			angestelltenComputer.add(new AngestelltenComputer(register, this.bestandsverwaltung, raeume));

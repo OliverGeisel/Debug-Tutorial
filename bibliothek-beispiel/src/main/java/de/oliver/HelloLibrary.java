@@ -87,7 +87,7 @@ public class HelloLibrary {
 		BestandsVerwaltung bestand = bib.getBestandsverwaltung();
 		for (int i = 0; i < 100; i++) {
 			var isbn = new ISBN(978, i, 34, 234, 2);
-			bestand.einfuegen(new Buch(Integer.toString(i), isbn));
+			bestand.neuesBuchHinzufuegen(new Buch(Integer.toString(i), isbn));
 		}
 	}
 

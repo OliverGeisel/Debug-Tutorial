@@ -50,7 +50,7 @@ public class Werkstatt extends Arbeitsplatz<Restaurator> {
 
 	private boolean zurueckstellen(Buch b) {
 		reparierteBuecher.remove(b);
-		bestand.insRegalStellen(b);
+		bestand.inEinRegalStellen(b);
 		return true;
 	}
 
