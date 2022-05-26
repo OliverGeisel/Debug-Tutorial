@@ -30,8 +30,10 @@ public abstract class Besucher implements Person {
 
 	private final int ID;
 
-	public Besucher(int id) {
+	public Besucher(int id,String vorname, String nachname) {
 		ID = id;
+		this.nachname=nachname;
+		this.vorname=vorname;
 	}
 
 	/**

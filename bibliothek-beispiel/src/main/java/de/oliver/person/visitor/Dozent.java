@@ -5,13 +5,13 @@ import de.oliver.structure.Terminal;
 
 public class Dozent extends Besucher {
 
-	public Dozent(int id) {
-		super(id);
+	public Dozent(int id, String vorname, String nachname) {
+		super(id, vorname,nachname);
 	}
 
 	@Override
 	public boolean ausleihen(Buch buch, Terminal terminal) {
-		return terminal.ausleihen(buch);
+		return terminal.ausleihen(buch,this);
 	}
 
 	@Override

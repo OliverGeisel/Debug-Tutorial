@@ -19,7 +19,7 @@ public interface Terminal extends Verschmutzbar {
 
 	Buch sucheNachTreffer(String text);
 
-	boolean ausleihen(Buch buch);
+	boolean ausleihen(Buch buch, Besucher besucher);
 
 	boolean zurueckgeben(Buch buch);
 

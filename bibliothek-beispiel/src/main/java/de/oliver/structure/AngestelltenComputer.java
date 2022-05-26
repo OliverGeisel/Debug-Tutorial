@@ -43,8 +43,8 @@ public class AngestelltenComputer extends Arbeitsplatz<Bibliothekar> implements 
 	}
 
 	@Override
-	public boolean ausleihen(Buch buch) {
-		return bestand.ausleihen(buch);
+	public boolean ausleihen(Buch buch, Besucher besucher) {
+		return bestand.ausleihen(buch,besucher);
 	}
 
 	@Override

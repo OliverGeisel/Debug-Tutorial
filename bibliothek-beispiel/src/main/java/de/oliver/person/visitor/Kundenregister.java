@@ -4,12 +4,13 @@ import de.oliver.core.Buch;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Kundenregister {
-	//todo Anzahl Bugs: |
+	//todo Anzahl Bugs: |||
 
 	private final Map<Integer, BesucherStatus> alleBesucher;
 
@@ -26,16 +27,27 @@ public class Kundenregister {
 		return true;
 	}
 
+	/**
+	 * Gibt das Buch der Bibliothek zurück.
+	 *
+	 * @param buch
+	 * @param besucher
+	 * @return
+	 */
 	public boolean gibBuchZurueck(Buch buch, Besucher besucher) {
-		var element = alleBesucher.get(besucher);
+		var element = alleBesucher.get(besucher.getID());
 		if (element == null) {
 			return false;
 		}
-		boolean back = alleBesucher.get(besucher).entferneBuchAusAusgeliehen(buch);
+		boolean back = alleBesucher.get(besucher).entferneBuchAusAusgelieheneBuecher(buch); // Todo Bug Typ passt nicht
 		if (!(besucher instanceof Dozent)) {
 			erhoeheStrafe(besucher, berechneKosten(buch));
 		}
 		return back;
+	}
+
+	public boolean leiheBuchAus(Buch buch, Besucher besucher){
+		return alleBesucher.get(besucher.getID()).registriereAusgeliehenesBuch(buch);
 	}
 
 	public Double getStrafe(Besucher besucher) {
@@ -55,10 +67,10 @@ public class Kundenregister {
 
 		double kosten = 0.0;
 		long ersteTage = Math.min(7, ueberzogeneTage);
-		long restage = ueberzogeneTage - ersteTage;
-		kosten += ersteTage * 1.0;
+		long restTage = ueberzogeneTage - ersteTage;
 		// Für die Tage 1-7 wird jeden Tag 1€ berechnet.
-		long wochen = (restage) / 7; // Fehler - Es fehlt +6 um immer ab wochenbeginn zu zählen
+		kosten += ersteTage * 1.0;
+		long wochen = (restTage) / 7; // Todo Bug - Es fehlt +6 um immer ab wochenbeginn zu zählen
 		// Ab dem 8. Tag wird jede Woche 5 € verlangt.
 		kosten += 5 * Math.min(6, wochen);
 		wochen -= Math.min(6, wochen);
@@ -80,12 +92,19 @@ public class Kundenregister {
 	 * @param kosten Betrag, um den die Strafe erhöht wird.
 	 * @return neuer Betrag der Strafe.
 	 */
-	public Double erhoeheStrafe(Besucher kunde, Double kosten) {
+	Double erhoeheStrafe(Besucher kunde, Double kosten) {
 		var status = alleBesucher.get(kunde.getID());
 		return status.erhoeheStrafe(kosten);
 	}
 
-	private class BesucherStatus {
+	public List<Buch> getAusgelieheneBuecher(Besucher besucher){
+		return alleBesucher.get(besucher.getID()).getAusgelieheneBuecher();
+	}
+
+	/**
+	 * Speichert den Staus des Kunden in der Bibliothek.
+	 */
+	private static final class BesucherStatus {
 		private List<Buch> ausgelieheneBuecher; // Todo Bug Nicht intiialisiert
 		private Double strafe = 0.0;
 
@@ -99,8 +118,12 @@ public class Kundenregister {
 			this.strafe = 0.0;
 		}
 
+		boolean registriereAusgeliehenesBuch(Buch buch){
+			return ausgelieheneBuecher.add(buch);
+		}
+
 		public List<Buch> getAusgelieheneBuecher() {
-			return ausgelieheneBuecher;
+			return Collections.unmodifiableList(ausgelieheneBuecher);
 		}
 
 		/**
@@ -118,7 +141,7 @@ public class Kundenregister {
 			return strafe;
 		}
 
-		public boolean entferneBuchAusAusgeliehen(Buch buch) {
+		public boolean entferneBuchAusAusgelieheneBuecher(Buch buch) {
 			return ausgelieheneBuecher.remove(buch);
 		}
 	}

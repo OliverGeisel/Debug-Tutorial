@@ -54,10 +54,10 @@ public class HelloLibrary {
 		reinigung2 = new Reinigungskraft("Andre", "Kellner", Geschlecht.MAENNLICH, 31);
 		restaurator = new Restaurator("Lena", "Büttner", Geschlecht.WEIBLICH, 26);
 
-		stu1 = new Studierender(1);
-		stu2 = new Studierender(2);
-		stu3 = new Studierender(3);
-		dozent = new Dozent(4);
+		stu1 = new Studierender(1,"Timo", "Morgenstern");
+		stu2 = new Studierender(2, "Nina","Richter");
+		stu3 = new Studierender(3,"Sven","Kahlschlag");
+		dozent = new Dozent(4,"Heiko","Werner");
 	}
 
 	private void init() {

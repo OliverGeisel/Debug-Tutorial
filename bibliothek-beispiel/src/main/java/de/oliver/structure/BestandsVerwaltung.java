@@ -2,6 +2,7 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
+import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Kundenregister;
 
 import java.util.*;
@@ -78,10 +79,10 @@ public class BestandsVerwaltung {
 		return null;
 	}
 
-	public boolean ausleihen(Buch buch) {
+	public boolean ausleihen(Buch buch, Besucher besucher) {
 		if (!buch.isAusgeliehen()) {
 			buch.ausleihen();
-			//TODO für kunden markieren.
+			kundenregister.leiheBuchAus(buch,besucher);
 		}
 		return true;
 	}
@@ -89,6 +90,8 @@ public class BestandsVerwaltung {
 	public boolean zurueckgeben(Buch buch) {
 
 		// Todo implement
+		Buch back = null ;
+		back.verfuegbarMachen();
 		return false;
 	}
 

@@ -21,7 +21,7 @@ class LeseraumTest {
 	@Test
 	void ueberfuelleLeseraum() {
 		assertFalse(raum.isBesetzt(), "Raum muss am Anfang leer sein");
-		assertDoesNotThrow(() -> raum.betreten(new Dozent(2), new Studierender(3), new Studierender(1)), "Wenn mehr Personen den Raum betreten, als hinein passen dürfen nur so viel hinein, wie noch hineinpassen!");
+		assertDoesNotThrow(() -> raum.betreten(new Dozent(2,"Dozent","Test"), new Studierender(3,"Studierender","Test1"), new Studierender(1,"Studierender","Test2")), "Wenn mehr Personen den Raum betreten, als hinein passen dürfen nur so viel hinein, wie noch hineinpassen!");
 
 	}
 }

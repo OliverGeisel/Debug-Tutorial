@@ -2,6 +2,7 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
+import de.oliver.person.staff.VerwaltungsException;
 import de.oliver.person.visitor.Besucher;
 
 import java.util.Collection;
@@ -38,11 +39,19 @@ public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal
 		return bestand.sucheNachTreffer(text);
 	}
 
+	@Override
+	public boolean ausleihen(Buch buch, Besucher besucher) throws VerwaltungsException {
+		if(!besucher.equals(getNutzer()))
+			throw new VerwaltungsException("Du kannst kein Buch für jemand anderen ausleihen");
+		ausleihen(buch);
+		return false;
+	}
+
 	public boolean ausleihen(Buch buch) {
 		if (isBesetzt()) {
 			return false;
 		}
-		return bestand.ausleihen(buch);
+		return bestand.ausleihen(buch,getNutzer());
 	}
 
 	public boolean zurueckgeben(Buch buch) {

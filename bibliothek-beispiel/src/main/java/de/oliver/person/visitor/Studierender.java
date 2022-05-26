@@ -4,13 +4,13 @@ import de.oliver.core.Buch;
 import de.oliver.structure.Terminal;
 
 public class Studierender extends Besucher {
-	public Studierender(int id) {
-		super(id);
+	public Studierender(int id, String vorname, String nachname) {
+		super(id,vorname,nachname);
 	}
 
 	@Override
 	public boolean ausleihen(Buch buch, Terminal terminal) {
-		return terminal.ausleihen(buch);
+		return terminal.ausleihen(buch,this);
 	}
 
 	@Override
