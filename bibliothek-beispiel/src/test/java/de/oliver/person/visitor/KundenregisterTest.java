@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class KundenregisterTest {
 
 	private Buch ueberfaelligesBuch;
-	Kundenregister register;
-	Besucher besucher;
+	private Kundenregister register;
+	private Besucher besucher;
 
 	@BeforeEach
 	void setUp() {

@@ -1,9 +1,6 @@
 package de.oliver.person.staff;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class AngestelltenVerwaltung {
 	private final Map<Bereich, Set<Angestellter>> angestellte = new HashMap<>();
@@ -36,6 +33,9 @@ public class AngestelltenVerwaltung {
 		return angestellte.values().stream().noneMatch(it -> it.contains(angestellter));
 	}
 
+	public Collection<Angestellter> getAngestellte(Bereich bereich) {
+		return Collections.unmodifiableSet(angestellte.get(bereich));
+	}
 
 }
 
