@@ -7,11 +7,13 @@ import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Kundenregister;
 import de.oliver.person.visitor.Studierender;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -21,7 +23,6 @@ import static org.mockito.Mockito.when;
 
 class BestandsVerwaltungTest {
 
-	// todo implement
 	private BestandsVerwaltung verwaltung;
 	@Mock
 	private Kundenregister kundenregister;
@@ -88,27 +89,94 @@ class BestandsVerwaltungTest {
 	}
 
 	@Test
-	void sucheNachISBN() {
+	void sucheNachISBNTreffer() {
+		verwaltung.neuesBuchHinzufuegen(buch);
+		Buch zweitesBuch = new Buch("Zweites Buch", ISBN.fromString("978-1-1-1-1"));
+		verwaltung.neuesBuchHinzufuegen(zweitesBuch);
+		assertEquals(2, verwaltung.getAnzahlBuecher(), "Es müssen beide Bücher aufgenommen worden sein!");
+		var result = verwaltung.sucheNachISBN(ISBN.NullISBN);
+		assertEquals(buch, result, "Es muss das Buch mit der Null-ISBN zurückgegeben werden.");
 	}
 
 	@Test
-	void sucheNachAuthor() {
+	void sucheNachISBN_KeinTreffer() {
+		verwaltung.neuesBuchHinzufuegen(buch);
+		assertEquals(1, verwaltung.getAnzahlBuecher(), "Es muss ein Buch aufgenommen worden sein!");
+		var result = verwaltung.sucheNachISBN(ISBN.fromString("978-1-1-1-1"));
+		assertNull(result, "Es muss das Buch mit der ISBN zurückgegeben werden, wenn kein Buch die ISBN besitzt.");
 	}
 
 	@Test
-	void sucheNachTitel() {
+	void sucheNachISBN_KeinTrefferWennLeer() {
+		assertEquals(0, verwaltung.getAnzahlBuecher(), "Es darf kein Buch vorhanden sein!");
+		var result = verwaltung.sucheNachISBN(ISBN.NullISBN);
+		assertNull(result, "Es darf kein Buch mit der Null-ISBN zurückgegeben, wenn kein Buch enthalten ist.");
 	}
 
 	@Test
+	void sucheNachAuthor1TrefferOkay() {
+		buch.setAutor("Robert Test");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		assertEquals(1, verwaltung.getAnzahlBuecher(), "Buch muss hinzugefügt sein!");
+		assertArrayEquals(List.of(buch).toArray(), verwaltung.sucheNachAuthor("Robert Test").toArray(), "Es muss das Buch zurückgeben!");
+	}
+
+	@Test
+	void sucheNachAuthor2TrefferOkay() {
+		buch.setAutor("Robert Test");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		verwaltung.neuesBuchHinzufuegen(new Buch("Hallo Welt", "Robert Test", ISBN.fromString("978-1-2-3-4")));
+		assertEquals(2, verwaltung.getAnzahlBuecher(), "Bücher müssen hinzugefügt sein!");
+		assertEquals(2, verwaltung.sucheNachAuthor("Robert Test").size(), "Es muss das Buch zurückgeben!");
+	}
+
+	@Test
+	void sucheNachAuthor2TrefferGleicheISBN_Okay() {
+		buch.setAutor("Robert Test");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		var buch2 = new Buch("Ein anderes Buch", "Robert Test", ISBN.NullISBN);
+		verwaltung.neuesBuchHinzufuegen(buch2);
+		assertEquals(2, verwaltung.getAnzahlBuecher(), "Buch muss hinzugefügt sein!");
+		var result = verwaltung.sucheNachAuthor("Robert Test");
+		assertTrue(List.of(buch, buch2).containsAll(result), "Es muss das Buch zurückgeben!");
+	}
+
+	@Test
+	void sucheNachAuthor2TrefferGleichesBuch_Okay() {
+		buch.setAutor("Robert Test");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		var buch2 = new Buch(buch.getTitel(), buch.getAutor(), buch.getIsbn());
+		verwaltung.neuesBuchHinzufuegen(buch2);
+		assertEquals(2, verwaltung.getAnzahlBuecher(), "Buch muss hinzugefügt sein!");
+		assertArrayEquals(List.of(buch, buch2).toArray(), verwaltung.sucheNachAuthor("Robert Test").toArray(), "Es muss das Buch zurückgeben!");
+	}
+
+	@Test
+	void sucheNachAuthorKeinTrefferOkay() {
+		buch.setAutor("Robert Test");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		assertEquals(1, verwaltung.getAnzahlBuecher(), "Buch muss hinzugefügt sein!");
+		assertArrayEquals(List.of().toArray(), verwaltung.sucheNachAuthor("Major Tom").toArray(), "Es darf kein Buch zurückgeben werden!");
+	}
+
+
+	@Test
+	@Disabled("Nicht implementiert")
 	void sucheNachTreffer() {
+		// todo freiwillig Implementiert
 	}
 
 	@Test
-	void neuesBuchHinzufuegen() {
+	void neuesBuchHinzufuegenOkay() {
+		assertEquals(0, verwaltung.getAnzahlBuecher(), "Es darf kein Buch am Anfang enthalten sein!");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		assertEquals(1, verwaltung.getAnzahlBuecher(), "Das Buch muss dabei sein.");
 	}
 
 	@Test
-	void testNeuesBuchHinzufuegen() {
+	void neuesBuchHinzufuegenFehler() {
+		neuesBuchHinzufuegenOkay();
+		assertThrows(VerwaltungsException.class, () -> verwaltung.neuesBuchHinzufuegen(buch), "Das Buch darf nicht erneut hinzugefügt werden!");
 	}
 
 	@Test
@@ -147,14 +215,45 @@ class BestandsVerwaltungTest {
 	}
 
 	@Test
-	void ausleihen() {
+	void getAnzahlBuecherDuplicateOkay() {
+		for (int i = 0; i < 3; i++) {
+			verwaltung.neuesBuchHinzufuegen(new Buch("Ein Buch der vielen Kopien", ISBN.NullISBN));
+		}
+		assertEquals(3, verwaltung.getAnzahlBuecher(), "Es müssen alle Bücher hinzugefügt worden sein!");
 	}
 
 	@Test
-	void ausRegalNehmen() {
+	void getAnzahlBuecherKeinBuchOkay() {
+		assertEquals(0, verwaltung.getAnzahlBuecher(), "Es darf kein Buch in der Verwaltung sein!");
 	}
 
 	@Test
-	void testAusRegalNehmen() {
+	void getAnzahlBuecherVerschieneOkay() {
+		for (int i = 0; i < 3; i++) {
+			verwaltung.neuesBuchHinzufuegen(new Buch("Ein Buch der vielen Kopien", ISBN.fromString(String.format("978-1-1-1-%s", i))));
+		}
+		assertEquals(3, verwaltung.getAnzahlBuecher(), "Es müssen alle Bücher hinzugefügt worden sein!");
+	}
+
+	@Test
+	void getAnzahlVerschiedenerBuecherKeinBuchOkay() {
+		assertEquals(0, verwaltung.getAnzahlVerschiedenerBuecher(), "Es darf kein Buch in der Verwaltung sein!");
+	}
+
+	@Test
+	void getAnzahlVerschiedenerBuecherVerschieneOkay() {
+		for (int i = 0; i < 3; i++) {
+			verwaltung.neuesBuchHinzufuegen(new Buch("Ein Buch der vielen Kopien", ISBN.fromString(String.format("978-1-1-1-%s", i))));
+		}
+		assertEquals(3, verwaltung.getAnzahlVerschiedenerBuecher(), "Es müssen alle Bücher als Verschieden gelten!");
+
+	}
+
+	@Test
+	void getAnzahlVerschiedenerBuecherDuplicateOkay() {
+		for (int i = 0; i < 3; i++) {
+			verwaltung.neuesBuchHinzufuegen(new Buch("Ein Buch der vielen Kopien", ISBN.NullISBN));
+		}
+		assertEquals(1, verwaltung.getAnzahlVerschiedenerBuecher(), "Es darf nur ein Buch ausgegeben werden, wenn die ISBN gleich ist!");
 	}
 }
