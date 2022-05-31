@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Kundenregister {
-	//todo Anzahl Bugs: |||
+	//todo Anzahl Bugs: ||
 
 	private final Map<Integer, BesucherStatus> alleBesucher;
 
@@ -43,7 +43,7 @@ public class Kundenregister {
 		if (element == null) {
 			return false;
 		}
-		boolean back = element.entferneBuchAusAusgelieheneBuecher(buch); // Todo Bug Typ passt nicht
+		boolean back = element.entferneBuchAusAusgelieheneBuecher(buch);
 		if (element.getBesucherTyp() != BesucherTyp.Dozent) {
 			erhoeheStrafeIntern(id, berechneKosten(buch));
 		}
@@ -139,7 +139,7 @@ public class Kundenregister {
 			besucherTyp =
 					switch (besucher) {
 						case Dozent d -> BesucherTyp.Dozent;
-						case Studierender s -> BesucherTyp.Studierender;
+						case Studierender ignored -> BesucherTyp.Studierender;
 						default -> BesucherTyp.Normal;
 					};
 		}

@@ -3,6 +3,7 @@ package de.oliver.person.staff;
 import de.oliver.person.Geschlecht;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Modifier;
@@ -45,13 +46,14 @@ class AngestellterTest {
 	}
 
 	@Test
+	@Disabled("Zur Zeit unnötig da nicht mehr package")
 	void getAlterZugriffsrechte() {
 		boolean result = false;
 		try {
 			int modifier = Angestellter.class.getDeclaredMethod("getAlter").getModifiers();
-			String visibility = Modifier.toString(modifier);
+			result = Modifier.isPublic(modifier);
 			// empty string ist package
-			result = visibility.isEmpty();
+			//result = visibility.();
 
 		} catch (NoSuchMethodException nsme) {
 			fail("Die Methode \"getAlter()\" existiert nicht");
@@ -71,6 +73,7 @@ class AngestellterTest {
 	}
 
 	@Test
+	@Disabled("Zur Zeit unnötig da nicht mehr package")
 	void getGeschlechtZugriffsrechte() {
 		boolean result = false;
 		try {

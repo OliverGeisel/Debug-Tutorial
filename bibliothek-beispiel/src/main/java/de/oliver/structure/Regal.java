@@ -68,7 +68,6 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 		}
 		// Simuliert verschmutung
 		verschmutzen();
-		buch.verfuegbarMachen();
 		return buch;
 	}
 

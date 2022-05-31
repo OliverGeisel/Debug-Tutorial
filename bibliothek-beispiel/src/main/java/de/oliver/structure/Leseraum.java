@@ -11,8 +11,12 @@ public class Leseraum implements Verschmutzbar {
 	private final Besucher[] leser;
 	private boolean besetzt;
 	private double verschmutzung;
+	private int imRaum;
 
 	public Leseraum(int leserSitze) {
+		if (leserSitze < 1) {
+			throw new IllegalArgumentException("Es muss mindestens eine Person in den Raum passen");
+		}
 		leser = new Besucher[leserSitze];
 	}
 
@@ -44,6 +48,15 @@ public class Leseraum implements Verschmutzbar {
 		return back;
 	}
 
+	public List<Besucher> getPersonenImRaum() {
+		List<Besucher> back = new LinkedList<>();
+		for (int i = 0; i < leser.length; i++) {
+			if (leser[i] != null) {
+				back.add(leser[i]);
+			}
+		}
+		return back;
+	}
 
 	public boolean isBesetzt() {
 		return besetzt;
