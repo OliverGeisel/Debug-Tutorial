@@ -65,8 +65,8 @@ public class BestandsVerwaltung {
 	 * @return Regal in dem das Buch ist.
 	 * @throws NoSuchElementException wenn das Buch in keinem Regal ist.
 	 */
-	public String getRegalCode(Buch buch) {
-		return buchRegalMapping.get(buch.getIsbn()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow().getCode();
+	public String getRegalCode(Buch buch) throws NoSuchElementException {
+		return buchRegalMapping.getOrDefault(buch.getIsbn(), List.of()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow().getCode();
 	}
 
 
@@ -109,6 +109,7 @@ public class BestandsVerwaltung {
 			buchRegalMapping.put(buch.getIsbn(), regale);
 		}
 		regale.add(regal);
+		regal.hineinStellen(buch);
 	}
 
 	public void neuesBuchHinzufuegen(Buch buch) {
@@ -196,7 +197,6 @@ public class BestandsVerwaltung {
 		if (back == null) {
 			throw new NoSuchElementException("Es gab leider kein Regal, das das Buch enthält.");
 		}
-		ausRegalNehmen(buch, back);
 		return back;
 	}
 
