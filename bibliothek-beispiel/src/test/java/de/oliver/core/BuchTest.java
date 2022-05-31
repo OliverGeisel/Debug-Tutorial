@@ -95,7 +95,6 @@ class BuchTest {
 		assertFalse(buch.isDreckig(), "Nach der Säuberung darf das Buch nicht mehr dreckig sein!");
 	}
 
-
 	@Test
 	void getAusleihdatumNachErstellung() {
 		assertNull(buch.getAusleihdatum(), "Es darf kein Ausleihdatum geben!");
@@ -121,7 +120,7 @@ class BuchTest {
 
 	@Test
 	void compareToGleich() {
-		assertTrue(buch.compareTo(new Buch("Anderes Buch", ISBN.fromString("978-1-123-123-2"))) == 0, "Das Buch muss gleich sein!");
+		assertEquals(0, buch.compareTo(new Buch("Anderes Buch", ISBN.fromString("978-1-123-123-2"))), "Das Buch muss gleich sein!");
 	}
 
 	@Test

@@ -28,26 +28,45 @@ Diese Lösung ist für kleine Beispiele noch vertretbar. Wenn jedoch Projekte mi
 Da überall print-Statements gesetzt werden müssen, ist das der Code damit überschwemmt und nachdem der Fehler behoben wurde müssen alle print-Statements entfernt werden.\
 Zudem sind alle print-Anweisungen mit extra Informationen zu versehen, damit der Entwickler überhaupt weiß, welche Variable jetzt ausgegeben wurde. 
 
-Ein weiteres Problem ist, dass das Programm durchläuft und nicht angehalten werden kann. Es muss die gesamte Ausgabe durchsucht und verstanden werden, um zu wissen, was an welcher Stelle etwas passiert ist. Es wäre also gut auf Wunsch anzuhalten und dann Schritt für Schritt voranzugehen. 
-Das Könnte mit einer Input-Abfrage programmiert werden, aber auch das muss am Ende wieder entfernt werden. 
-Das nächste Problem ist, dass die Werte nicht verändert werden können. Das klingt erst mal nutzlos, aber es gibt Situationen, in denen man den Wert einer Variable ändern möchte, um ein anderes Verhalten als normal zu erhalten. 
-Durch die vielen Ausgaben ist die Übersicht sehr schwer. Eine Filterung der Ausgaben muss deshalb mit programmiert werden. 
+Ein weiteres Problem ist, dass das Programm durchläuft und nicht angehalten werden kann. Es muss die gesamte Ausgabe
+durchsucht und verstanden werden, um zu wissen, was an welcher Stelle etwas passiert ist. Es wäre also gut auf Wunsch
+anzuhalten und dann Schritt für Schritt voranzugehen.
+Das Könnte mit einer Input-Abfrage programmiert werden, aber auch das muss am Ende wieder entfernt werden.
+Das nächste Problem ist, dass die Werte nicht verändert werden können. Das klingt erst mal nutzlos, aber es gibt
+Situationen, in denen man den Wert einer Variable ändern möchte, um ein anderes Verhalten als normal zu erhalten.
+Durch die vielen Ausgaben ist die Übersicht sehr schwer. Eine Filterung der Ausgaben muss deshalb mit programmiert
+werden.
 
 ### Etwas besser aber...
-Zumindest zwei Probleme lassen sich mit Loggern lösen. Durch Logger kann die Filterung deutlich einfacher programmiert werden. Auch durch die Nutzung mehrerer Logger bzw. durch die Nutzung der verschiedenen Level ist die zusätzliche Information und Filterung kein Problem mehr.
+
+Zumindest zwei Probleme lassen sich mit Loggern lösen. Durch Logger kann die Filterung deutlich einfacher programmiert
+werden. Auch durch die Nutzung mehrerer Logger bzw. durch die Nutzung der verschiedenen Level ist die zusätzliche
+Information und Filterung kein Problem mehr.
 Ein Beispiel für das Nutzen eines Loggers ist in der Datei "BreakpointLogging.java" zu finden.
 
-Es bleiben aber die Probleme, dass Code geschrieben und wieder entfernt werden muss und das Programm nicht unterbrechbar ist.
+Es bleiben aber die Probleme, dass Code geschrieben und wieder entfernt werden muss und das Programm nicht unterbrechbar
+ist.
+
+#### Logging ist dennoch wichtig
+
+Logging ist eine Hilfe zum Debuggen. Allgemein sollte Logging während der Entwicklung genutzt werden. So sollte jede
+Exception in einem Log stehen.
+Jedoch hilft Debugging nur die Ursache bzw. den Ort des Fehlers zu finden. Die Wahl des Logging-Levels und der
+mitgelieferten Informationen sollten gut gewählt sein.
+Logging sollte aber eben nicht genutzt werden, um einen Fehler zu finden und dann wieder das Logging zu entfernen.
 
 ### Ort des Fehlers finden.
-Wenn eine nicht gefangene Exception in Java auftritt, dann wird ein sogenannter Stack Trace ausgegeben. 
+
+Wenn eine nicht gefangene Exception in Java auftritt, dann wird ein sogenannter Stack Trace ausgegeben.
 Dieser enthält 4 wichtige Informationen:
+
 1. Name des Threads in dem die Exception auftrat
 2. Typ der Exception
 3. Beschreibung/ Grund der Exception
 4. Methoden Stack
 
-Der Name des Threads ist bei single threaded-Anwendungen immer der main-Thread (Java). Er ist nur wichtig, wenn die Anwendung mehrere Threads nutzt.\
+Der Name des Threads ist bei single threaded-Anwendungen immer der main-Thread (Java). Er ist nur wichtig, wenn die
+Anwendung mehrere Threads nutzt.\
 Der Typ der Exception ist schon wichtiger. Er soll eine Einordnung geben, wieso der Fehler auftrat. Deswegen sollten auch immer die Typen der Exception gut gewählt und beschreibend sein.\
 Die konkrete Information, warum der Fehler auftrat, soll dann die Beschreibung der Exception geben. In "ExceptionBeispiele.java" gibt es ein Beispiel, das keine Informationen über die Ursache gibt. Deshalb sollte immer gut überlegt werden, welche Exception geworfen wird und welche Information mitgegeben wird.  
 Beispielsweise gibt es in der Datei "ExceptionBeispiele.java", wenn man die Anwendung mit dem Argument 2 startet, einen Stack Trace der eine NoSuchElementException wirft und als Grund "No value Present!" ausgibt.

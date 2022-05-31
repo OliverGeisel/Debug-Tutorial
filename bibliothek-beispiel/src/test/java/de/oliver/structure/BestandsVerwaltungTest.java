@@ -87,7 +87,6 @@ class BestandsVerwaltungTest {
 		assertThrows(NoSuchElementException.class, () -> verwaltung.getRegalCode(testBuch), "Der Code darf nicht gefunden werden!");
 	}
 
-
 	@Test
 	void sucheNachISBN() {
 	}

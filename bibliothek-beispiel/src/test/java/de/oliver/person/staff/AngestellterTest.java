@@ -46,7 +46,7 @@ class AngestellterTest {
 	}
 
 	@Test
-	@Disabled
+	@Disabled("Zur Zeit unnötig da nicht mehr package")
 	void getAlterZugriffsrechte() {
 		boolean result = false;
 		try {
@@ -73,7 +73,7 @@ class AngestellterTest {
 	}
 
 	@Test
-	@Disabled
+	@Disabled("Zur Zeit unnötig da nicht mehr package")
 	void getGeschlechtZugriffsrechte() {
 		boolean result = false;
 		try {

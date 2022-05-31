@@ -56,7 +56,7 @@ class KundenregisterTest {
 		addBesucherOkay();
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertTrue(register.gibBuchZurueck(ueberfaelligesBuch, besucher), "Das Buch muss zurück gegeben werden können");
-		assertTrue(register.getAusgelieheneBuecher(besucher).stream().noneMatch(it -> it.equals(ueberfaelligesBuch)),"Das Buch darf nicht mehr mit dem Besucher verknüpft sein!");
+		assertTrue(register.getAusgelieheneBuecher(besucher).stream().noneMatch(it -> it.equals(ueberfaelligesBuch)), "Das Buch darf nicht mehr mit dem Besucher verknüpft sein!");
 	}
 
 	@Test

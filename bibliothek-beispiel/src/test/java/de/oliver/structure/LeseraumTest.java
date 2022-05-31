@@ -37,14 +37,14 @@ class LeseraumTest {
 
 	@Test
 	void KonstruktorNagativeAnzhalFehler() {
-		assertThrows(IllegalArgumentException.class, () -> new Leseraum(0), "Es darf kein Raum für eine negative Anzahl an Personen geben!");
+		assertThrows(IllegalArgumentException.class, () -> new Leseraum(-1), "Es darf kein Raum für eine negative Anzahl an Personen geben!");
 	}
 
 
 	@Test
 	void betretenLeerenRaum() {
 		assertFalse(raum.isBesetzt(), "Raum muss am Anfang leer sein");
-		assertDoesNotThrow(() -> raum.betreten(new Dozent(1, "Dozent", "Test")), "Es darf nichts passieren, wenn eine Person einen leeren Raum betrit");
+		assertDoesNotThrow(() -> raum.betreten(new Dozent(1, "Dozent", "Test")), "Es darf nichts passieren, wenn eine Person einen leeren Raum betritt");
 	}
 
 	@Test
@@ -81,7 +81,7 @@ class LeseraumTest {
 			}
 		}, "Der Raum muss dreckig werden!");
 		raum.saeubern();
-		assertFalse(raum.isDreckig(),"Der Raum muss nach der Reinigung sauber sein!");
+		assertFalse(raum.isDreckig(), "Der Raum muss nach der Reinigung sauber sein!");
 	}
 
 	@Test
