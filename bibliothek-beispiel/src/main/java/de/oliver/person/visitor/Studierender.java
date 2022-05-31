@@ -20,7 +20,6 @@ public class Studierender extends Besucher {
 
 	@Override
 	public boolean bezahlen(Terminal terminal) {
-		// Todo implement
-		return true;
+		return terminal.bezahlen(this,terminal.getMahngebuehren(this));
 	}
 }

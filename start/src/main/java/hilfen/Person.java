@@ -5,7 +5,6 @@ package hilfen;
  * Außerdem können sie ihren vollständigen Namen angeben.
  */
 public interface Person {
-	// Todo Refactoring hier ist public überflüssig
 
 
 	/**
