@@ -53,7 +53,7 @@ class KundenregisterTest {
 
 	@Test
 	void gibBuchZurueckOkay() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertTrue(register.gibBuchZurueck(ueberfaelligesBuch, besucher), "Das Buch muss zurück gegeben werden können");
 		assertTrue(register.getAusgelieheneBuecher(besucher).stream().noneMatch(it -> it.equals(ueberfaelligesBuch)), "Das Buch darf nicht mehr mit dem Besucher verknüpft sein!");
@@ -61,7 +61,7 @@ class KundenregisterTest {
 
 	@Test
 	void gibBuchZurueckFehlerNichtDemBesucherZugeordnet() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertFalse(register.gibBuchZurueck(ueberfaelligesBuch, besucher), "Das Buch ist nicht richtigem Nutzer zugeordnet und darf nicht zurück gegeben werden");
 	}
 
@@ -73,13 +73,13 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNachRegistrierung() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertEquals(0, register.getStrafe(besucher), "Die Strafe muss am Anfang bei 0 liegen!");
 	}
 
 	@Test
 	void getStrafe7TageVorAbgabe() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		verschiebeNachHinten(ueberfaelligesBuch, -7);
 		assertEquals(LocalDate.now().minusDays(28 - 7), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 21 Tage in der Vergangenheit liegen!");
@@ -90,7 +90,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafe1TagVorAbgabe() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		verschiebeNachHinten(ueberfaelligesBuch, -1);
 		assertEquals(LocalDate.now().minusDays(28 - 1), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 27 Tage in der Vergangenheit liegen!");
@@ -101,7 +101,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeAmAbgabeTag() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 28 Tage in der Vergangenheit liegen!");
 		register.gibBuchZurueck(ueberfaelligesBuch, besucher);
@@ -111,7 +111,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach1Tag() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 1);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 1), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 29 Tage in der Vergangenheit liegen!");
@@ -122,7 +122,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach7Tagen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 7), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 35 Tage in der Vergangenheit liegen!");
@@ -133,7 +133,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach8Tagen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 8);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 8), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 36 Tage in der Vergangenheit liegen!");
@@ -144,7 +144,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach14Tagen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 14);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 14), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 42 Tage in der Vergangenheit liegen!");
@@ -155,7 +155,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach15Tagen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 15);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 15), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 43 Tage in der Vergangenheit liegen!");
@@ -167,7 +167,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach43Tagen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 43);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 43), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 71 Tage in der Vergangenheit liegen!");
@@ -178,7 +178,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach39Wochen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7 * 39);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 7 * 39), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 43 Wochen in der Vergangenheit liegen!");
@@ -189,7 +189,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach40Wochen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7 * 40);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 7 * 40), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 44 Wochen in der Vergangenheit liegen!");
@@ -200,7 +200,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach41Wochen() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7 * 41);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 7 * 41), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 45 Wochen in der Vergangenheit liegen!");
@@ -211,7 +211,7 @@ class KundenregisterTest {
 
 	@Test
 	void getStrafeNach2Jahren() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 2 * 365);
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
 		assertEquals(LocalDate.now().minusDays(28 + 2 * 365), ueberfaelligesBuch.getAusleihdatum(), "Das Datum muss 2 Jahre und 28 Tage in der Vergangenheit liegen!");
@@ -255,7 +255,7 @@ class KundenregisterTest {
 
 	@Test
 	void erhoeheStrafeOkay() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertEquals(0, register.getStrafe(besucher), "Die Strafe muss am Anfang bei 0 liegen!");
 		register.erhoeheStrafe(besucher, 2.0);
 		assertEquals(2, register.getStrafe(besucher), "Die Strafe nach dem erhöhen bei 2 liegen!");
@@ -266,13 +266,13 @@ class KundenregisterTest {
 
 	@Test
 	void leiheBuchAusOkay() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertTrue(register.leiheBuchAus(ueberfaelligesBuch, besucher), "Das System muss das Buch dem Kunden ausleihen");
 	}
 
 	@Test
 	void getAusgelieheneBuecherOkay() {
-		addBesucherOkay();
+		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertTrue(register.leiheBuchAus(ueberfaelligesBuch, besucher));
 		assertArrayEquals(List.of(ueberfaelligesBuch).toArray(), register.getAusgelieheneBuecher(besucher).toArray(), "Das Buch muss in der Liste, ausgeliehener Bücher sein!");
 	}

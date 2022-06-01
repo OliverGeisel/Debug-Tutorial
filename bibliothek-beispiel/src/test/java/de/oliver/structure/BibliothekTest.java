@@ -1,6 +1,5 @@
 package de.oliver.structure;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,9 +18,6 @@ class BibliothekTest {
 		bibliothek = new Bibliothek("TestBibo", 2, 2, LocalTime.of(8, 0), LocalTime.of(20, 0));
 	}
 
-	@AfterEach
-	void tearDown() {
-	}
 
 
 	@Test
