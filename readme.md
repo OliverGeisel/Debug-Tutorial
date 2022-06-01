@@ -1,8 +1,3 @@
-
----
-title: "Debug-Tutorial"
----
-
 # Debug-Tutorial
 Dies ist eine Einführung in das Debugging mit IDEs. Es soll anhand mehrerer kleiner Beispiele die Grundlagen, für Bugs
 und Debugging, verständlich beigebracht werden.
@@ -26,7 +21,7 @@ Das wäre beispielsweise ```System.out.println("run ist: " + run);```.
 In der Konsole fällt auf, dass "run" höchstens 6 ist. Damit fehlt ein Durchlauf und es ist klar, wo der Fehler ist. Er
 ist im Schleifenkopf. Es handelt sich um einen sogenannten "Off by one"-Fehler.
 Das bedeutet, das große Ganze ist korrekt, nur ist die Berechnung um eins falsch. Eine Lösung wäre demnach entweder die
-Bedingung in ```i < b+1``` oder ```i <= b``` zu ändern.
+Bedingung in ```i < b + 1``` oder ```i <= b``` zu ändern.
 
 #### Probleme
 
@@ -77,8 +72,9 @@ Bugs ist ein alltäglicher Begriff für Fehler. Genauer gesagt für Laufzeitfehl
 ausgeführt wird, ist eine ungewünschte Folge zu beobachten.
 Jeder Bug wird aber durch eine Ursache erst zum Bug. Diese ist meist im Code versteckt. Leider wird auch gerne mal die
 Ursache als Bug bezeichnet und kann damit zur Verwirrung führen.
-Die Begriffe, die sich dafür in der Industrie genutzt werden lauten etwas anders und können [http://error](ICQB)
-oder [](IEEE) nachgelesen werden.
+Die Begriffe, die sich dafür in der Industrie genutzt werden lauten etwas anders und können
+bei [ISTQB](https://www.german-testing-board.info/lehrplaene/istqbr-certified-tester-schema/entwicklungstester/)
+oder [IEEE](https://ieeexplore.ieee.org/document/5399061) nachgelesen werden.
 Im weiteren Verlauf des Textes bleiben wir jedoch bei den "einfacheren" Begriffen Bug, Fehler und Ursache.
 
 ### Einen Bug finden
