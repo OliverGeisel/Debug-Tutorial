@@ -11,7 +11,6 @@ public class Leseraum implements Verschmutzbar {
 	private final Besucher[] leser;
 	private boolean besetzt;
 	private double verschmutzung;
-
 	private int imRaum;
 
 	public Leseraum(int leserSitze) {
@@ -20,7 +19,6 @@ public class Leseraum implements Verschmutzbar {
 		}
 		leser = new Besucher[leserSitze];
 	}
-
 
 	public Besucher[] betreten(Besucher... besucher) {
 		// todo Bug fehlender Schutz vor überfüllung
@@ -60,7 +58,6 @@ public class Leseraum implements Verschmutzbar {
 		}
 		return back;
 	}
-
 
 	public boolean isBesetzt() {
 		return besetzt;

@@ -1,27 +1,26 @@
 package de.oliver.structure;
 
-import org.junit.jupiter.api.AfterEach;
+import de.oliver.person.visitor.Besucher;
+import de.oliver.person.visitor.Studierender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BibliothekTest {
 
 
 	private Bibliothek bibliothek;
+	private Besucher person;
 
 	@BeforeEach
 	void setUp() {
 		bibliothek = new Bibliothek("TestBibo", 2, 2, LocalTime.of(8, 0), LocalTime.of(20, 0));
+		person = new Studierender(1, "Nico", "Hermann");
 	}
 
-	@AfterEach
-	void tearDown() {
-	}
 
 
 	@Test
@@ -80,5 +79,61 @@ class BibliothekTest {
 	void getOefffnungsZeiten() {
 		Bibliothek.OeffnungsZeiten zeiten = new Bibliothek.OeffnungsZeiten(LocalTime.of(8, 0), LocalTime.of(20, 0));
 		assertEquals(bibliothek.getOefffnungsZeiten(), zeiten, "Öffnungszeiten stimmen nicht den angegeben überein!");
+	}
+
+	@Test
+	void betreten1StundeVorOeffnungszeit() {
+		LocalTime eintrittsZeit = LocalTime.of(7, 0);
+		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf nicht eintreten, wenn die Bibliothek nicht geöffnet ist.");
+	}
+
+	@Test
+	void betreten1MinuteVorOeffnungszeit() {
+		LocalTime eintrittsZeit = LocalTime.of(7, 59);
+		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf nicht eintreten, wenn die Bibliothek nicht geöffnet ist.");
+	}
+
+	@Test
+	void betretenZurOeffnungszeit() {
+		LocalTime eintrittsZeit = LocalTime.of(8, 0);
+		assertDoesNotThrow(() -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek betreten!");
+	}
+
+	@Test
+	void betretenMittenInOeffnungszeit() {
+		LocalTime eintrittsZeit = LocalTime.of(16, 0);
+		assertDoesNotThrow(() -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek betreten!");
+	}
+
+	@Test
+	void betretenZurSchliesszeit() {
+		LocalTime eintrittsZeit = LocalTime.of(20, 0);
+		assertDoesNotThrow(() -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek betreten!");
+	}
+
+	@Test
+	void betreten1MinuteNachSchliesszeit() {
+		LocalTime eintrittsZeit = LocalTime.of(20, 1);
+		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek nicht mehr betreten!");
+	}
+
+	@Test
+	void betreten2StundenNachSchliesszeit() {
+		LocalTime eintrittsZeit = LocalTime.of(22, 0);
+		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek nicht mehr betreten!");
+	}
+
+	@Test
+	void verlassenOkay() {
+		bibliothek.betreten(person, LocalTime.of(12, 0));
+		assertTrue(bibliothek.isInBibliothek(person), "Person muss in der Bibliothek sein");
+		assertDoesNotThrow(() -> bibliothek.verlassen(person, LocalTime.of(15, 0)), "Die Person muss die Bibliothek verlassen können!");
+		assertFalse(bibliothek.isInBibliothek(person), "Person darf nicht in der Bibliothek sein");
+	}
+
+	@Test
+	void verlassenFehler() {
+		assertFalse(bibliothek.isInBibliothek(person), "Person darf nicht in der Bibliothek sein");
+		assertThrows(IllegalStateException.class, () -> bibliothek.verlassen(person, LocalTime.of(15, 0)), "Die Person kann nicht in der Bibliothek sein und damit auch nicht verlassen!");
 	}
 }

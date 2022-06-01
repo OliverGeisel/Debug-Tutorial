@@ -38,8 +38,8 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	 * Setzt den Status auf ausgeliehen. Kann nicht ausgeliehen werden, wenn es nicht verfügbar ist.
 	 */
 	public void ausleihen() throws IllegalStateException {
-		// Todo Bug Lösung
-		if(isAusgeliehen()){
+		//TODO BUG LÖSUNG
+		if (isAusgeliehen()) {
 			throw new IllegalStateException("Ein Buch kann nicht erneut ausgeliehen werden!");
 		}
 		ausgeliehen = true;
@@ -49,10 +49,10 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	/**
 	 * Erlaubt das Ausleihen des Buches.
 	 */
-	public void verfuegbarMachen() throws IllegalStateException{
-		// Todo  Bug Lösung
-		if(!isAusgeliehen()){
-			throw new IllegalStateException("Ein Buch kann nicht verfügbar werden, wenn es nicht ausgeliehen ist!");
+	public void verfuegbarMachen() throws IllegalStateException {
+		//TODO BUG LÖSUNG
+		if (!isAusgeliehen()) {
+			throw new IllegalStateException("Buch ist bereits verfügbar!");
 		}
 		ausgeliehen = false;
 		ausleihdatum = null;

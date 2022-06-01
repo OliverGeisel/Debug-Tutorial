@@ -7,6 +7,7 @@ import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Kundenregister;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BestandsVerwaltung {
 	// Todo Bugs: ||
@@ -101,7 +102,10 @@ public class BestandsVerwaltung {
 		return null;
 	}
 
-	public void neuesBuchHinzufuegen(Buch buch, Regal regal) {
+	public void neuesBuchHinzufuegen(Buch buch, Regal regal) throws VerwaltungsException {
+		if (alleBuecher.contains(buch)) {
+			throw new VerwaltungsException("Das Buch ist bereits in der Bibliothek");
+		}
 		alleBuecher.add(buch);
 		var regale = buchRegalMapping.get(buch.getIsbn());
 		if (regale == null) {
@@ -121,8 +125,10 @@ public class BestandsVerwaltung {
 		boolean back = kundenregister.gibBuchZurueck(buch);
 		buch.verfuegbarMachen();
 		if (buch.getBeschaedigung() >= 0.8)
-			werkstatt.zurReparaturHinzufuegen(buch);// Todo Bug - Else fehlt
-		inEinRegalStellen(buch);
+			werkstatt.zurReparaturHinzufuegen(buch);// Todo Bug - Lösung
+		else {
+			inEinRegalStellen(buch);
+		}
 		return back;
 	}
 
@@ -202,6 +208,13 @@ public class BestandsVerwaltung {
 		return back;
 	}
 
+	public int getAnzahlBuecher() {
+		return alleBuecher.size();
+	}
+
+	public int getAnzahlVerschiedenerBuecher() {
+		return alleBuecher.stream().collect(Collectors.groupingBy(it -> it.getIsbn())).size();
+	}
 
 }
 

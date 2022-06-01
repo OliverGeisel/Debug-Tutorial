@@ -76,9 +76,9 @@ class BestandsVerwaltungTest {
 
 	@Test
 	void getRegalCodeVonBekanntemRegal() {
-		Buch testBuch = new Buch("Testbuch", ISBN.NullISBN);
-		verwaltung.neuesBuchHinzufuegen(testBuch,regal1);
-		assertEquals("Regal1", verwaltung.getRegalCode(testBuch), "Der Code muss zurückgegeben werden!");
+		verwaltung.neuesBuchHinzufuegen(buch, regal1);
+		when(regal1.enthaelt(buch)).thenReturn(true);
+		assertEquals("Regal1", verwaltung.getRegalCode(buch), "Der Code muss zurückgegeben werden!");
 	}
 
 	@Test
@@ -132,10 +132,11 @@ class BestandsVerwaltungTest {
 	void inEinRegalStellenVerwaltungsExceptionTest() {
 		verwaltung.neuesBuchHinzufuegen(buch);
 		verwaltung.ausRegalNehmen(buch);
+		when(regal1.isVoll()).thenReturn(false, true);
 		for (int i = 0; i < 21; i++) {
 			verwaltung.neuesBuchHinzufuegen(new Buch("Test2-Buch",ISBN.NullISBN));
 		}
-		assertThrows(VerwaltungsException.class, () -> verwaltung.inEinRegalStellen(buch), "Wenn ein Buch nicht registriert ist, muss eine IllegalStateException kommen");
+		assertThrows(VerwaltungsException.class, () -> verwaltung.inEinRegalStellen(buch), "Wenn kein Platz mehr ist, muss eine VerwaltungsException kommen");
 	}
 
 	@Test

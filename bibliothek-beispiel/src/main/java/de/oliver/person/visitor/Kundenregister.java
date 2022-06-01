@@ -136,7 +136,7 @@ public class Kundenregister {
 			besucherTyp =
 					switch (besucher) {
 						case Dozent d -> BesucherTyp.Dozent;
-						case Studierender s -> BesucherTyp.Studierender;
+						case Studierender ignored -> BesucherTyp.Studierender;
 						default -> BesucherTyp.Normal;
 					};
 		}

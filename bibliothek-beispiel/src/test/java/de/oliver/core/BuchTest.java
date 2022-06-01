@@ -27,7 +27,9 @@ class BuchTest {
 
 	@Test
 	void ausleihenFehlschlagWennAusgeliehen() {
-		ausleihenErfolgreich();
+		assertFalse(buch.isAusgeliehen(), "Buch darf am Anfang nicht ausgeliehen sein!");
+		buch.ausleihen();
+		assertTrue(buch.isAusgeliehen(), "Nach dem ausleihen muss das als ausgeliehen markiert sein!");
 		assertThrows(IllegalStateException.class, () -> buch.ausleihen(), "Die Ausleihe eines Buches darf nicht gelingen, wenn es bereits augeliehen ist");
 	}
 
