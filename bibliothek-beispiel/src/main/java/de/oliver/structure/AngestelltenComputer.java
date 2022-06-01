@@ -49,7 +49,6 @@ public class AngestelltenComputer extends Arbeitsplatz<Bibliothekar> implements 
 
 	@Override
 	public boolean zurueckgeben(Buch buch) {
-		// Todo fix
 		return bestand.zurueckgeben(buch);
 	}
 
@@ -61,8 +60,6 @@ public class AngestelltenComputer extends Arbeitsplatz<Bibliothekar> implements 
 
 	@Override
 	public double getMahngebuehren(Besucher besucher) {
-
-
 		return kunden.getStrafe(besucher);
 	}
 
