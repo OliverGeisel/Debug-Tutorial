@@ -10,7 +10,6 @@ import java.util.*;
 
 
 public class Bibliothek {
-	// Todo Anzahl Bugs: |||
 
 	private final String name;
 
@@ -30,7 +29,7 @@ public class Bibliothek {
 		raeume = new Leseraum[anzahlRaeume];
 		this.oeffnung = oeffnung;
 		this.schliessung = schliessung;
-		for (Leseraum raum : raeume) { // Todo Bug ---- innere hat keine Wirkung
+		for (Leseraum raum : raeume) {
 			raum = new Leseraum(2);
 		}
 		verwaltung = new AngestelltenVerwaltung();
@@ -41,10 +40,9 @@ public class Bibliothek {
 			regale.add(new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT, Integer.toString(i)));
 			i++;
 		}
-		bestandsverwaltung = new BestandsVerwaltung(register,regale);
+		bestandsverwaltung = new BestandsVerwaltung(register, regale);
 		werkstatt = bestandsverwaltung.getWerkstatt();
 		personenInBib = new LinkedList<>();
-
 
 
 		angestelltenComputer = new ArrayList<>();
@@ -93,18 +91,22 @@ public class Bibliothek {
 		return register;
 	}
 
-	public void betreten(Person person, LocalTime zeit) {
+	public void betreten(Person person, LocalTime zeit) throws IllegalStateException {
 		if (zeit == null)
 			throw new IllegalArgumentException();
 		if (person == null)
 			return;
-		if (zeit.isBefore(oeffnung) || zeit.isAfter(schliessung)) // Todo Bug Zeit vertauscht
+		if (zeit.isBefore(oeffnung) || zeit.isAfter(schliessung))
 			System.out.printf("%s betritt um %s die %s.%n", person.getVollerName(), zeit, getName());
-		personenInBib.add(person); // Todo Bug Klammer fehlt
-
+		else
+			throw new IllegalStateException("Die Bibliothek ist noch nicht geöffnet");
+		personenInBib.add(person);
 	}
 
-	public void verlassen(Person person, LocalTime zeit) {
+	public void verlassen(Person person, LocalTime zeit) throws IllegalArgumentException {
+		if (!personenInBib.contains(person)) {
+			throw new IllegalAccessError("Die Person ist nicht in der Bibliothek!");
+		}
 		System.out.printf("%s verlässt um %s die %s.%n", person.getVollerName(), zeit, getName());
 		personenInBib.remove(person);
 	}
@@ -114,6 +116,10 @@ public class Bibliothek {
 			personenInBib.remove(p);
 			System.out.printf("%s verlässt um %s die %s.%n", p.getVollerName(), LocalTime.now(), getName());
 		}
+	}
+
+	public boolean isInBibliothek(Person person) {
+		return personenInBib.contains(person);
 	}
 
 	OeffnungsZeiten getOefffnungsZeiten() {

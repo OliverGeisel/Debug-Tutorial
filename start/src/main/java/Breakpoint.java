@@ -22,7 +22,7 @@ public class Breakpoint {
 		int b = 7;
 		int c = summeVonBis(a, b);
 
-		System.out.print("Summe der Zahlen a bis b = " + c);
+		System.out.println("Summe der Zahlen a bis b = " + c);
 	}
 
 }

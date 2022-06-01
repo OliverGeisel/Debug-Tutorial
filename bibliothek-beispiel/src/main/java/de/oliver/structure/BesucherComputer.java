@@ -41,21 +41,21 @@ public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal
 
 	@Override
 	public boolean ausleihen(Buch buch, Besucher besucher) throws VerwaltungsException {
-		if(!besucher.equals(getNutzer()))
+		if (!besucher.equals(getNutzer()))
 			throw new VerwaltungsException("Du kannst kein Buch für jemand anderen ausleihen");
 		ausleihen(buch);
 		return false;
 	}
 
 	public boolean ausleihen(Buch buch) {
-		if (isBesetzt()) {
+		if (!isBesetzt()) {
 			return false;
 		}
-		return bestand.ausleihen(buch,getNutzer());
+		return bestand.ausleihen(buch, getNutzer());
 	}
 
 	public boolean zurueckgeben(Buch buch) {
-		if (isBesetzt()) {
+		if (!isBesetzt()) {
 			return false;
 		}
 		return bestand.zurueckgeben(buch);
@@ -69,18 +69,18 @@ public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal
 
 	@Override
 	public double getMahngebuehren(Besucher besucher) {
-		// Todo fix
-		return 0;
+
+		throw new UnsupportedOperationException("Diese Art Terminals unterstützt diese Funktionalität nicht!");
 	}
 
 	@Override
 	public Leseraum reservieren(Besucher... besucher) {
-		return null;
+		throw new UnsupportedOperationException("Diese Art Terminals unterstützt diese Funktionalität nicht!");
 	}
 
 	@Override
 	public boolean bezahlen(Besucher besucher, double betrag) {
-		return false;
+		throw new UnsupportedOperationException("Diese Art Terminals unterstützt diese Funktionalität nicht!");
 	}
 
 

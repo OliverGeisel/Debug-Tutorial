@@ -9,7 +9,6 @@ import java.util.List;
 
 
 public class Werkstatt extends Arbeitsplatz<Restaurator> {
-	// Todo Anzahl Bugs: |
 	private final List<Buch> beschaedigteBuecher;
 	private final List<Buch> reparierteBuecher = new LinkedList<>();
 	private final BestandsVerwaltung bestand;
@@ -35,7 +34,7 @@ public class Werkstatt extends Arbeitsplatz<Restaurator> {
 		if (isDreckig()) {
 			throw new ZuSchmutzigException("Die Werkstatt ist zu schmutzig um Bücher zu reparieren!");
 		}
-		Buch buch = beschaedigteBuecher.get(0); // Todo Bug --- fehlende Kontrolle bzw. remove muss genommen werden
+		Buch buch = beschaedigteBuecher.get(0);
 		buch.reparieren();
 		verschmutzen();
 		reparierteBuecher.add(buch);

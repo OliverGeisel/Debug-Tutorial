@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Leseraum implements Verschmutzbar {
-	// Todo Anzahl Bugs: ||
 	private final Besucher[] leser;
 	private boolean besetzt;
 	private double verschmutzung;
@@ -21,8 +20,6 @@ public class Leseraum implements Verschmutzbar {
 	}
 
 	public Besucher[] betreten(Besucher... besucher) {
-		// todo Bug fehlender Schutz vor überfüllung
-		// todo Bug da es immer überschreibt.
 		int i = 0;
 		List<Besucher> back = new LinkedList<>();
 		for (Besucher b : besucher) {

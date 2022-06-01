@@ -11,7 +11,6 @@ import java.util.Random;
  */
 
 public class Buch implements Comparable<Buch>, Verschmutzbar {
-	// Todo Anzahl Bugs: ||
 	private final String titel;
 	private String autor;
 	private final ISBN isbn;
@@ -38,7 +37,6 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	 * Setzt den Status auf ausgeliehen. Kann nicht ausgeliehen werden, wenn es nicht verfügbar ist.
 	 */
 	public void ausleihen() {
-		// Todo Bug check felt.
 		ausgeliehen = true;
 		ausleihdatum = LocalDate.now();
 	}
@@ -47,7 +45,6 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	 * Erlaubt das Ausleihen des Buches.
 	 */
 	public void verfuegbarMachen() {
-		// Todo  Bug check fehlt .
 		ausgeliehen = false;
 		ausleihdatum = null;
 	}

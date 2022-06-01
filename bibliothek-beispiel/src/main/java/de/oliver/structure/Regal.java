@@ -10,7 +10,6 @@ import java.util.*;
  * Beinhaltet Bücher. Diese Bücher sind in auf Brettern platziert.
  */
 public class Regal implements Verschmutzbar, Iterable<Buch> {
-	// Todo Anzahl Bugs: |||
 	public final static int REGALBRETTER_DEFAULT = 5;
 	public final static int BUECHER_JE_BRETT_DEFAULT = 20;
 
@@ -45,7 +44,7 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 
 	public boolean isVoll() {
 		for (Buch[] regal : inhalt) {
-			if (regal.length < BUECHER_JE_BRETT_DEFAULT) {// Todo Bug ---- Macht keinen sinn
+			if (regal.length < BUECHER_JE_BRETT_DEFAULT) {
 				return false;
 			}
 		}
@@ -59,10 +58,10 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 		RegalSchleife:
 		for (Buch[] brett : inhalt) {
 			ReihenSchleife:
-			for (Buch b : brett) {// Todo Bug ---- Hier muss mit der normalen Zählschleife gearbeitet werden
+			for (Buch b : brett) {
 				if (b == null) {
 					b = buch;
-					break; //Todo Bug hier fehlt label sprung
+					break;
 				}
 			}
 		}

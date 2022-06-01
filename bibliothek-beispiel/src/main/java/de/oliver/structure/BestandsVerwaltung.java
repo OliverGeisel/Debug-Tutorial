@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class BestandsVerwaltung {
-	// Todo Bugs: |
 	private final Map<ISBN, List<Regal>> buchRegalMapping;
 	private final List<Buch> alleBuecher = new LinkedList<>();
 	private final Kundenregister kundenregister;
@@ -125,7 +124,7 @@ public class BestandsVerwaltung {
 		boolean back = kundenregister.gibBuchZurueck(buch);
 		buch.verfuegbarMachen();
 		if (buch.getBeschaedigung() >= 0.8)
-			werkstatt.zurReparaturHinzufuegen(buch);// Todo Bug - Else fehlt
+			werkstatt.zurReparaturHinzufuegen(buch);
 		inEinRegalStellen(buch);
 		return back;
 	}
@@ -141,7 +140,6 @@ public class BestandsVerwaltung {
 	 * @throws IllegalStateException, wenn das Buch noch nicht registriert ist.
 	 */
 	Regal inEinRegalStellen(Buch buch) throws VerwaltungsException, IllegalStateException {
-		// Todo Bug - kein Check ob bereits in Bestand.
 		Regal verweis = null;
 		for (Regal regal : regale) {
 			if (!regal.isVoll()) {
