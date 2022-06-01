@@ -9,6 +9,9 @@ import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -172,7 +175,7 @@ class WerkstattTest {
 		Buch b = new Buch("Testbuch", ISBN.NullISBN);
 		werkstatt.zurReparaturHinzufuegen(b);
 		werkstatt.reparieren();
-		werkstatt.alleRepariertenZurueckstellen();
+		assertTrue(List.of(b).containsAll(Arrays.stream(werkstatt.alleRepariertenZurueckstellen()).toList()));
 		verify(bestand).inEinRegalStellen(b);
 	}
 
