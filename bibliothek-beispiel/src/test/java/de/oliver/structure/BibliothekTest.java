@@ -22,7 +22,6 @@ class BibliothekTest {
 	}
 
 
-
 	@Test
 	void getName() {
 		assertEquals("TestBibo", bibliothek.getName(), "Der Name passt nicht!");

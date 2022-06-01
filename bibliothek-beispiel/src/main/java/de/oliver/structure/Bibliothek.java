@@ -46,7 +46,6 @@ public class Bibliothek {
 		personenInBib = new LinkedList<>();
 
 
-
 		angestelltenComputer = new ArrayList<>();
 		for (i = 0; i < 2; i++) {
 			angestelltenComputer.add(new AngestelltenComputer(register, this.bestandsverwaltung, raeume));
@@ -105,7 +104,7 @@ public class Bibliothek {
 
 	public void verlassen(Person person, LocalTime zeit) throws IllegalArgumentException {
 		if (!personenInBib.contains(person)) {
-			throw new IllegalStateException("Die Person ist nicht in der Bibliothek!");// TODO BUG LÖSUNG
+			throw new IllegalArgumentException("Die Person ist nicht in der Bibliothek!");// TODO BUG LÖSUNG
 		}
 		System.out.printf("%s verlässt um %s die %s.%n", person.getVollerName(), zeit, getName());
 		personenInBib.remove(person);
