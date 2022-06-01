@@ -32,7 +32,8 @@ class AngestelltenVerwaltungTest {
 
 	@Test
 	void isAngestelltFalseNachEntlassung() {
-		isAngestelltOkay();
+		verwaltung.angestelltenHinzufuegen(angestellter, Bereich.REINIGUNG);
+		assertTrue(verwaltung.isAngestellt(angestellter), "Der Angestellte ist bei der Bibliothek angestellt!");
 		verwaltung.removeAngestellten(angestellter);
 		assertFalse(verwaltung.isAngestellt(angestellter), "Der Angestellte darf nicht als angestellt gelten, nachdem er entlassen wurde!");
 	}
@@ -40,12 +41,13 @@ class AngestelltenVerwaltungTest {
 	@Test
 	void angestelltenHinzufuegenOkay() {
 		verwaltung.angestelltenHinzufuegen(angestellter, Bereich.REINIGUNG);
-		assertTrue(verwaltung.getAngestellte(Bereich.REINIGUNG).contains(angestellter), "Der ");
+		assertTrue(verwaltung.getAngestellte(Bereich.REINIGUNG).contains(angestellter), "Der Angestellte muss hinzugefügt werden");
 	}
 
 	@Test
 	void removeAngestellten() {
-		angestelltenHinzufuegenOkay();
+		verwaltung.angestelltenHinzufuegen(angestellter, Bereich.REINIGUNG);
+		assertTrue(verwaltung.getAngestellte(Bereich.REINIGUNG).contains(angestellter), "Der Angestellte muss hinzugefügt werden");
 		verwaltung.removeAngestellten(angestellter);
 		assertFalse(verwaltung.getAngestellte(Bereich.REINIGUNG).contains(angestellter), "Der Angestellte darf nicht mehr enthalten sein!");
 	}

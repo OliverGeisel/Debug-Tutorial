@@ -175,7 +175,9 @@ class BestandsVerwaltungTest {
 
 	@Test
 	void neuesBuchHinzufuegenFehler() {
-		neuesBuchHinzufuegenOkay();
+		assertEquals(0, verwaltung.getAnzahlBuecher(), "Es darf kein Buch am Anfang enthalten sein!");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		assertEquals(1, verwaltung.getAnzahlBuecher(), "Das Buch muss dabei sein.");
 		assertThrows(VerwaltungsException.class, () -> verwaltung.neuesBuchHinzufuegen(buch), "Das Buch darf nicht erneut hinzugefügt werden!");
 	}
 

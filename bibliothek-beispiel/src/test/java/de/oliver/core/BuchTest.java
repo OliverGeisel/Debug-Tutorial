@@ -35,7 +35,9 @@ class BuchTest {
 
 	@Test
 	void verfuegbarMachenErfolgreich() {
-		ausleihenErfolgreich();
+		assertFalse(buch.isAusgeliehen(), "Buch darf am Anfang nicht ausgeliehen sein!");
+		buch.ausleihen();
+		assertTrue(buch.isAusgeliehen(), "Nach dem ausleihen muss das als ausgeliehen markiert sein!");
 		assertDoesNotThrow(() -> buch.verfuegbarMachen(), "Das Buch muss wieder ausleihbar sein!");
 	}
 
@@ -90,7 +92,12 @@ class BuchTest {
 	@Test
 	void saeubernWennDreckig() {
 		assertFalse(buch.isDreckig(), "Buch darf nicht dreckig sein!");
-		isDreckigTrueNachVerschmutzung();
+		buch.verschmutzen();
+		assertTimeout(Duration.of(1, ChronoUnit.SECONDS), () -> {
+			while (!buch.isDreckig()) {
+				buch.verschmutzen();
+			}
+		}, "Die Verschmutzung muss sich ändern!");
 		buch.saeubern();
 		assertFalse(buch.isDreckig(), "Nach der Säuberung darf das Buch nicht mehr dreckig sein!");
 	}

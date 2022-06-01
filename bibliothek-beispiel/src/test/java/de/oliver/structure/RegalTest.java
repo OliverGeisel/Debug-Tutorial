@@ -2,7 +2,6 @@ package de.oliver.structure;
 
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +23,6 @@ class RegalTest {
 	@BeforeEach
 	void setUp() {
 		regal = new Regal(Regal.REGALBRETTER_DEFAULT, Regal.BUECHER_JE_BRETT_DEFAULT, "R1");
-	}
-
-	@AfterEach
-	void tearDown() {
-
 	}
 
 	@Test
@@ -85,9 +79,6 @@ class RegalTest {
 		assertTrue(regal.enthaelt(buch1));
 	}
 
-	@Test
-	void iteratorTest() {
-	}
 
 	@Test
 	void toStringTest() {

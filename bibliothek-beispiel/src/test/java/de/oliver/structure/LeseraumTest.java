@@ -49,14 +49,18 @@ class LeseraumTest {
 
 	@Test
 	void zweitePersonBetrittRaum() {
-		betretenLeerenRaum();
+		assertFalse(raum.isBesetzt(), "Raum muss am Anfang leer sein");
+		assertDoesNotThrow(() -> raum.betreten(new Dozent(1, "Dozent", "Test")), "Es darf nichts passieren, wenn eine Person einen leeren Raum betrit");
 		assertDoesNotThrow(() -> raum.betreten(new Studierender(2, "Studierender", "Test")), "Eine zweite Person kann den Raum betreten!");
 		assertEquals(2, raum.getPersonenImRaum().size());
 	}
 
 	@Test
 	void verlassen() {
-		zweitePersonBetrittRaum();
+		assertFalse(raum.isBesetzt(), "Raum muss am Anfang leer sein");
+		assertDoesNotThrow(() -> raum.betreten(new Dozent(1, "Dozent", "Test")), "Es darf nichts passieren, wenn eine Person einen leeren Raum betrit");
+		assertDoesNotThrow(() -> raum.betreten(new Studierender(2, "Studierender", "Test")), "Eine zweite Person kann den Raum betreten!");
+		assertEquals(2, raum.getPersonenImRaum().size());
 		var personen = raum.verlassen();
 		assertFalse(raum.isBesetzt(), "Der Raum darf nicht mehr besetzt sein, nachdem die Personen raus sind");
 		assertEquals(2, personen.size(), "Es müssen zwei personen sein");

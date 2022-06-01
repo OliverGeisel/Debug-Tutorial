@@ -174,7 +174,6 @@ class WerkstattTest {
 		werkstatt.reparieren();
 		werkstatt.alleRepariertenZurueckstellen();
 		verify(bestand).inEinRegalStellen(b);
-
 	}
 
 }

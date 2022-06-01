@@ -1,7 +1,6 @@
 package de.oliver.person.staff;
 
 import de.oliver.person.Geschlecht;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,10 +19,6 @@ class AngestellterTest {
 		};
 	}
 
-	@AfterEach
-	void tearDown() {
-	}
-
 	@Test
 	void getAlter() {
 		assertEquals(24, angestellter.getAlter(), "Das Alter passt nicht!");
@@ -32,7 +27,6 @@ class AngestellterTest {
 	@Test
 	void setAlterOkay() {
 		assertEquals(24, angestellter.getAlter(), "Alter wurde falsch initialisiert");
-
 		angestellter.setAlter(25);
 		assertEquals(25, angestellter.getAlter(), "Alter wurde nicht geändert!");
 	}

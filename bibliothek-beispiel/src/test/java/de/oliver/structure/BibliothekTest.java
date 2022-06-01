@@ -134,6 +134,6 @@ class BibliothekTest {
 	@Test
 	void verlassenFehler() {
 		assertFalse(bibliothek.isInBibliothek(person), "Person darf nicht in der Bibliothek sein");
-		assertThrows(IllegalStateException.class, () -> bibliothek.verlassen(person, LocalTime.of(15, 0)), "Die Person kann nicht in der Bibliothek sein und damit auch nicht verlassen!");
+		assertThrows(IllegalArgumentException.class, () -> bibliothek.verlassen(person, LocalTime.of(15, 0)), "Die Person kann nicht in der Bibliothek sein und damit auch nicht verlassen!");
 	}
 }
