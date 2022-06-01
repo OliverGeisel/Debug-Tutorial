@@ -98,7 +98,7 @@ Dieser enthält 4 wichtige Informationen:
 1. Name des Threads in dem die Exception auftrat
 2. Typ der Exception
 3. Beschreibung/ Grund der Exception
-4. "Methoden" Stack bzw. Call Stack
+4. "Trac" bzw. Call Stack
 
 #### Passende Beschreibung wählen
 
@@ -117,15 +117,16 @@ Das lässt darauf schließen, dass irgendwo muss ```null``` einer Variable zugew
 
 #### Den Ort des Fehlers einschränken
 
-Die Information, in welcher Zeile der Fehler geworfen wurde, steht im "Methoden" Stack (Offiziell gibt es keine
+Die Information, in welcher Zeile der Fehler geworfen wurde, steht im "Trace" (Offiziell gibt es keine
 Bezeichnung dafür. Es sind viele StackTraceElemente, die alle etwas repräsentieren. Wenn keine weitere Exception
-geworfen wurde -siehe weiter unten- ist es der call stack, der auch execution stack genannt wird, zu dem Zeitpunkt, als
+geworfen wurde -siehe weiter unten- ist er identisch zum call stack, der auch execution stack genannt wird, zu dem
+Zeitpunkt, als
 die Exception auftrat. Der Name wird hier verwendet, um eine Bezeichnung dafür zu haben). Die Information steht dabei *
 nicht* am Ende des Stackes, sondern ganz oben. Direkt nach dem Grund der Exception.
 In dem zuvor genannten Beispiel ist es die Zeile 143 in der Klasse Optional des JDK. Dort findet man auch die
 entsprechende Zeile ```throw new NoSuchElementException("No value present!");```.
 Das sagt uns jetzt aber nur wo sie geworfen wurde. Das ist aber nicht die Zeile, die den Fehler verursacht. Deshalb muss
-eine Zeile weiter unten im Methoden Stack geschaut werden.
+eine Zeile weiter unten im "Trace" geschaut werden.
 Dort sieht man, dass in Zeile 24 der *ExceptionBeispiele.java* in der Methode "tiefeException" der Aufruf des Optionals
 war. Da man im Normalfall davon ausgehen kann, dass die Klassen im JDK korrekt sind, muss der Fehler in der Nähe dieser
 Zeile 24 liegen.\
@@ -138,7 +139,7 @@ Damit ist die Ursache gefunden.
 
 Das letzte Beispiel der *ExceptionBeispiele.java* ist etwas schwerer.
 Hier wird eine Exception geworfen, die durch eine Exception verursacht wurde. Der Grund für die oberste Exception, ist
-die Exception, die weiter unten im "Methoden Stack" steht. Sie wird markiert mit "Caused by"
+die Exception, die weiter unten im "Trace" steht. Sie wird markiert mit "Caused by"
 Den Fehler hier zu finden ist deutlich schwerer und benötigt etwas Bedenkzeit.
 Jedoch lässt sich der Fehler auch finden, wenn die verursachende Exception analysiert wird.
 Wieder ist es eine ```NoSuchElementException``` und wieder ist es das ```Optional.get()```.
@@ -349,7 +350,8 @@ folgenden Kriterien durchsucht werden,
 
 ### Leseräume
 
-Ein Leseraum ist für eine feste Anzahl an Personen ausgelegt. Diese können den Raum reservieren. Je nach Nutzung wird
+Ein Leseraum ist für eine feste Anzahl an Personen ausgelegt. Diese können den Raum bei einem Bibliothekar am Computer
+reservieren. Je nach Nutzung wird
 der Leseraum verschmutzt.
 
 ### Angestelltenverwaltung
