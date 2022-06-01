@@ -1,8 +1,3 @@
-
----
-title: "Debug-Tutorial"
----
-
 # Debug-Tutorial
 Dies ist eine Einführung in das Debugging mit IDEs. Es soll anhand mehrerer kleiner Beispiele die Grundlagen, für Bugs
 und Debugging, verständlich beigebracht werden.
@@ -26,7 +21,7 @@ Das wäre beispielsweise ```System.out.println("run ist: " + run);```.
 In der Konsole fällt auf, dass "run" höchstens 6 ist. Damit fehlt ein Durchlauf und es ist klar, wo der Fehler ist. Er
 ist im Schleifenkopf. Es handelt sich um einen sogenannten "Off by one"-Fehler.
 Das bedeutet, das große Ganze ist korrekt, nur ist die Berechnung um eins falsch. Eine Lösung wäre demnach entweder die
-Bedingung in ```i < b+1``` oder ```i <= b``` zu ändern.
+Bedingung in ```i < b + 1``` oder ```i <= b``` zu ändern.
 
 #### Probleme
 
@@ -77,8 +72,9 @@ Bugs ist ein alltäglicher Begriff für Fehler. Genauer gesagt für Laufzeitfehl
 ausgeführt wird, ist eine ungewünschte Folge zu beobachten.
 Jeder Bug wird aber durch eine Ursache erst zum Bug. Diese ist meist im Code versteckt. Leider wird auch gerne mal die
 Ursache als Bug bezeichnet und kann damit zur Verwirrung führen.
-Die Begriffe, die sich dafür in der Industrie genutzt werden lauten etwas anders und können [http://error](ICQB)
-oder [](IEEE) nachgelesen werden.
+Die Begriffe, die sich dafür in der Industrie genutzt werden lauten etwas anders und können
+bei [ISTQB](https://www.german-testing-board.info/lehrplaene/istqbr-certified-tester-schema/entwicklungstester/)
+oder [IEEE](https://ieeexplore.ieee.org/document/5399061) nachgelesen werden.
 Im weiteren Verlauf des Textes bleiben wir jedoch bei den "einfacheren" Begriffen Bug, Fehler und Ursache.
 
 ### Einen Bug finden
@@ -102,7 +98,7 @@ Dieser enthält 4 wichtige Informationen:
 1. Name des Threads in dem die Exception auftrat
 2. Typ der Exception
 3. Beschreibung/ Grund der Exception
-4. "Methoden" Stack bzw. Call Stack
+4. "Trac" bzw. Call Stack
 
 #### Passende Beschreibung wählen
 
@@ -121,15 +117,16 @@ Das lässt darauf schließen, dass irgendwo muss ```null``` einer Variable zugew
 
 #### Den Ort des Fehlers einschränken
 
-Die Information, in welcher Zeile der Fehler geworfen wurde, steht im "Methoden" Stack (Offiziell gibt es keine
+Die Information, in welcher Zeile der Fehler geworfen wurde, steht im "Trace" (Offiziell gibt es keine
 Bezeichnung dafür. Es sind viele StackTraceElemente, die alle etwas repräsentieren. Wenn keine weitere Exception
-geworfen wurde -siehe weiter unten- ist es der call stack, der auch execution stack genannt wird, zu dem Zeitpunkt, als
+geworfen wurde -siehe weiter unten- ist er identisch zum call stack, der auch execution stack genannt wird, zu dem
+Zeitpunkt, als
 die Exception auftrat. Der Name wird hier verwendet, um eine Bezeichnung dafür zu haben). Die Information steht dabei *
 nicht* am Ende des Stackes, sondern ganz oben. Direkt nach dem Grund der Exception.
 In dem zuvor genannten Beispiel ist es die Zeile 143 in der Klasse Optional des JDK. Dort findet man auch die
 entsprechende Zeile ```throw new NoSuchElementException("No value present!");```.
 Das sagt uns jetzt aber nur wo sie geworfen wurde. Das ist aber nicht die Zeile, die den Fehler verursacht. Deshalb muss
-eine Zeile weiter unten im Methoden Stack geschaut werden.
+eine Zeile weiter unten im "Trace" geschaut werden.
 Dort sieht man, dass in Zeile 24 der *ExceptionBeispiele.java* in der Methode "tiefeException" der Aufruf des Optionals
 war. Da man im Normalfall davon ausgehen kann, dass die Klassen im JDK korrekt sind, muss der Fehler in der Nähe dieser
 Zeile 24 liegen.\
@@ -142,7 +139,7 @@ Damit ist die Ursache gefunden.
 
 Das letzte Beispiel der *ExceptionBeispiele.java* ist etwas schwerer.
 Hier wird eine Exception geworfen, die durch eine Exception verursacht wurde. Der Grund für die oberste Exception, ist
-die Exception, die weiter unten im "Methoden Stack" steht. Sie wird markiert mit "Caused by"
+die Exception, die weiter unten im "Trace" steht. Sie wird markiert mit "Caused by"
 Den Fehler hier zu finden ist deutlich schwerer und benötigt etwas Bedenkzeit.
 Jedoch lässt sich der Fehler auch finden, wenn die verursachende Exception analysiert wird.
 Wieder ist es eine ```NoSuchElementException``` und wieder ist es das ```Optional.get()```.
@@ -353,7 +350,8 @@ folgenden Kriterien durchsucht werden,
 
 ### Leseräume
 
-Ein Leseraum ist für eine feste Anzahl an Personen ausgelegt. Diese können den Raum reservieren. Je nach Nutzung wird
+Ein Leseraum ist für eine feste Anzahl an Personen ausgelegt. Diese können den Raum bei einem Bibliothekar am Computer
+reservieren. Je nach Nutzung wird
 der Leseraum verschmutzt.
 
 ### Angestelltenverwaltung
