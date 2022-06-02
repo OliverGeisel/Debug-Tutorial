@@ -27,6 +27,7 @@ class BestandsVerwaltungTest {
 	@Mock
 	private Kundenregister kundenregister;
 
+	@Mock
 	private Regal regal1;
 
 	private Regal regal2;
@@ -37,14 +38,22 @@ class BestandsVerwaltungTest {
 	void setUp() {
 		besucher = new Studierender(1, "Studierender", "Teststudierender");
 
-		regal1 = new Regal(1, 1, "Regal1");
 		regal2 = new Regal(2, 10, "Regal2");
 		MockitoAnnotations.openMocks(this);
 
 		Set<Regal> regale = new HashSet<>();
 		regale.add(regal1);
 		regale.add(regal2);
+		// stub regal1
+		when(regal1.getCode()).thenReturn("Regal1");
+		when(regal1.hineinStellen(buch)).thenReturn(buch);
+		when(regal1.herausnehmen(buch)).thenReturn(buch);
+		when(regal1.anzahlBuecherImRegal()).thenReturn(0L);
+		when(regal1.isDreckig()).thenReturn(false);
+		when(regal1.isVoll()).thenReturn(false);
+		// stub kundenregister
 		when(kundenregister.gibBuchZurueck(any(), any(Besucher.class))).thenReturn(true);
+		when(kundenregister.gibBuchZurueck(any())).thenReturn(true);
 		when(kundenregister.getStrafe(besucher)).thenReturn(0.0);
 		//when(kundenregister.leiheBuchAus(any(Buch.class),besucher)).thenReturn(true);
 		verwaltung = new BestandsVerwaltung(kundenregister, regale);
@@ -67,9 +76,9 @@ class BestandsVerwaltungTest {
 
 	@Test
 	void getRegalCodeVonBekanntemRegal() {
-		Buch testBuch = new Buch("Testbuch", ISBN.NullISBN);
-		verwaltung.neuesBuchHinzufuegen(testBuch, regal1);
-		assertEquals("Regal1", verwaltung.getRegalCode(testBuch), "Der Code muss zurückgegeben werden!");
+		verwaltung.neuesBuchHinzufuegen(buch, regal1);
+		when(regal1.enthaelt(buch)).thenReturn(true);
+		assertEquals("Regal1", verwaltung.getRegalCode(buch), "Der Code muss zurückgegeben werden!");
 	}
 
 	@Test
@@ -173,7 +182,14 @@ class BestandsVerwaltungTest {
 	}
 
 	@Test
-	void zurueckgeben() {
+	void zurueckgebenOkay() {
+		assertEquals(0, verwaltung.getAnzahlBuecher(), "Es dürfen keine Bücher vorhanden sein!");
+		verwaltung.neuesBuchHinzufuegen(buch);
+		assertEquals(1, verwaltung.getAnzahlBuecher(), "Das Buch muss drin sein!");
+		verwaltung.ausleihen(buch, new Studierender(1, "Test", "Studierender"));
+		assertTrue(buch.isAusgeliehen(), "Buch muss ausgeliehen sein!");
+		assertTrue(verwaltung.zurueckgeben(buch), "Das Buch muss zurück gegeben werden!");
+		assertFalse(buch.isAusgeliehen(), "Das Buch muss wieder verfügbar sein!");
 	}
 
 	@Test
@@ -185,10 +201,11 @@ class BestandsVerwaltungTest {
 	void inEinRegalStellenVerwaltungsExceptionTest() {
 		verwaltung.neuesBuchHinzufuegen(buch);
 		verwaltung.ausRegalNehmen(buch);
+		when(regal1.isVoll()).thenReturn(false, true);
 		for (int i = 0; i < 21; i++) {
 			verwaltung.neuesBuchHinzufuegen(new Buch("Test2-Buch", ISBN.NullISBN));
 		}
-		assertThrows(VerwaltungsException.class, () -> verwaltung.inEinRegalStellen(buch), "Wenn ein Buch nicht registriert ist, muss eine IllegalStateException kommen");
+		assertThrows(VerwaltungsException.class, () -> verwaltung.inEinRegalStellen(buch), "Wenn kein Platz mehr ist, muss eine VerwaltungsException kommen");
 	}
 
 	@Test
