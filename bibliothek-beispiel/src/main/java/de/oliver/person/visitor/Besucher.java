@@ -18,10 +18,6 @@ public abstract class Besucher implements Person {
 		return nachname;
 	}
 
-	@Override
-	public String getVollerName() {
-		return null;
-	}
 
 	@Override
 	public int getAlter() {

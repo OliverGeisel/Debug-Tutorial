@@ -147,7 +147,7 @@ class BestandsVerwaltungTest {
 		var buch2 = new Buch(buch.getTitel(), buch.getAutor(), buch.getIsbn());
 		verwaltung.neuesBuchHinzufuegen(buch2);
 		assertEquals(2, verwaltung.getAnzahlBuecher(), "Buch muss hinzugefügt sein!");
-		assertArrayEquals(List.of(buch, buch2).toArray(), verwaltung.sucheNachAuthor("Robert Test").toArray(), "Es muss das Buch zurückgeben!");
+		assertTrue(List.of(buch, buch2).containsAll(verwaltung.sucheNachAuthor("Robert Test")), "Es müssen die Bücher zurückgeben werden!");
 	}
 
 	@Test
