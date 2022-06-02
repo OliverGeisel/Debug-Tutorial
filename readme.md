@@ -1,15 +1,52 @@
 # Debug-Tutorial
+
 Dies ist eine Einführung in das Debugging mit IDEs. Es soll anhand mehrerer kleiner Beispiele die Grundlagen, für Bugs
 und Debugging, verständlich beigebracht werden.
 Wenn die Grundlagen abgeschlossen wurden, dann soll in einem großen Beispiel das Erlernte geübt werden.
 
 Die Einführung, mit den entsprechenden Java-Dateien, ist in dem Ordner "start/src/main/java" zu finden.
 
+## Bugs
+
+Bugs ist ein alltäglicher Begriff für Fehler. Genauer gesagt für Laufzeitfehler. Das bedeutet, nur wenn das Programm
+ausgeführt wird, ist eine ungewünschte Folge zu beobachten.
+Jeder Bug wird aber durch eine Ursache erst zum Bug. Diese ist meist im Code versteckt. Leider wird auch gerne mal die
+Ursache als Bug bezeichnet und kann damit zur Verwirrung führen.
+Die Begriffe, die sich dafür in der Industrie genutzt werden lauten etwas anders und können
+bei [ISTQB](https://www.german-testing-board.info/lehrplaene/istqbr-certified-tester-schema/entwicklungstester/)
+oder [IEEE](https://ieeexplore.ieee.org/document/5399061) nachgelesen werden.
+Im weiteren Verlauf des Textes bleiben wir jedoch bei den "einfacheren" Begriffen Bug, Fehler und Ursache.
+
+Die Ursachen für Bug können dabei verschieden sein.
+Mögliche Ursachen sind:
+
+* Syntax - ein Zeichen vergessen oder zu viel
+* Semantik - Interpretation ist falsch/ > statt < in als vergleich
+* Logik - Abfolge des Programmes in falscher Reihenfolge
+
+### Einen Bug finden
+
+Bugs kündigen sich nicht an. Sie können nur bemerkt werden. Es gibt zwei Möglichkeiten, wie ein Bug bemerkt werden kann.
+
+1. Ein falsches Ergebnis wurde ausgegeben.
+2. Eine Exception/ Absturz des Programmes trat auf.
+
+Die erste Variante werden wir als Nächstes kennenlernen. Im Beispiel "summeVonBis" wird ein falscher Wert ausgegeben.
+Leider kann dies sehr schnell übersehen werden, weshalb genau dafür Tests existieren und den zweiten Teil dieser
+Einführung sind.
+
+Die zweite Möglichkeit ist leichter zu bemerken, da sie zu einem Anhalten des Programmes führt. Oft steht auch noch die
+Nachricht in der Fehlerausgabe.
+Wie diese Nachricht zu interpretieren ist, wird im folgenden Kapitel "Stack trace lesen und verstehen" erklärt.
 
 ## Wie es nicht geht!
-In der Datei *Breakpoint.java* enthält eine Funktion summeVonBis(a,b). Diese Funktion soll die Summe von a bis b (inklusive beider Zahlen) zurückgeben.
-Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch. Auch die dazugehörigen Tests (src/test/java/BreakpointTest.java) schlagen fehl.
-Analysiert man jetzt den Code, so findet man ziemlich schnell den Fehler. Doch um den zu verstehen, wozu ein Debugger gebraucht wird, sei jetzt mal angenommen der Fehler wird nicht
+
+In der Datei *Breakpoint.java* ist eine Funktion summeVonBis(a,b). Diese Funktion soll die Summe von a bis b (inklusive
+beider Zahlen) zurückgeben.
+Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch. Auch die dazugehörigen Tests (
+src/test/java/BreakpointTest.java) schlagen fehl.
+Analysiert man jetzt den Code, so findet man ziemlich schnell den Fehler. Doch um den zu verstehen, wozu ein Debugger
+gebraucht wird, sei jetzt mal angenommen der Fehler wird nicht
 auf den ersten Blick gefunden.
 
 ### Was man instinktiv tut.
@@ -36,15 +73,15 @@ Da überall print-Statements gesetzt werden müssen, ist das der Code damit übe
 wurde müssen alle print-Statements entfernt werden und dabei können leicht Anweisungen übersehen werden.\
 
 Ein weiteres Problem ist, dass das Programm durchläuft und nicht angehalten werden kann. Es muss die gesamte Ausgabe
-durchsucht und verstanden werden, um zu wissen, was an welcher Stelle etwas passiert ist. Es wäre also gut auf Wunsch
+durchsucht und verstanden werden, um zu wissen, was an welcher Stelle passiert ist. Es wäre also gut auf Wunsch
 anzuhalten und dann Schritt für Schritt voranzugehen.
 Das Könnte mit einer Input-Abfrage programmiert werden, aber auch das muss am Ende wieder entfernt werden.
+
 Das nächste Problem ist, dass die Werte nicht verändert werden können. Das klingt erst mal nutzlos, es gibt aber
 Situationen, in denen man zu Testzwecken den Wert einer Variable ändern möchte, um ein anderes Verhalten als normal zu
 erhalten.
 Des Weiteren ist die Übersicht, durch die vielen Ausgaben, sehr schwer. Eine Filterung der Ausgaben muss deshalb mit
-programmiert
-werden.
+programmiert werden.
 
 ### Etwas besser aber...
 
@@ -66,36 +103,12 @@ mitgelieferten Informationen sollten deshalb gut gewählt sein.
 Logging sollte aber eben nicht genutzt werden, um einen Fehler zu finden und nach dem Beheben des Fehlers das Logging
 wieder zu entfernen.
 
-## Bugs
-
-Bugs ist ein alltäglicher Begriff für Fehler. Genauer gesagt für Laufzeitfehler. Das bedeutet, nur wenn das Programm
-ausgeführt wird, ist eine ungewünschte Folge zu beobachten.
-Jeder Bug wird aber durch eine Ursache erst zum Bug. Diese ist meist im Code versteckt. Leider wird auch gerne mal die
-Ursache als Bug bezeichnet und kann damit zur Verwirrung führen.
-Die Begriffe, die sich dafür in der Industrie genutzt werden lauten etwas anders und können
-bei [ISTQB](https://www.german-testing-board.info/lehrplaene/istqbr-certified-tester-schema/entwicklungstester/)
-oder [IEEE](https://ieeexplore.ieee.org/document/5399061) nachgelesen werden.
-Im weiteren Verlauf des Textes bleiben wir jedoch bei den "einfacheren" Begriffen Bug, Fehler und Ursache.
-
-### Einen Bug finden
-
-Bugs kündigen sich nicht an. Sie können nur bemerkt werden. Es gibt zwei Möglichkeiten, wie ein Bug bemerkt werden kann.
-
-1. Ein falsches Ergebnis wurde ausgegeben.
-2. Eine Exception/ Absturz des Programmes trat auf.
-
-Die erste Variante haben wir schon am Anfang kennengelernt. Im Beispiel summeVonBis war der erwartete wert nicht gleich
-dem ausgegeben. Leider kann dies sehr schnell übersehen werden, weshalb Tests genau dafür existieren.
-Die zweite Möglichkeit ist leichter zu bemerken, da sie zu einem Anhalten des Programmes führt. Oft steht auch noch
-Nachicht in der Fehlerausgabe.
-Wie diese Nachricht zu interpretieren ist, wird im folgenden Kapitel erklärt.
-
 ## Stack trace lesen und verstehen
 
 Wenn eine nicht gefangene Exception in Java auftritt, dann wird ein sogenannter Stack Trace ausgegeben.
 Dieser enthält 4 wichtige Informationen:
 
-1. Name des Threads in dem die Exception auftrat
+1. Name des Threads, in dem die Exception auftrat
 2. Typ der Exception
 3. Beschreibung/ Grund der Exception
 4. "Trac" bzw. Call Stack
@@ -106,14 +119,15 @@ Der Name des Threads ist bei single threaded-Anwendungen immer der main-Thread (
 Anwendung mehrere Threads nutzt.\
 Der Typ der Exception ist schon wichtiger. Er soll eine Einordnung geben, wieso der Fehler auftrat. Deswegen sollten
 auch immer die Typen der Exception gut gewählt und beschreibend sein.\
-Die konkrete Information, warum der Fehler auftrat, soll dann die Beschreibung der Exception geben. In *
-ExceptionBeispiele.java* gibt es ein Beispiel, das keine Informationen über die Ursache gibt. Deshalb sollte immer gut
+Die konkrete Information, warum der Fehler auftrat, soll dann die Beschreibung der Exception geben.
+In *ExceptionBeispiele.java* gibt es ein Beispiel, das keine Informationen über die Ursache gibt. Deshalb sollte immer
+gut
 überlegt werden, welche Exception geworfen wird und welche Information mitgegeben wird.  
 Beispielsweise gibt es in der Datei *ExceptionBeispiele.java*, wenn man die Anwendung mit dem Argument 2 startet, einen
 Stack Trace der eine ```NoSuchElementException``` wirft und als Grund "No value Present!" ausgibt.
 Beide Informationen zusammen sagen, dass ein bestimmtes Element gesucht wurde (Exception), es aber nicht gefunden wurde,
 da in dem genutzten Objekt kein Wert verfügbar war (Grund).
-Das lässt darauf schließen, dass irgendwo muss ```null``` einer Variable zugewiesen worden sein.
+Das lässt darauf schließen, dass irgendwo ```null``` einer Variable zugewiesen worden sein muss.
 
 #### Den Ort des Fehlers einschränken
 
@@ -121,14 +135,15 @@ Die Information, in welcher Zeile der Fehler geworfen wurde, steht im "Trace" (O
 Bezeichnung dafür. Es sind viele StackTraceElemente, die alle etwas repräsentieren. Wenn keine weitere Exception
 geworfen wurde -siehe weiter unten- ist er identisch zum call stack, der auch execution stack genannt wird, zu dem
 Zeitpunkt, als
-die Exception auftrat. Der Name wird hier verwendet, um eine Bezeichnung dafür zu haben). Die Information steht dabei *
-nicht* am Ende des Stackes, sondern ganz oben. Direkt nach dem Grund der Exception.
+die Exception auftrat. Der Name wird hier verwendet, um eine Bezeichnung dafür zu haben).
+Die Information steht dabei **nicht** am Ende des Trace, sondern ganz oben. Direkt nach dem Grund der Exception.
 In dem zuvor genannten Beispiel ist es die Zeile 143 in der Klasse Optional des JDK. Dort findet man auch die
-entsprechende Zeile ```throw new NoSuchElementException("No value present!");```.
+entsprechende Zeile ```throw new NoSuchElementException("No value present!");```.\
 Das sagt uns jetzt aber nur wo sie geworfen wurde. Das ist aber nicht die Zeile, die den Fehler verursacht. Deshalb muss
 eine Zeile weiter unten im "Trace" geschaut werden.
 Dort sieht man, dass in Zeile 24 der *ExceptionBeispiele.java* in der Methode "tiefeException" der Aufruf des Optionals
-war. Da man im Normalfall davon ausgehen kann, dass die Klassen im JDK korrekt sind, muss der Fehler in der Nähe dieser
+war.
+Da man im Normalfall davon ausgehen kann, dass die Klassen im JDK korrekt sind, muss der Fehler in der Nähe dieser
 Zeile 24 liegen.\
 Eine weitere Hilfe bietet hier die JavaDoc von ```Optional.get()```. In dieser steht, dass die Exception nur geworfen
 wird, wenn der Wert innerhalb des Optionals ```null``` ist.
@@ -164,12 +179,15 @@ Dieser Modus ist deutlich langsamer, als der normale Modus. In IDEs ist dieser M
 extra Button (meist ein Käfer-Symbol) startbar.
 Überwiegend ändert sich dabei die Ansicht in der IDE oder ein extra Fenster erscheint.
 
-**Aufgabe:** Finden Sie diesen Button zum Starten des Debug-Modus in ihrer IDE. Hier kann wieder die Datei *
-Breakpoint.java* genommen werden.
+**Aufgabe:** Finden Sie diesen Button zum Starten des Debug-Modus in ihrer IDE.
+Hier kann wieder die Datei *Breakpoint.java* genommen werden.
 
 ### Breakpoints
-Wenn der Debug-Modus gestartet wurde, dann sollte nix besonders passieren. Lediglich in der Konsole stehen zwei extra Zeilen.
-Das liegt daran, dass der Debugger nicht weiß, wann er was tun soll. So läuft er einfach ganz normal durch das Programm.\
+
+Wenn der Debug-Modus gestartet wurde, dann sollte nichts besonders passieren. Lediglich in der Konsole stehen zwei extra
+Zeilen.
+Das liegt daran, dass der Debugger nicht weiß, wann er was tun soll. So läuft er einfach ganz normal durch das
+Programm.\
 Es wird also eine Markierung benötigt, die dem Debugger sagt: "Hier bitte halten!" Das erledigt ein Breakpoint.
 
 Breakpoints sind Haltepunkte im Code, die der Entwickler selbständig setzt. Sie werden gesetzt, indem man links neben
@@ -182,22 +200,23 @@ aktiviert ist.
 
 **Wichtig!** Ein Breakpoint hält **vor** der markierten Zeile. Die Zeile wurde also noch nicht ausgeführt.
 
-**Aufgabe:** Setzen Sie an den Anfang eines Programms (Breakpoint.java) einen Breakpoint und starten Sie den
-Debug-Modus. Das Programm
-sollte an dieser Stelle halten und die Fenster, des Debug-Modus, sollten nun gefüllt sein.
+**Aufgabe:** Setzen Sie an den Anfang eines Programms (*Breakpoint.java*) einen Breakpoint und starten Sie den
+Debug-Modus. Das Programm sollte an dieser Stelle halten und die Fenster, des Debug-Modus, sollten nun gefüllt sein.
 
 #### Breakpoint Arten
 
 Der normale Breakpoint ist ein Line-Breakpoint. Dieser hält in der bzw. vor der markierten Zeile.
 Es gibt aber auch andere Breakpoints, die nur bei einem Lambda-Ausdruck halten.
-Auch die Methode kann einen Breakpoint besitzen. Jedoch verlangsamen Methoden-Breakpoints das System sehr und sollten
+Auch die Methode kann einen Breakpoint besitzen. Jedoch können Methoden-Breakpoints das System sehr verlangsamen und
+sollten
 deswegen nur begrenzt eingesetzt werden.
 Ein normaler Line-Breakpoint in der ersten Zeile des Rumpfes funktioniert genauso.\
 Die letzte Art sind bedingte Breakpoints. Diese können beispielsweise bei einem Schleifendurchlauf erst nach fünfmaligem
 passieren aktiv werden und eben erst den sechsten Lauf pausieren.
 
-**Aufgabe:** In der Datei *BreakpointArten.java* ist eine Methode mit Kommentaren. Diese Kommentare beschreiben die
+**Aufgaben:** In der Datei *BreakpointArten.java* ist eine Methode mit Kommentaren. Diese Kommentare beschreiben die
 Breakpoint Arten. Setzen Sie diese in die entsprechende Zeile ein. Testen Sie die Breakpoints.
+
 Für bedingte-Breakpoints gibt es eine extra Datei.\
 In *BreakpointBedingung.java* ist es das Ziel sich pi zu näheren. Jedoch ist ein Fehler im Programm.
 Um zumindest das letzte Ergebnis vor dem Fehler zu erhalten, soll der Breakpoint nur vor dem Ausführen der bösen Aktion
@@ -206,14 +225,13 @@ Es könnte auch anders gelöst werden, jedoch soll hier ein bedingter Breakpoint
 sonst ignoriert wird.
 Die entsprechende zeile ist im Code mit einem Kommentar markiert.
 
-
 ### Im Code vorangehen
 
 Es gibt viele verschiedene Möglichkeiten im Code voranzukommen. Die Gängigsten sind:
 
 - Step over → geht zum nächsten Befehl, der folgt.
 - Step into → springt in die folgende Methode hinein und wird dort weiter geführt.
-- Step out → Gegenteil zu step into. Spring aus der Methode und landet in der Methode die im Stack "darunter" liegt.
+- Step out → Gegenteil zu step into. Spring aus der Methode und landet in der Methode die im Stack "darunter" liegt und.
 - Continue → führt so lange fort bis der nächste Breakpoint kommt.
 
 Weitere Optionen, die aber nur manche IDEs haben, sind:
@@ -223,41 +241,97 @@ Weitere Optionen, die aber nur manche IDEs haben, sind:
   Dabei können aber Änderungen, die Objekte außerhalb der Methode betreffen, erhalten bleiben und so das Programm kaputt
   machen.
 
-**Aufgabe:** Finden Sie diese Möglichkeiten in der IDE ihrer Wahl. Die Datei *Breakpoint.java* kann dabei helfen die Funktion dieser Buttons zu verstehen 
-
+**Aufgabe:** Finden Sie diese Möglichkeiten in der IDE ihrer Wahl. Die Datei *Breakpoint.java* kann dabei helfen die
+Funktion dieser Buttons zu verstehen.
 
 ### Auslesen/Manipulation des Speichers
 
 Wenn ein Breakpoint erreicht wurde, so können alle Objekte und Variablen, die zu dieser Zeit existieren eingesehen
 und manipuliert werden.
+
 #### Auslesen
+
 Im Normalfall sollte nun ein "Variablen"-Fenster auftauchen. In diesem sind Bezeichnungen wie this, args usw zu finden.
-Das sind die momentanen Objekte, die in dem aktuellen Scope genutzt werden können. 
-Da Objekte, aus mehreren Teilen bestehen, können auch diese in dem Variablen-Fenster angesehen werden. 
+Das sind die momentanen Objekte, die in dem aktuellen Scope genutzt werden können.
+Da Objekte, aus mehreren Teilen bestehen, können auch diese in dem Variablen-Fenster angesehen werden.
 
 #### Manipulation
-Manchmal ist es sinnvoll die Objekte während des Debugging zu ändern. Damit kann beispielsweise ein ```assert condition;``` geprüft werden.
-Eine andere Möglichkeit wäre es in einem if-Statement die Variablen in der condition zu ändern und damit in den anderen Zweig zu gehen, als eigentlich vorgesehen.
-Leider lassen sich nicht alle Variablen ändern. Variablen/Attribute, die mit ```final``` gekennzeichnet sind, können nicht geändert werden. Auch ein Debugger kann das nicht umgehen. 
 
-**Aufgabe:** Öffnen Sie WerteManipulation.java. Dieser Code darf *nicht* verändert werden. 
-Wählen Sie ein Level durch die Angabe eines zusätzlichen Programmargumentes. Ziel ist es das Level zu absolvieren, indem durch den Debugger die Werte der Variablen geändert werden.
-Ein Level ist geschafft, wenn am Ende "Glückwunsch! Du hast Level X abgeschlossen!" auf der Konsole ausgegeben wird. 
-**Achtung** Level 4 ist sehr schwer und benötigt deswegen etwas an Überlegung.
+Manchmal ist es sinnvoll die Objekte während des Debugging zu ändern. Damit kann beispielsweise
+ein ```assert condition;``` geprüft werden.
+Eine andere Möglichkeit wäre es in einem if-Statement die Variablen in der condition zu ändern und damit in den anderen
+Zweig zu gehen, als eigentlich vorgesehen.
+Leider lassen sich nicht alle Variablen ändern. Variablen/Attribute, die mit ```final``` gekennzeichnet sind, können
+nicht geändert werden. Auch ein Debugger kann das nicht umgehen.
 
+**Aufgabe:** Öffnen Sie *WerteManipulation.java*. Dieser Code darf **nicht** verändert werden.
+Wählen Sie ein Level durch die Angabe eines zusätzlichen Programmargumentes. Ziel ist es das Level zu absolvieren, indem
+durch den Debugger die Werte der Variablen geändert werden.
+Ein Level ist geschafft, wenn am Ende "Glückwunsch! Du hast Level X abgeschlossen!" auf der Konsole ausgegeben wird.
+**Achtung!** Level 4 ist sehr schwer und benötigt deswegen etwas an Überlegung.
 
 ### Frame stack
-Ein weiters Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen 
+
+Ein weiters Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen
 und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode sein.
 
+**Aufgabe:** In der Datei *FrameStack.java* ist eine Klasse mit drei Methoden, die alle eine lokale Variable "a"
+besitzen.
+Gehen Sie Schrittweise von der ersten Methoden bis zur letzten! Wenn Sie die tiefste Methode erreicht haben,
+nutzen Sie das Frame Fenster um den Wert der "a" Variable in der "höchsten Methode" (erste aufgerufene) zu ändern.
+Kehren sie dann zu der Methode, in der das Programm hält zurück und gehen sie im Programm voran.
+**Beobachten Sie das Variablen-Fenster über die ganze Zeit!**
 
+## Tests
 
+Tests geben die Grundlage fürs Debugging. Ohne Tests gibt es keine registrierten Fehlerwirkungen. Ohne Fehlerwirkungen
+gibt es keine bemerkten Bugs. Ohne Bugs kein Debugging.
 
+Tests können beide Auswirkungen von Bugs feststellen. Jedoch müssen Test dies explizit suchen. Das sorgt dazu, dass sehr
+viele Tests geschrieben bzw. durchgeführt werden.
 
+### Mehr als public
 
+Heutzutage werden (zumindest in Java oder Kotlin) Quellcode (Productioncode) und Tests in zwei verschiedene Ordner
+gepackt.
+so ist beispielsweise der Quellcode in "src" und der Testcode in "test" lokalisiert. Jedoch ist innerhalb des Ordners
+die Struktur identisch.\
+Wenn die Klasse *Person.java* in src/de/uni/core lokalisiert ist, so würde die entsprechende Testklasse *
+PersonTest.java* in test/de/uni/core lokalisiert sein.
+Dadurch sind beide Klassen im package "de.uni.core". Damit bekommt auch *PersonTest.java* neben Methoden/Attributen, die
+mit *public* gekennzeichnet sind, auch Zugriff auf die Elemente, die mit *package* oder *protected* gekennzeichnet sind.
 
-## Tests und Debugging
-Dies ist das große Beispiel, in dem die neuen Kenntnisse angewendet und gefestigt werden sollen. 
+### Kein private
+
+Wenn jetzt schon die ersten drei Modifier ohne Probleme für die Tests zugänglich sind, bleibt nur noch die Frage, wie
+testen wir *private* Methoden/Attribute?
+Die kurze Antwort: **"Garnicht!"**\
+Der Grund ist, wir müssen es nicht. *private* Methoden sollen das interne Verhalten steuern. Durch den Aufruf dieser
+Methoden soll das äußere Verhalten erreicht werden.
+Das bedeutet, wir testen private implizit durch die anderen Methoden. Es ist in der Regel schlechtes Design, wenn
+*private* explizit getestet werden muss und nicht durch public/package/protected Methoden aufgerufen wird.
+
+#### Die Ausnahme
+
+Es gibt aber auch Situationen, in denen *private* getestet werden muss. Das ist aber die Ausnahme.
+In diesem Fall wird Reflection genommen. Dabei wird "eine Ebene" höher gegangen und es wird nicht mehr mit Objekten "
+gearbeitet", sondern mit Klassen.
+Weil Klassen Methoden enthalten, können wir durch die Reflection auf die Methoden zugreifen und umgehen damit die
+Einschränkungen, die *private* hat.\
+Es sollte dennoch sparsam eingesetzt werden.
+
+**Hinweis:** In *WerteManipulation.java* gibt es in level4() einen größeren Abschnitt, der Reflection nutzt. Dieser Teil
+umgeht die
+private Einschränkung, um ein neues Objekt zu erzeugen und zu setzen.
+
+### JUnit
+
+To-do kommt noch!
+
+## Bibliothek
+
+Dies ist das große Beispiel, in dem die neuen Kenntnisse angewendet und gefestigt werden sollen.
+
 ### Situation
 
 Die HelloLibrary wurde inzwischen um eine Mitarbeiterverwaltung und ein Kundenregister erweitert.
@@ -281,8 +355,10 @@ Tests, die bereits zu Anfang erfolgreich sind, sollen als Hilfe dienen, wo der F
 Da nicht alle Klassen getestet sind muss hier durch cleveres Debuggen der Fehler gefunden werden.
 
 ### Die Bibliothek
-Die Verwaltung der Bibliothek besteht aus einer Bestandsverwaltung, Mitarbeiterverwaltung und dem Kundenregister. 
-Die Bibliothek besitzt jetzt Leseräume, sowie eine Werkstatt. An Terminals (BesucherComputer, AngestelltenComputer) können Dienste der Bibliothek genutzt werden.
+
+Die Verwaltung der Bibliothek besteht aus einer Bestandsverwaltung, Mitarbeiterverwaltung und dem Kundenregister.
+Die Bibliothek besitzt jetzt Leseräume, sowie eine Werkstatt. An Terminals (BesucherComputer, AngestelltenComputer)
+können Dienste der Bibliothek genutzt werden.
 
 ### Verschmutzbare Objekte
 
@@ -290,11 +366,16 @@ Jeder Arbeitsplatz, Leseraum, jedes Regal und alle Bücher werden über die Zeit
 Reinigungskraft gesäubert werden.
 
 ### Personal
-Es gibt drei Arten von Mitarbeitern. 
-- Bibliothekare arbeiten an Tresen, und vergeben die Leseräume der Bibliothek und
-können am Terminal nach Büchern suchen. Sie können auch neue Besucher in der Bibliothek anlegen (Kundenregister).
-- Reinigungskräfte säubern alle Arbeitsplätze. Regale und die darin enthaltenen Bücher werden ebenfalls von den Reinigungskräften gesäubert.  
-- In der Werkstatt wird ein beschädigtes Buch von einem Restaurator wieder in stand gesetzt und dann zurück in ein Regal gestellt.
+
+Es gibt drei Arten von Mitarbeitern.
+
+- *Bibliothekare* arbeiten an Tresen, und vergeben die Leseräume der Bibliothek und
+  können am Terminal nach Büchern suchen. Sie können auch neue Besucher in der Bibliothek anlegen (Kundenregister).
+- *Reinigungskräfte* säubern alle Arbeitsplätze. Regale und die darin enthaltenen Bücher werden ebenfalls von den
+  Reinigungskräften gesäubert.
+- In der Werkstatt wird ein beschädigtes Buch von einem *Restaurator* wieder in stand gesetzt und dann zurück in ein
+  Regal
+  gestellt.
 
 ### Besucher
 
@@ -346,7 +427,8 @@ folgenden Kriterien durchsucht werden,
 2. nach ISBN
 3. nach Titel
 4. Nach Treffer
-   **Hinweis:** "Nach Treffer" kann selbst implementiert werden.
+
+**Hinweis:** "Nach Treffer" kann selbst implementiert werden.
 
 ### Leseräume
 
