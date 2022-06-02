@@ -21,7 +21,9 @@ public interface Person {
 	/**
 	 * @return Vorname plus Nachname.
 	 */
-	public String getVollerName();
+	default public String getVollerName() {
+		return getVorname() + " " + getNachname();
+	}
 
 	/**
 	 * @return Alter der Person.
