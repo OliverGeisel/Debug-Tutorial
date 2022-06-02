@@ -38,7 +38,6 @@ class BestandsVerwaltungTest {
 	void setUp() {
 		besucher = new Studierender(1, "Studierender", "Teststudierender");
 
-
 		regal2 = new Regal(2, 10, "Regal2");
 		MockitoAnnotations.openMocks(this);
 
@@ -203,7 +202,7 @@ class BestandsVerwaltungTest {
 		verwaltung.ausRegalNehmen(buch);
 		when(regal1.isVoll()).thenReturn(false, true);
 		for (int i = 0; i < 21; i++) {
-			verwaltung.neuesBuchHinzufuegen(new Buch("Test2-Buch",ISBN.NullISBN));
+			verwaltung.neuesBuchHinzufuegen(new Buch("Test2-Buch", ISBN.NullISBN));
 		}
 		assertThrows(VerwaltungsException.class, () -> verwaltung.inEinRegalStellen(buch), "Wenn kein Platz mehr ist, muss eine VerwaltungsException kommen");
 	}
