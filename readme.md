@@ -326,7 +326,143 @@ private Einschränkung, um ein neues Objekt zu erzeugen und zu setzen.
 
 ### JUnit
 
-To-do kommt noch!
+JUnit ist ein Testframework für Java. Die aktuelle major-Version ist die 5.x.x. Inzwischen besteht JUnit5 auch aus
+mehreren Teilprojekten.
+Hier wird allerdings nur das JUnit Jupiter, das das Testframework ist, benötigt. Für mehr Informationen
+sieh [JUNIT5](https://junit.org/junit5/docs/current/user-guide/).
+
+#### Testmethoden schreiben
+
+Folgender Quellcode kann als Template-Klasse für Unit-Tests genommen werden.
+
+```Java 
+...
+
+public class MeineKlasseTest{
+
+  // def der privaten attribute die zum test gebraucht werden.
+  private MeineKlasse getestetsObjekt;
+
+  // Mock-Objekte
+  @Mock
+  AndereKlasse mockObjekt;
+
+  @BeforeEach
+  void setup(){
+  // init der privaten Attribute
+    MockitoAnnotations.openMocks(this);
+    getestetsObjekt = new MeineKlasse(mockObjekt);
+  
+  // eventuelles Stubbing
+    when(getestetsObjekt.isX()).then(true);
+  }
+  
+  @AfterEach
+  void tearDown(){
+    // Optinaler Reset von Objekten. 
+  }
+
+  @Test
+  void meineTestMethode1(){
+    getestetsObjekt.m1();
+    assertTrue(getestetsObjekt.isGut(), "Nach m1 muss das Objekt als gut gelten!")
+  } 
+  
+  @Test
+  void meineTestMethode2(){
+    assertEquals(mockObjekt, getestetsObjekt.getAndereKlasse(), "Der Getter muss das passende Objekt zurückgeben");
+  } 
+  
+  @Test
+  void meineTestMethode3(){
+    try{
+      getestetsObjekt.methodeMitException();
+      fail("Die Exception muss ausgelöst werden");
+    }catch(NoSuchElementException ne){
+    // Alles Okay
+    }
+  }
+  
+}
+
+```
+
+#### Struktur der Testklasse
+
+Die obige Klasse kann drei Bereiche aufgeteilt werden.
+Die genutzten "Testobjekte als Attribute", der "Initialisierung bzw. das Aufräumen" und die "Testmethoden" (Es sind
+keine offiziellen Bezeichnungen)
+
+Bei Unit-Tests wird nur eine Klasse getestet. In diesem Fall ist es `MeineKlasse`. Diese Klasse benötigt ein Objekt des
+Types `AndereKlasse`.
+Damit dieses Objekt keinen Einfluss auf die Tests hat, wird dieses Objekt gemockt und mit der entsprechenden Annotation
+gekennzeichnet. Weitere Informationen zu Mock bzw. Mockito sind unter [Mockito](https://site.mockito.org) zu finden.\
+All benötige Objekte werden im ersten Bereich als private Attribute niedergeschrieben.
+
+Im zweiten Bereich werden Vor- bzw. Nachbereitungen für jeden Test, innerhalb der Klasse, abgehandelt. Die Methoden, die
+mit `@BeforeEach` gekennzeichnet sind, laufen vor jedem Test.
+In diesen Methode/n werden die Objekte initialisiert. Die Mock-Objekte werden dabei entweder wie in diesem Beispiel alle
+zusammen durch ` MockitoAnnotations.openMocks(this);` oder einzeln durch `mock(...)` initialisiert.
+Das zu testende Objekt bzw. Klasse wird ganz normal durch den Aufruf des Konstruktors initialisiert.\
+Sollte das zu testende Objekt Methoden oder Attribute, der Mock-Objekte, nutzen so werden die entsprechenden Teile
+"simuliert". Beispielsweise kann ein boolean-Getter des Mock-Objektes mit `when(mockObjekt.isX()).thenretrun(true);`
+simuliert werden.
+Damit bekommt das testObjekt jedes Mal, wenn es diese Methode aufruft true zurück.
+Ziel ist es dabei die möglichen Fehler, aus der anderen Klasse, nicht zu haben und damit die Fehler nur innerhalb der zu
+testenden Klasse sind.
+
+Der dritte Abschnitt enthält alle Testmethoden, die die Methoden oder Attribute der Klasse `MeineKlasse` testen.
+Dabei sollte ein gutes Namensschema genommen werden. Jede Methode muss mit `@Test` gekennzeichnet sein.
+Die Methoden dürfen auch **nicht** private sein, da sie sonst nicht als Test-Case ausgeführt werden.
+Da hier Unit-Tests behandelt werden, müssen die Tests atomar sein. Das bedeutet, sie beeinflussen andere Tests nicht.
+Das bedeutet auch, dass die Reihenfolge, der ausgeführten Test, nicht wichtig ist.\
+Innerhalb der Test werden hauptsächlich die `asserX(....)`-Methoden aufgerufen. Wie diese Methoden genutzt werden
+sollten, ist im nächsten Kapitel erklärt.
+
+#### assertX
+
+Todo - Kommt noch
+
+### Tests in IDEs
+
+Die meisten IDEs haben eine Test-Umgebung bereits installiert, oder können über ein Plug-in installiert werden.
+Meist ist JUnit mit integriert.
+
+#### Übersicht der Tests
+
+Nachdem Test ausgeführt wurden, werden sie oft in einem eigenen Fenster angezeigt.
+Oft gibt es noch ein Gesamtergebnis, das anzeigt wie viele Tests fehlschlugen und wie viele erfolgreich waren.
+Die ausgeführten Tests werden dabei auch entsprechend ihres Ergebnisses mit einem Symbol markiert.
+In JUnit gibt es vier mögliche Testausgänge:
+
+* success - Test läuft erfolgreich durch
+* fail - ein assert stimmt nicht
+* abort - eine unerwartete Exception trat auf
+* skipped - Test wurde übersprungen
+
+Je nach IDE werden dabei unterschiedliche Symbole genommen.
+Manchmal werden sogar zwei Arten mit dem gleichen Symbol gekennzeichnet.
+
+**Aufgabe:** In *src/test/java/TestErgebnisse.java* sind verschiedene Testausgänge vorhanden.
+Führen Sie die Tests aus und stellen Sie fest, welcher Test zu welchem Ausgang gehört und welches Symbol die IDE dazu
+anzeigt.
+
+#### Übersicht filtern
+
+Wenn alle Tests des Projektes ausgeführt wurden, dann ist im Normalfall ein großer Teil erfolgreich und ein kleiner Teil
+fehlgeschlagen.
+Oft interessiert einen aber nur die fehlgeschlagenen Tests. Dafür gibt es Filter. Diese blenden alle erfolgreichen Tests
+aus.
+
+**Aufgabe:** führen Sie alle Tests, entweder in start oder bibliothek, aus und lassen Sie nur die fehlgeschlagenen Tests
+anzeigen.
+
+Nachdem jetzt nur noch die fehlerhaften Tests angezeigt werden, können die einzelnen Tests analysiert werden. In der
+Übersicht klickt man einfach auf einen fehlerhaften Test und sieht den Soll- bzw. Istwert, Fehlermessage und den
+entsprechenden stack trace.
+Durch einfaches oder doppeltes klicken auf die Methode spring die IDE in der Regel zum entsprechenden Test.
+Manche IDEs zeigen sogar die Stelle an, wo der Fehler in der Methode, geworfen wurde.
+Ab hier beginnt das Debugging.
 
 ## Bibliothek
 
@@ -352,7 +488,8 @@ Die HelloLibrary-Methoden können als korrekt angesehen werden.
 Es gibt zwei Phasen dieser Aufgabe. Die Erste ist es die Bugs anhand der Tests zu finden. In der zweiten Phase sollen
 dann durch die falschen Konsolen-Outputs Fehler gefunden werden.
 Tests, die bereits zu Anfang erfolgreich sind, sollen als Hilfe dienen, wo der Fehler **nicht** ist.  
-Da nicht alle Klassen getestet sind muss hier durch cleveres Debuggen der Fehler gefunden werden.
+Da nicht alle Klassen getestet sind muss hier durch cleveres Debuggen der Fehler gefunden werden.\
+Die folgenden Abschnitte geben weitere Informationen zur Implementierung.
 
 ### Die Bibliothek
 
