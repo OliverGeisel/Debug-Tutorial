@@ -39,6 +39,8 @@ Die zweite Möglichkeit ist leichter zu bemerken, da sie zu einem Anhalten des P
 Nachricht in der Fehlerausgabe.
 Wie diese Nachricht zu interpretieren ist, wird im folgenden Kapitel "Stack trace lesen und verstehen" erklärt.
 
+<hr>
+
 ## Wie es nicht geht!
 
 In der Datei *Breakpoint.java* ist eine Funktion summeVonBis(a,b). Diese Funktion soll die Summe von a bis b (inklusive
@@ -103,6 +105,8 @@ mitgelieferten Informationen sollten deshalb gut gewählt sein.
 Logging sollte aber eben nicht genutzt werden, um einen Fehler zu finden und nach dem Beheben des Fehlers das Logging
 wieder zu entfernen.
 
+<hr>
+
 ## Stack trace lesen und verstehen
 
 Wenn eine nicht gefangene Exception in Java auftritt, dann wird ein sogenannter Stack Trace ausgegeben.
@@ -163,6 +167,8 @@ Es muss also wieder irgendwie mit dem Optional zu tun haben.
 **Aufgabe:** Führen Sie die "ExceptionBeispiele.java" aus und probieren Sie in allen Fällen die Ursache zu finden.\
 *Hinweis!* Das Beispiel mit dem Programmargument 1 ist nur ein Demonstrationsbeispiel, wie Exceptions nicht aussehen
 sollten.
+
+<hr>
 
 ## Grundlagen des Debuggen mit einer IDE
 
@@ -275,12 +281,27 @@ Ein Level ist geschafft, wenn am Ende "Glückwunsch! Du hast Level X abgeschloss
 Ein weiters Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen
 und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode sein.
 
+In Java werden alle Methoden in Frames abgelegt realisiert. Diese Frames haben neben den Argumenten der Methode, sowie
+den lokalen Variablen noch die Rücksprungadresse und ein paar anderen Objekten.
+Diese Frames werden in einem Stapel (Stack) abgelegt. Das "oberste Element" ist dabei immer die Methode, die aktuell
+ausgeführt wird.
+Der darunter liegende Frame ist die Methode, die die aktuelle Methode aufgerufen hat.
+In diesem Frame können aber auch alle Argumente und lokalen Variablen gelesen und verändert werden, auch wenn sie gerade
+nicht im Scope der aktuell ausgeführten Methode sind.
+
 **Aufgabe:** In der Datei *FrameStack.java* ist eine Klasse mit drei Methoden, die alle eine lokale Variable "a"
 besitzen.
 Gehen Sie Schrittweise von der ersten Methoden bis zur letzten! Wenn Sie die tiefste Methode erreicht haben,
-nutzen Sie das Frame Fenster um den Wert der "a" Variable in der "höchsten Methode" (erste aufgerufene) zu ändern.
-Kehren sie dann zu der Methode, in der das Programm hält zurück und gehen sie im Programm voran.
+nutzen Sie das Frame-Fenster um den Wert der "a" Variable in der "höchsten Methode" (erste aufgerufene) zu ändern.
+Kehren Sie dann zu der Methode, in der das Programm hält zurück und gehen sie im Programm voran.
 **Beobachten Sie das Variablen-Fenster über die ganze Zeit!**
+
+### Zusammenfassung
+
+Todo - wird noch geschrieben
+
+
+<hr>
 
 ## Tests
 
@@ -328,10 +349,10 @@ private Einschränkung, um ein neues Objekt zu erzeugen und zu setzen.
 
 JUnit ist ein Testframework für Java. Die aktuelle major-Version ist die 5.x.x. Inzwischen besteht JUnit5 auch aus
 mehreren Teilprojekten.
-Hier wird allerdings nur das JUnit Jupiter, das das Testframework ist, benötigt. Für mehr Informationen
+Hier wird allerdings nur das JUnit Jupiter, welches das Testframework ist, benötigt. Für mehr Informationen
 sieh [JUNIT5](https://junit.org/junit5/docs/current/user-guide/).
 
-#### Testmethoden schreiben
+#### Testklassen/Unit-Tests schreiben
 
 Folgender Quellcode kann als Template-Klasse für Unit-Tests genommen werden.
 
@@ -401,7 +422,8 @@ All benötige Objekte werden im ersten Bereich als private Attribute niedergesch
 
 Im zweiten Bereich werden Vor- bzw. Nachbereitungen für jeden Test, innerhalb der Klasse, abgehandelt. Die Methoden, die
 mit `@BeforeEach` gekennzeichnet sind, laufen vor jedem Test.
-In diesen Methode/n werden die Objekte initialisiert. Die Mock-Objekte werden dabei entweder wie in diesem Beispiel alle
+In dieser/n Methode/n werden die Objekte initialisiert. Die Mock-Objekte werden dabei entweder, wie in diesem Beispiel,
+alle
 zusammen durch ` MockitoAnnotations.openMocks(this);` oder einzeln durch `mock(...)` initialisiert.
 Das zu testende Objekt bzw. Klasse wird ganz normal durch den Aufruf des Konstruktors initialisiert.\
 Sollte das zu testende Objekt Methoden oder Attribute, der Mock-Objekte, nutzen so werden die entsprechenden Teile
@@ -411,22 +433,44 @@ Damit bekommt das testObjekt jedes Mal, wenn es diese Methode aufruft true zurü
 Ziel ist es dabei die möglichen Fehler, aus der anderen Klasse, nicht zu haben und damit die Fehler nur innerhalb der zu
 testenden Klasse sind.
 
-Der dritte Abschnitt enthält alle Testmethoden, die die Methoden oder Attribute der Klasse `MeineKlasse` testen.
-Dabei sollte ein gutes Namensschema genommen werden. Jede Methode muss mit `@Test` gekennzeichnet sein.
-Die Methoden dürfen auch **nicht** private sein, da sie sonst nicht als Test-Case ausgeführt werden.
-Da hier Unit-Tests behandelt werden, müssen die Tests atomar sein. Das bedeutet, sie beeinflussen andere Tests nicht.
+Der dritte und größte Abschnitt enthält alle Testmethoden, die die Methoden oder Attribute der Klasse `MeineKlasse`
+testen.
+Dabei sollte ein gutes Namensschema genommen werden. Jede Methode, die mit `@Test` gekennzeichnet ist, ist ein
+Test-Case.
+Die Methoden dürfen **nicht** private sein, da sie sonst nicht als Test-Case ausgeführt werden.
+Da hier Unit-Tests behandelt werden, müssen die Tests atomar sein. Das bedeutet, sie beeinflussen keine anderen Tests.
 Das bedeutet auch, dass die Reihenfolge, der ausgeführten Test, nicht wichtig ist.\
-Innerhalb der Test werden hauptsächlich die `asserX(....)`-Methoden aufgerufen. Wie diese Methoden genutzt werden
+Innerhalb der Test werden hauptsächlich die `asserX(...)`-Methoden aufgerufen. Wie diese Methoden genutzt werden
 sollten, ist im nächsten Kapitel erklärt.
 
 #### assertX
 
-Todo - Kommt noch
+`asserX(...)`-Methoden, aus JUnit, sicheren etwas zu. Sie können Vor-, Zwischen- und Nachbedingungen realisieren.\
+Es sei mal angenommen, dass für eine Methode, die getestet werden soll, die Vorbedingung: "der Parameter x muss größer 3
+sein" gilt.
+Dann kann dies durch die Codezeile `assertTrue(x > 3, "Der Parameter x muss größer 3 sein!");` umgesetzt werden.
+In diesem Fall wurde die `asssertTrue(...)`-Methode genommen. Diese nimmt den Boolschen-Ausdruck (Expression) `x > 3`
+und wertet ihn zur Laufzeit aus.
+Wenn der Ausdruck zu `true` evaluiert wird, dann ist alles okay und die Vorbedingung gilt als erfüllt.
+Wenn der Ausdruck hingegen zu `false` ausgewertet wird, dann wirft die `assertTrue(...)`-Methode eine Exception und das
+JUnit-Framework bricht den Test-Case ab un markiert ihn als Fehlschlag und gibt den angegeben String "Der Parameter x
+muss größer 3 sein!" im Testergebnis-Bericht ausgegeben.
+
+Es gibt viele verschiedene `asserX(...)`-Methoden. So gibt es auch noch `asserEquals` mit zwei oder drei Parametern.
+Dabei wird ein Sollzustand, mit einem Istzustand verglichen und optional (3. Parameter) die Fehler-Nachricht beim
+Fehlschlag ausgegeben.
+Die wahl der richtigen assert-Methode kann die Lesbarkeit des Codes erheblich verbessern. So könnte auch das vorherige
+Beispiel mit `asserEquals(true, x > 3, "Der Parameter x muss größer 3 sein!");` realisiert werden.
+Jedoch ist diese Umsetzung etwas komplizierter als die Vorherige.
+
+Eine Übersicht über alle assert-Methoden kann
+bei [JUnit-Javadoc](https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html)
+nachgelesen werden.
 
 ### Tests in IDEs
 
 Die meisten IDEs haben eine Test-Umgebung bereits installiert, oder können über ein Plug-in installiert werden.
-Meist ist JUnit mit integriert.
+Größtenteils ist JUnit mit integriert.
 
 #### Übersicht der Tests
 
@@ -463,6 +507,8 @@ entsprechenden stack trace.
 Durch einfaches oder doppeltes klicken auf die Methode spring die IDE in der Regel zum entsprechenden Test.
 Manche IDEs zeigen sogar die Stelle an, wo der Fehler in der Methode, geworfen wurde.
 Ab hier beginnt das Debugging.
+
+<hr>
 
 ## Bibliothek
 
