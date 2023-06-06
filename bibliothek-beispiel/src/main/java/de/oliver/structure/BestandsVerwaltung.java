@@ -1,3 +1,19 @@
+/*
+ * Copyright 2023 Oliver Geisel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package de.oliver.structure;
 
 import de.oliver.core.Buch;
@@ -25,7 +41,6 @@ public class BestandsVerwaltung {
 
 	private final Werkstatt werkstatt;
 
-
 	public BestandsVerwaltung(Kundenregister kundenregister, Set<Regal> regale) {
 		this.kundenregister = kundenregister;
 		this.regale = regale.toArray(new Regal[1]);
@@ -47,7 +62,6 @@ public class BestandsVerwaltung {
 		return regale.remove(regal);
 	}
 
-
 	private Regal getNichtVollesRegal() {
 		for (Regal regal : regale) {
 			if (!regal.isVoll()) {
@@ -68,7 +82,6 @@ public class BestandsVerwaltung {
 	public String getRegalCode(Buch buch) throws NoSuchElementException {
 		return buchRegalMapping.getOrDefault(buch.getIsbn(), List.of()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow().getCode();
 	}
-
 
 	public Buch sucheNachISBN(ISBN isbn) {
 		int index = Collections.binarySearch(alleBuecher, new Buch("Testbuch", isbn));
@@ -155,7 +168,6 @@ public class BestandsVerwaltung {
 		return verweis;
 	}
 
-
 	public boolean ausleihen(Buch buch, Besucher besucher) {
 		if (!buch.isAusgeliehen()) {
 			buch.ausleihen();
@@ -164,7 +176,6 @@ public class BestandsVerwaltung {
 		}
 		return true;
 	}
-
 
 	/**
 	 * Nimmt ein Buch aus den Regalen.

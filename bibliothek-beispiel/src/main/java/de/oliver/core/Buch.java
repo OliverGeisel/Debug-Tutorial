@@ -1,9 +1,24 @@
+/*
+ * Copyright 2023 Oliver Geisel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package de.oliver.core;
 
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Random;
-
 
 /**
  * Repräsentiert ein Buch in einer Bibliothek.
@@ -63,14 +78,12 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 		beschaedigung = Math.max(0.8, beschaedigung + 0.1);
 	}
 
-
 	/**
 	 * Repariert das Buch wieder und macht es wieder nutzbar.
 	 */
 	public void reparieren() {
 		beschaedigung = 0.01;
 	}
-
 
 	/**
 	 * Gibt Auskunft, ob ein Buch gereinigt werden sollte.
@@ -97,7 +110,6 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	public void verschmutzen() {
 		verschmutzung += 0.07;
 	}
-
 
 	public String getTitel() {
 		return titel;
@@ -188,6 +200,5 @@ public class Buch implements Comparable<Buch>, Verschmutzbar {
 	public int compareTo(Buch o) {
 		return this.isbn.compareTo(o.isbn);
 	}
-
 
 }
