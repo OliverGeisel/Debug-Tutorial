@@ -1,0 +1,16 @@
+-n Debugging
+--description "Eine kleine Beispielanwendung um das Debugging zu erlernen"
+--main-class de.oliver.HelloLibrary
+--main-jar Debug-Tutorial-bibliothek-1.0-SNAPSHOT.jar
+--vendor "Oliver Geisel"
+--app-version "1.1.1"
+--copyright "Copyright (c) 2023 Oliver Geisel"
+--description "Debug Tutorial Bibliothek"
+
+--java-options --enable-preview
+--type exe
+--license-file ..\LICENSE
+
+--win-console
+--win-menu
+--win-shortcut
