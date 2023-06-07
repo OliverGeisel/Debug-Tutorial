@@ -59,7 +59,7 @@ public class Regal implements Verschmutzbar, Iterable<Buch> {
 		RegalSchleife:
 		for (Buch[] brett : inhalt) {
 			ReihenSchleife:
-			for (int i = 0; i < brett.length; i++) {// Todo Bug  Lösung
+			for (int i = 0; i < brett.length; i++) {// Todo Bug Lösung
 				Buch b = brett[i];
 				if (b == null) {
 					brett[i] = buch;

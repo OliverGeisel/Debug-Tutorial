@@ -7,13 +7,15 @@ import de.oliver.person.visitor.Besucher;
 
 import java.util.Collection;
 
-// Anzahl Bugs:
+//Todo Anzahl Bugs: ||||
 public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal {
 	private static int counter = 1;
 	private final int number;
 	private final BestandsVerwaltung bestand;
 
 	public BesucherComputer(BestandsVerwaltung bestand) {
+		if (bestand == null) // Todo Bug Lösung - NullPointerException wenn bestand null ist
+			throw new NullPointerException("BestandsVerwaltung darf nicht null sein");
 		this.bestand = bestand;
 		number = counter;
 		counter++;
@@ -43,8 +45,7 @@ public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal
 	public boolean ausleihen(Buch buch, Besucher besucher) throws VerwaltungsException {
 		if (!besucher.equals(getNutzer()))
 			throw new VerwaltungsException("Du kannst kein Buch für jemand anderen ausleihen");
-		ausleihen(buch);
-		return false;
+		return ausleihen(buch); // Todo Bug Lösung
 	}
 
 	public boolean ausleihen(Buch buch) {
@@ -85,8 +86,10 @@ public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal
 
 
 	public String toString() {
+		// TODO 'bestzt' muss 'besetzt' sein
+		// TODO nutzer != null ? "niemanden" : nutzer zu nutzet == null...
 		// VLT. besser einen StringBuilder
-		return "Das ist Terminal " + number + ". Und es ist mit " + (nutzer != null ? "niemanden" : nutzer) + " bestzt.";
+		return "Das ist Terminal " + number + ". Und es ist mit " + (nutzer == null ? "niemanden" : nutzer) + " besetzt."; // Todo Bug  Lösung
 	}
 
 	@Override
