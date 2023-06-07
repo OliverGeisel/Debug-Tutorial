@@ -83,6 +83,12 @@ public class BestandsVerwaltung {
 		return buchRegalMapping.getOrDefault(buch.getIsbn(), List.of()).stream().filter(it -> it.enthaelt(buch)).findFirst().orElseThrow().getCode();
 	}
 
+	/**
+	 * Sucht nach einem Buch mit der angegebenen ISBN.
+	 *
+	 * @param isbn ISBN des gesuchten Buches
+	 * @return Buch mit der angegebenen ISBN oder null, wenn es nicht gefunden wurde.
+	 */
 	public Buch sucheNachISBN(ISBN isbn) {
 		int index = Collections.binarySearch(alleBuecher, new Buch("Testbuch", isbn));
 		if (index < 0) {

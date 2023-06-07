@@ -366,7 +366,7 @@ public class MeineKlasseTest{
 
   // Mock-Objekte
   @Mock
-  AndereKlasse mockObjekt;
+  private AndereKlasse mockObjekt;
 
   @BeforeEach
   void setup(){
@@ -405,7 +405,6 @@ public class MeineKlasseTest{
   }
   
 }
-
 ```
 
 #### Struktur der Testklasse
@@ -466,6 +465,23 @@ Jedoch ist diese Umsetzung etwas komplizierter als die Vorherige.
 Eine Übersicht über alle assert-Methoden kann
 bei [JUnit-Javadoc](https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html)
 nachgelesen werden.
+
+#### JUnit-Annotationen
+
+In JUnit 5.X gibt es viele Annotationen, die das Testen erleichtern. Viele sind schon in JUnit 4 vorhanden, jedoch gibt
+es auch neue. In der Datei *src/test/java/structure/BesucherComputerTest.java* werden einige der neuen Annotationen
+genutzt und kurz erklärt.
+Annotationen, die in dieser Datei vorkommen sind:
+
+* `@Test` - kennzeichnet eine Methode als Test-Case
+* `@BeforeEach` - kennzeichnet eine Methode, die vor jedem Test-Case ausgeführt wird
+* `@AfterEach` - kennzeichnet eine Methode, die nach jedem Test-Case ausgeführt wird
+* `@DisplayName` - gibt dem Test-Case einen Namen, der im Testergebnis-Bericht angezeigt wird
+* `@RepeatedTest` - kennzeichnet eine Methode als wiederholbaren Test-Case
+* `@TestMethodOrder` - gibt die Reihenfolge der Test-Case-Methoden an
+* `@ParameterizedTest` - kennzeichnet eine Methode als parametrisierten Test-Case
+* `@TestInstance` - gibt an, wie oft die Test-Case-Klasse instanziiert wird
+* `@CsvSource` - gibt eine Liste von Parametern an, die für einen parametrisierten Test-Case genutzt werden
 
 ### Tests in IDEs
 

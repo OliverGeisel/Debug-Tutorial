@@ -25,6 +25,7 @@ import java.util.Collection;
 
 // Anzahl Bugs:
 public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal {
+	public static final String MESSAGE = "Diese Art Terminals unterstützt diese Funktionalität nicht!";
 	private static int counter = 1;
 	private final int number;
 	private final BestandsVerwaltung bestand;
@@ -86,17 +87,17 @@ public class BesucherComputer extends Arbeitsplatz<Besucher> implements Terminal
 	@Override
 	public double getMahngebuehren(Besucher besucher) {
 
-		throw new UnsupportedOperationException("Diese Art Terminals unterstützt diese Funktionalität nicht!");
+		throw new UnsupportedOperationException(MESSAGE);
 	}
 
 	@Override
 	public Leseraum reservieren(Besucher... besucher) {
-		throw new UnsupportedOperationException("Diese Art Terminals unterstützt diese Funktionalität nicht!");
+		throw new UnsupportedOperationException(MESSAGE);
 	}
 
 	@Override
 	public boolean bezahlen(Besucher besucher, double betrag) {
-		throw new UnsupportedOperationException("Diese Art Terminals unterstützt diese Funktionalität nicht!");
+		throw new UnsupportedOperationException(MESSAGE);
 	}
 
 	public String toString() {
