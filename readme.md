@@ -13,7 +13,7 @@ ausgeführt wird, ist eine ungewünschte Folge zu beobachten.
 Jeder Bug wird aber durch eine Ursache erst zum Bug. Diese ist meist im Code versteckt. Leider wird auch gerne mal die
 Ursache als Bug bezeichnet und kann damit zur Verwirrung führen.
 Die Begriffe, die sich dafür in der Industrie genutzt werden lauten etwas anders und können
-bei [ISTQB](https://www.german-testing-board.info/lehrplaene/istqbr-certified-tester-schema/entwicklungstester/)
+bei [ISTQB/GTB](https://www.german-testing-board.info/lehrplaene/istqbr-certified-tester-schema/entwicklungstester/)
 oder [IEEE](https://ieeexplore.ieee.org/document/5399061) nachgelesen werden.
 Im weiteren Verlauf des Textes bleiben wir jedoch bei den "einfacheren" Begriffen Bug, Fehler und Ursache.
 
@@ -21,7 +21,7 @@ Die Ursachen für Bug können dabei verschieden sein.
 Mögliche Ursachen sind:
 
 * Syntax - ein Zeichen vergessen oder zu viel
-* Semantik - Interpretation ist falsch/ > statt < in als vergleich
+* Semantik - Interpretation ist falsch/ > statt < als Vergleich
 * Logik - Abfolge des Programmes in falscher Reihenfolge
 
 ### Einen Bug finden
@@ -72,7 +72,7 @@ Ansonsten stehen unnötige und vlt. sogar verwirrende Zeilen in der Ausgabe, wen
 Diese Lösung ist für kleine Beispiele noch vertretbar. Wenn jedoch Projekte mit tausenden Zeilen Code einen Fehler
 haben, dann ist diese Lösung sehr suboptimal.
 Da überall print-Statements gesetzt werden müssen, ist das der Code damit überschwemmt und nachdem der Fehler behoben
-wurde müssen alle print-Statements entfernt werden und dabei können leicht Anweisungen übersehen werden.\
+wurde müssen alle print-Statements entfernt werden und dabei können leicht Anweisungen übersehen werden.
 
 Ein weiteres Problem ist, dass das Programm durchläuft und nicht angehalten werden kann. Es muss die gesamte Ausgabe
 durchsucht und verstanden werden, um zu wissen, was an welcher Stelle passiert ist. Es wäre also gut auf Wunsch
@@ -115,7 +115,7 @@ Dieser enthält 4 wichtige Informationen:
 1. Name des Threads, in dem die Exception auftrat
 2. Typ der Exception
 3. Beschreibung/ Grund der Exception
-4. "Trac" bzw. Call Stack
+4. "Trace" bzw. Call Stack
 
 #### Passende Beschreibung wählen
 
@@ -145,10 +145,10 @@ In dem zuvor genannten Beispiel ist es die Zeile 143 in der Klasse Optional des 
 entsprechende Zeile ```throw new NoSuchElementException("No value present!");```.\
 Das sagt uns jetzt aber nur wo sie geworfen wurde. Das ist aber nicht die Zeile, die den Fehler verursacht. Deshalb muss
 eine Zeile weiter unten im "Trace" geschaut werden.
-Dort sieht man, dass in Zeile 24 der *ExceptionBeispiele.java* in der Methode "tiefeException" der Aufruf des Optionals
+Dort sieht man, dass in Zeile 40 der *ExceptionBeispiele.java* in der Methode "tiefeException" der Aufruf des Optionals
 war.
 Da man im Normalfall davon ausgehen kann, dass die Klassen im JDK korrekt sind, muss der Fehler in der Nähe dieser
-Zeile 24 liegen.\
+Zeile 40 liegen.\
 Eine weitere Hilfe bietet hier die JavaDoc von ```Optional.get()```. In dieser steht, dass die Exception nur geworfen
 wird, wenn der Wert innerhalb des Optionals ```null``` ist.
 Nun schaut man sich den Code an und sieht, dass ein paar Zeilen darüber ```Optional.ofNullable(null)``` aufgerufen wird.
@@ -194,7 +194,8 @@ Wenn der Debug-Modus gestartet wurde, dann sollte nichts besonders passieren. Le
 Zeilen.
 Das liegt daran, dass der Debugger nicht weiß, wann er was tun soll. So läuft er einfach ganz normal durch das
 Programm.\
-Es wird also eine Markierung benötigt, die dem Debugger sagt: "Hier bitte halten!" Das erledigt ein Breakpoint.
+Es wird also eine Markierung benötigt, die dem Debugger sagt: "Hier bitte halten!"
+Das erledigt ein **Breakpoint**.
 
 Breakpoints sind Haltepunkte im Code, die der Entwickler selbständig setzt. Sie werden gesetzt, indem man links neben
 Zeile im Programmcode einfach oder doppelt klickt.
@@ -243,7 +244,7 @@ Es gibt viele verschiedene Möglichkeiten im Code voranzukommen. Die Gängigsten
 Weitere Optionen, die aber nur manche IDEs haben, sind:
 
 - Run to Cursor → Das Programm läuft bis zum Cursor weiter, oder zum nächsten Breakpoint.
-- Drop Frame → Dies verwirft eine Methode und "resetet" sie. Es startet also die Methode neu.
+- Drop Frame → Dies verwirft eine Methode und "resettet" sie. Es startet also die Methode neu.
   Dabei können aber Änderungen, die Objekte außerhalb der Methode betreffen, erhalten bleiben und so das Programm kaputt
   machen.
 
@@ -278,7 +279,7 @@ Ein Level ist geschafft, wenn am Ende "Glückwunsch! Du hast Level X abgeschloss
 
 ### Frame stack
 
-Ein weiters Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen
+Ein weiteres Fenster sollte "Frames" oder ähnlich heißen. Dort sollte als Erstes die momentane Methode auftauchen
 und darunter alle aufgerufenen Methoden stehen. Die letzte Methode müsste die Main-Methode sein.
 
 In Java werden alle Methoden in Frames abgelegt realisiert. Diese Frames haben neben den Argumenten der Methode, sowie
@@ -326,7 +327,7 @@ mit *public* gekennzeichnet sind, auch Zugriff auf die Elemente, die mit *packag
 
 Wenn jetzt schon die ersten drei Modifier ohne Probleme für die Tests zugänglich sind, bleibt nur noch die Frage, wie
 testen wir *private* Methoden/Attribute?
-Die kurze Antwort: **"Garnicht!"**\
+Die kurze Antwort: **"Gar nicht!"**\
 Der Grund ist, wir müssen es nicht. *private* Methoden sollen das interne Verhalten steuern. Durch den Aufruf dieser
 Methoden soll das äußere Verhalten erreicht werden.
 Das bedeutet, wir testen private implizit durch die anderen Methoden. Es ist in der Regel schlechtes Design, wenn
@@ -350,60 +351,58 @@ private Einschränkung, um ein neues Objekt zu erzeugen und zu setzen.
 JUnit ist ein Testframework für Java. Die aktuelle major-Version ist die 5.x.x. Inzwischen besteht JUnit5 auch aus
 mehreren Teilprojekten.
 Hier wird allerdings nur das JUnit Jupiter, welches das Testframework ist, benötigt. Für mehr Informationen
-sieh [JUNIT5](https://junit.org/junit5/docs/current/user-guide/).
+siehe [JUNIT5](https://junit.org/junit5/docs/current/user-guide/).
 
 #### Testklassen/Unit-Tests schreiben
 
 Folgender Quellcode kann als Template-Klasse für Unit-Tests genommen werden.
 
-```Java 
-...
+```Java
+import static org.junit.jupiter.api.Assertions.*;
 
-public class MeineKlasseTest{
+public class MeineKlasseTest {
 
   // def der privaten attribute die zum test gebraucht werden.
-  private MeineKlasse getestetsObjekt;
+  private MeineKlasse getestetesObjekt;
 
   // Mock-Objekte
   @Mock
   private AndereKlasse mockObjekt;
 
   @BeforeEach
-  void setup(){
-  // init der privaten Attribute
+  void setup() {
+    // init der privaten Attribute
     MockitoAnnotations.openMocks(this);
-    getestetsObjekt = new MeineKlasse(mockObjekt);
-  
-  // eventuelles Stubbing
+    getestetesObjekt = new MeineKlasse(mockObjekt);
+    // eventuelles Stubbing
     when(getestetsObjekt.isX()).then(true);
   }
-  
+
   @AfterEach
-  void tearDown(){
-    // Optinaler Reset von Objekten. 
+  void tearDown() {
+    // Optionaler Reset von Objekten. 
   }
 
   @Test
-  void meineTestMethode1(){
-    getestetsObjekt.m1();
-    assertTrue(getestetsObjekt.isGut(), "Nach m1 muss das Objekt als gut gelten!")
-  } 
-  
+  void meineTestMethode1() {
+    getestetesObjekt.m1();
+    assertTrue(getestetesObjekt.isGut(), "Nach m1 muss das Objekt als gut gelten!");
+  }
+
   @Test
-  void meineTestMethode2(){
-    assertEquals(mockObjekt, getestetsObjekt.getAndereKlasse(), "Der Getter muss das passende Objekt zurückgeben");
-  } 
-  
+  void meineTestMethode2() {
+    assertEquals(mockObjekt, getestetesObjekt.getAndereKlasse(), "Der Getter muss das passende Objekt zurückgeben");
+  }
+
   @Test
-  void meineTestMethode3(){
-    try{
-      getestetsObjekt.methodeMitException();
+  void meineTestMethode3() {
+    try {
+      getestetesObjekt.methodeMitException();
       fail("Die Exception muss ausgelöst werden");
     }catch(NoSuchElementException ne){
     // Alles Okay
     }
   }
-  
 }
 ```
 
@@ -417,7 +416,7 @@ Bei Unit-Tests wird nur eine Klasse getestet. In diesem Fall ist es `MeineKlasse
 Types `AndereKlasse`.
 Damit dieses Objekt keinen Einfluss auf die Tests hat, wird dieses Objekt gemockt und mit der entsprechenden Annotation
 gekennzeichnet. Weitere Informationen zu Mock bzw. Mockito sind unter [Mockito](https://site.mockito.org) zu finden.\
-All benötige Objekte werden im ersten Bereich als private Attribute niedergeschrieben.
+Alle Objekte, die benötigt werden, sind im ersten Bereich als private Attribute niedergeschrieben.
 
 Im zweiten Bereich werden Vor- bzw. Nachbereitungen für jeden Test, innerhalb der Klasse, abgehandelt. Die Methoden, die
 mit `@BeforeEach` gekennzeichnet sind, laufen vor jedem Test.
@@ -429,8 +428,8 @@ Sollte das zu testende Objekt Methoden oder Attribute, der Mock-Objekte, nutzen 
 "simuliert". Beispielsweise kann ein boolean-Getter des Mock-Objektes mit `when(mockObjekt.isX()).thenretrun(true);`
 simuliert werden.
 Damit bekommt das testObjekt jedes Mal, wenn es diese Methode aufruft true zurück.
-Ziel ist es dabei die möglichen Fehler, aus der anderen Klasse, nicht zu haben und damit die Fehler nur innerhalb der zu
-testenden Klasse sind.
+Ziel ist es dabei die möglichen Fehler, aus der anderen Klasse, nicht zu haben und die Fehler nur innerhalb der zu
+testenden Klasse sein können.
 
 Der dritte und größte Abschnitt enthält alle Testmethoden, die die Methoden oder Attribute der Klasse `MeineKlasse`
 testen.
@@ -448,7 +447,7 @@ sollten, ist im nächsten Kapitel erklärt.
 Es sei mal angenommen, dass für eine Methode, die getestet werden soll, die Vorbedingung: "der Parameter x muss größer 3
 sein" gilt.
 Dann kann dies durch die Codezeile `assertTrue(x > 3, "Der Parameter x muss größer 3 sein!");` umgesetzt werden.
-In diesem Fall wurde die `asssertTrue(...)`-Methode genommen. Diese nimmt den Boolschen-Ausdruck (Expression) `x > 3`
+In diesem Fall wurde die `asssertTrue(...)`-Methode genommen. Diese nimmt den Booleschen-Ausdruck (Expression) `x > 3`
 und wertet ihn zur Laufzeit aus.
 Wenn der Ausdruck zu `true` evaluiert wird, dann ist alles okay und die Vorbedingung gilt als erfüllt.
 Wenn der Ausdruck hingegen zu `false` ausgewertet wird, dann wirft die `assertTrue(...)`-Methode eine Exception und das
@@ -518,7 +517,7 @@ aus.
 anzeigen.
 
 Nachdem jetzt nur noch die fehlerhaften Tests angezeigt werden, können die einzelnen Tests analysiert werden. In der
-Übersicht klickt man einfach auf einen fehlerhaften Test und sieht den Soll- bzw. Istwert, Fehlermessage und den
+Übersicht klickt man einfach auf einen fehlerhaften Test und sieht den Soll- bzw. Istwert, Fehlernachricht und den
 entsprechenden stack trace.
 Durch einfaches oder doppeltes klicken auf die Methode spring die IDE in der Regel zum entsprechenden Test.
 Manche IDEs zeigen sogar die Stelle an, wo der Fehler in der Methode, geworfen wurde.
@@ -538,7 +537,7 @@ bekommen.
 Nun soll es auch möglich sein, dass Kunden Bücher ausleihen können und auch zurückgeben können.
 Bücher werden dabei in Regale gestellt. Werden Bücher ausgeliehen, so werden sie aus dem entsprechenden Regal
 genommen. Zwei SHKs haben diese Anwendung gebaut.
-Der eine hat die Tests, der andere den Quellcode geschrieben.
+Der eine hat die Tests, der andere hat den Quellcode geschrieben.
 Leider sind im Quellcode Fehler. Dies wurde durch die Tests herausgefunden.
 Die SHKs sind nicht mehr angestellt und die Fehler müssen schnell behoben werden.
 Die Tests sind **korrekt** implementiert und benötigen **keine Korrektur**.
@@ -586,14 +585,14 @@ jedoch müssen Dozenten keine Strafgebühren zahlen.
 Bücher können höchstens 28 Tage ausgeliehen werden. Danach fallen Mahngebühren an.
 Die Kosten der Rückgabe berechnen sich wie folgt.
 
-1. Für die Tage 1-7 wird jeden Tag 1€ berechnet.
+1. Für die Tage 1-7 wird jeden Tag 1 € berechnet.
 2. Ab dem 8. Tag wird jede angefangene Woche 5 € verlangt.
-3. Ab 43 Tagen wird 2€ pro angefangener Woche verlangt.
-4. Die Strafe darf nie mehr als 100€ betragen
+3. Ab 43 Tagen wird 2 € pro angefangener Woche verlangt.
+4. Die Strafe darf nie mehr als 100 € betragen
 5. Dozenten können das Buch so lange sie wollen ausleihen. Sie zahlen keine Gebühren.
 
 Bei der Rückgabe wird überprüft, ob ein Buch beschädigt ist und ob es rechtzeitig zurückgegeben wurde. Ist die
-Beschädigung über 80%, so wird es zur Restauration in die Werkstatt geschickt. Das Buch ist bis zur fertigen Reparatur
+Beschädigung über 80 %, so wird es zur Restauration in die Werkstatt geschickt. Das Buch ist bis zur fertigen Reparatur
 bzw. bis es wieder in einem Regal ist nicht ausleihbar.
 
 ### Bücher
@@ -610,7 +609,7 @@ repräsentieren.
 
 Jedes Buch kann beschädigt werden. Wenn es eine bestimmte Beschädigung überschreitet, gilt es als kaputt. Ist dies der
 Fall, muss es repariert werden.
-In dieser Aufgabe ist es möglich Bücher über 100% zu beschädigen. Das ist jedoch kein Fehler und vereinfacht lediglich
+In dieser Aufgabe ist es möglich Bücher über 100 % zu beschädigen. Das ist jedoch kein Fehler und vereinfacht lediglich
 das Programm.
 
 #### Ausleihbar
