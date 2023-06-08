@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="ExceptionBeispiele" type="Application" factoryName="Application"
+                   folderName="start" editBeforeRun="true" nameIsGenerated="true">
+        <option name="MAIN_CLASS_NAME" value="ExceptionBeispiele"/>
+        <module name="Debug-Tutorial-start"/>
+        <option name="PROGRAM_PARAMETERS" value="0"/>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
+    </configuration>
+</component>
