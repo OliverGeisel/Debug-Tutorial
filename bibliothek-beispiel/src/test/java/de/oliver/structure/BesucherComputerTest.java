@@ -21,10 +21,12 @@ import de.oliver.core.ISBN;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Studierender;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -32,6 +34,11 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD) // Bestimmt ob Klasse bei jedem Test neu gemacht wird. seit 5.0
 @TestMethodOrder(MethodOrderer.MethodName.class) // Reihenfolge der Tests festlegen seit 5.7
+@ExtendWith(MockitoExtension.class) // Erweiterung der Funktionalität von JUnit. Initialisiert alle mit @Mock und
+// @Spy gekennzeichneten Attribute.
+// Alternative zu 'MockitoAnnotations.openMocks(this);'  seit 5.0
+@Tag("Unit")      // Markiert alle Tests als Unit-Tests und Structure-Tests. Kann genutzt werden um nur bestimmte
+@Tag("Structure") // Gruppen von Tests auszuführen. seit 5.0
 class BesucherComputerTest {
 
 	private BesucherComputer computer;
