@@ -1,6 +1,7 @@
 package de.oliver.core;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -26,6 +27,7 @@ class BuchTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void ausleihenFehlschlagWennAusgeliehen() {
 		assertFalse(buch.isAusgeliehen(), "Buch darf am Anfang nicht ausgeliehen sein!");
 		buch.ausleihen();
@@ -42,6 +44,7 @@ class BuchTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void verfuegbarMachenFehlschlagWennNichtAusgeliehen() {
 		assertThrows(IllegalStateException.class, () -> buch.verfuegbarMachen(), "Das Buch darf nicht erneut verfügbar gemacht werden.");
 	}

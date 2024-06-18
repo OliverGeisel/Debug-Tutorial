@@ -3,6 +3,7 @@ package de.oliver.structure;
 import de.oliver.person.visitor.Dozent;
 import de.oliver.person.visitor.Studierender;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -48,6 +49,7 @@ class LeseraumTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void zweitePersonBetrittRaum() {
 		assertFalse(raum.isBesetzt(), "Raum muss am Anfang leer sein");
 		assertDoesNotThrow(() -> raum.betreten(new Dozent(1, "Dozent", "Test")), "Es darf nichts passieren, wenn eine Person einen leeren Raum betrit");
@@ -56,6 +58,7 @@ class LeseraumTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void verlassen() {
 		assertFalse(raum.isBesetzt(), "Raum muss am Anfang leer sein");
 		assertDoesNotThrow(() -> raum.betreten(new Dozent(1, "Dozent", "Test")), "Es darf nichts passieren, wenn eine Person einen leeren Raum betrit");

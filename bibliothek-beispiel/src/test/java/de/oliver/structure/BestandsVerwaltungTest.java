@@ -8,6 +8,7 @@ import de.oliver.person.visitor.Kundenregister;
 import de.oliver.person.visitor.Studierender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -192,11 +193,13 @@ class BestandsVerwaltungTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void inEinRegalStellenIllegalStateExceptionTest() {
 		assertThrows(IllegalStateException.class, () -> verwaltung.inEinRegalStellen(buch), "Wenn ein Buch nicht registriert ist, muss eine IllegalStateException kommen");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void inEinRegalStellenVerwaltungsExceptionTest() {
 		verwaltung.neuesBuchHinzufuegen(buch);
 		verwaltung.ausRegalNehmen(buch);

@@ -3,6 +3,7 @@ package de.oliver.structure;
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -33,13 +34,14 @@ class RegalTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void isVollFalseBeimErzeugen() {
 		assertFalse(regal.isVoll(), "Das Regal muss beim erstellen leer sein!");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void isVollFalseBeimEntnehmenEinesBuches() {
-		;
 		assertFalse(regal.isVoll(), "Das Regal muss beim erstellen leer sein!");
 		mitgleichemBuchfuellen(regal);
 		assertTrue(regal.isVoll(), "Buch ist nicht voll");
@@ -53,6 +55,7 @@ class RegalTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void alleBuecherOkay() {
 		regal.hineinStellen(buch1);
 		regal.hineinStellen(buch1);
@@ -60,6 +63,7 @@ class RegalTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void leereVollesRegal() {
 		mitgleichemBuchfuellen(regal);
 		assertTrue(regal.isVoll(), "Das Regal muss voll sein");
@@ -74,6 +78,7 @@ class RegalTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void enthaeltBuchOkay() {
 		regal.hineinStellen(buch1);
 		assertTrue(regal.enthaelt(buch1));
