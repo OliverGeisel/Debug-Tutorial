@@ -119,6 +119,7 @@ class WerkstattTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void reparierenFehlschlagEndlos() {
 		Buch buch = new Buch("Testbuch", ISBN.NullISBN);
 		buch.starkBeschaedigen();

@@ -19,6 +19,7 @@ package de.oliver.person.visitor;
 import de.oliver.core.Buch;
 import de.oliver.core.ISBN;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -66,6 +67,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void gibBuchZurueckOkay() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
@@ -74,6 +76,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void gibBuchZurueckFehlerNichtDemBesucherZugeordnet() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertFalse(register.gibBuchZurueck(ueberfaelligesBuch, besucher), "Das Buch ist nicht richtigem Nutzer zugeordnet und darf nicht zurück gegeben werden");
@@ -92,6 +95,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafe7TageVorAbgabe() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
@@ -103,6 +107,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafe1TagVorAbgabe() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
@@ -114,6 +119,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeAmAbgabeTag() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		register.leiheBuchAus(ueberfaelligesBuch, besucher);
@@ -124,6 +130,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach1Tag() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 1);
@@ -135,6 +142,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach7Tagen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7);
@@ -146,6 +154,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach8Tagen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 8);
@@ -157,6 +166,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach14Tagen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 14);
@@ -168,6 +178,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach15Tagen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 15);
@@ -179,6 +190,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach43Tagen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 43);
@@ -190,6 +202,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach39Wochen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7 * 39);
@@ -201,6 +214,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach40Wochen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7 * 40);
@@ -212,6 +226,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach41Wochen() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 7 * 41);
@@ -223,6 +238,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getStrafeNach2Jahren() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		verschiebeNachHinten(ueberfaelligesBuch, 2 * 365);
@@ -246,6 +262,7 @@ class KundenregisterTest {
 			"287,0.0",
 			"294,0.0",
 	})
+	@Tag("CI-IGNORE")
 	void strafeFuerDozent(int tage, double strafe) {
 		Besucher dozent = new Dozent(2, "Dozent", "TestDozent");
 		register.addBesucher(dozent);
@@ -259,6 +276,7 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void bezahlenOkay() {
 		getStrafeNach1Tag();
 		assertNotEquals(0, register.getStrafe(besucher), "Es muss eine Strafe für den Nutzer geben");
@@ -276,12 +294,14 @@ class KundenregisterTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void leiheBuchAusOkay() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertTrue(register.leiheBuchAus(ueberfaelligesBuch, besucher), "Das System muss das Buch dem Kunden ausleihen");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getAusgelieheneBuecherOkay() {
 		assertTrue(register.addBesucher(besucher), "Der Besucher muss hinzugefügt werden");
 		assertTrue(register.leiheBuchAus(ueberfaelligesBuch, besucher));

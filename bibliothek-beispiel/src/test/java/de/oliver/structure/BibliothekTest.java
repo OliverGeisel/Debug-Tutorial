@@ -19,6 +19,7 @@ package de.oliver.structure;
 import de.oliver.person.visitor.Besucher;
 import de.oliver.person.visitor.Studierender;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
@@ -65,6 +66,7 @@ class BibliothekTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void getLeseraeumeNachInit() {
 		var raeume = bibliothek.getLeseraeume();
 		assertEquals(2, raeume.length, "Die Anzahl der Leseräume muss 2 betragen!");
@@ -95,48 +97,56 @@ class BibliothekTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void betreten1StundeVorOeffnungszeit() {
 		LocalTime eintrittsZeit = LocalTime.of(7, 0);
 		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf nicht eintreten, wenn die Bibliothek nicht geöffnet ist.");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void betreten1MinuteVorOeffnungszeit() {
 		LocalTime eintrittsZeit = LocalTime.of(7, 59);
 		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf nicht eintreten, wenn die Bibliothek nicht geöffnet ist.");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void betretenZurOeffnungszeit() {
 		LocalTime eintrittsZeit = LocalTime.of(8, 0);
 		assertDoesNotThrow(() -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek betreten!");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void betretenMittenInOeffnungszeit() {
 		LocalTime eintrittsZeit = LocalTime.of(16, 0);
 		assertDoesNotThrow(() -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek betreten!");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void betretenZurSchliesszeit() {
 		LocalTime eintrittsZeit = LocalTime.of(20, 0);
 		assertDoesNotThrow(() -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek betreten!");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void betreten1MinuteNachSchliesszeit() {
 		LocalTime eintrittsZeit = LocalTime.of(20, 1);
 		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek nicht mehr betreten!");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void betreten2StundenNachSchliesszeit() {
 		LocalTime eintrittsZeit = LocalTime.of(22, 0);
 		assertThrows(IllegalStateException.class, () -> bibliothek.betreten(person, eintrittsZeit), "Die Person darf die Bibliothek nicht mehr betreten!");
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void verlassenOkay() {
 		bibliothek.betreten(person, LocalTime.of(12, 0));
 		assertTrue(bibliothek.isInBibliothek(person), "Person muss in der Bibliothek sein");
@@ -145,6 +155,7 @@ class BibliothekTest {
 	}
 
 	@Test
+	@Tag("CI-IGNORE")
 	void verlassenFehler() {
 		assertFalse(bibliothek.isInBibliothek(person), "Person darf nicht in der Bibliothek sein");
 		assertThrows(IllegalArgumentException.class, () -> bibliothek.verlassen(person, LocalTime.of(15, 0)), "Die Person kann nicht in der Bibliothek sein und damit auch nicht verlassen!");

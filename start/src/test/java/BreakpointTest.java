@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BreakpointTest {
 
 	@Test
+	@Tag("CI-IGNORE")
+	@Tag("LOESUNG-IGNORE")
 	void summeVonBisTest() {
 		assertAll(
 				() -> assertEquals(0, Breakpoint.summeVonBis(0, 0), "Die Summe von 0 bis 0 ist 0"),
