@@ -20,33 +20,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.geisel.oliver</groupId>
     <artifactId>Debug-Tutorial-start</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <name>Start - Beispiele und Einführung</name>
+    <description>
+        In diesem Modul finden Sie Beispiele und Einführungen in die Themen des Debuggings.
+        In der Readme.md des Parent-Projekts sind alle Anweisungen zur Verwendung der Beispiele enthalten.
+
+        Wichtig für diese Beispiele ist, dass Sie die Java-Version 8 verwenden bzw. eine neuere Version, die die
+        Funktionen
+        der Java-Version 8 unterstützt.
+    </description>
+
+
+    <parent>
+        <groupId>de.geisel.oliver</groupId>
+        <artifactId>Debug-Tutorial</artifactId>
+        <version>1.2-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.9.3</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0</version>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
