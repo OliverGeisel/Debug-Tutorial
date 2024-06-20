@@ -5,21 +5,24 @@ Es soll anhand mehrerer kleiner Beispiele die Grundlagen, für Bugs
 und Debugging, verständlich beigebracht werden.
 Wenn die Grundlagen abgeschlossen wurden, dann soll in einem großen Beispiel das Erlernte geübt werden.
 Alle Beispiele und Erklärungen sind in Java geschrieben bzw. beziehen sich auf Java.
-In anderen Programmiersprachen kann es zu Abweichungen kommen.
+In anderen Programmiersprachen kann es sein, dass manche Konzepte etwas anders funktionieren.
 
 Die Einführung, mit den entsprechenden Java-Dateien, ist in dem Ordner `start/src/main/java` zu finden.
+Das große Beispiel, mit den entsprechenden Java-Dateien, ist in dem Ordner `bibliothek-beispiel/src/main/java` zu finden.
 
 ## Bugs
 
-Bugs ist ein alltäglicher Begriff für **Fehler** in der Informatik/Programmierung.
-Genauer gesagt für **Laufzeitfehler**.
-Das bedeutet, nur wenn das Programm ausgeführt wird, ist eine ungewünschte Folge zu beobachten.
-Jeder Bug wird aber durch eine **Ursache** erst zum Bug.
-Diese ist meist im Code versteckt.
+Bugs ist ein allgemeiner Begriff für **Fehler** in der Informatik/Programmierung.
+In der Programmierung sind Bugs oft **Laufzeitfehler** bzw. ein **Fehlerzustand**.
+Dieser Zustand ist unerwünscht und führt zu einer **unerwünschten Folge**.
+Dieser Zustand muss aber erst erreicht werden. Nur wenn das Programm ausgeführt wird kann der Fehlerzustand erreicht werden.
+Jeder Bug wird also erst durch eine **Ursache** zum Bug.
+Diese ist meist im Code versteckt.\
+Es gibt also eine Handlung (Ursache), die durch einen Fehlerzustand (Bug) und zu einer ungewünschten Folge (Wirkung) führt.
 Leider wird auch gerne mal die Ursache als Bug bezeichnet und kann damit zur Verwirrung führen.
 Die Begriffe, die sich dafür in der Industrie genutzt werden, lauten etwas anders und können
 bei [ISTQB/GTB](https://www.german-testing-board.info/lehrplaene/istqbr-certified-tester-schema/entwicklungstester/) oder [IEEE](https://ieeexplore.ieee.org/document/5399061) nachgelesen werden.
-Im weiteren Verlauf des Textes bleiben wir jedoch bei den "einfacheren" Begriffen Bug, Fehler und Ursache.
+Im weiteren Verlauf des Textes bleiben wir jedoch bei den "einfacheren" Begriffen Ursache, Bug, Fehler.
 
 Die Ursachen für Bug können dabei verschieden sein.
 Mögliche Ursachen sind:
@@ -28,16 +31,19 @@ Mögliche Ursachen sind:
 * Semantik - Interpretation ist falsch/ `>` statt `<` als Vergleich
 * Logik - Abfolge des Programmes in falscher Reihenfolge
 
+Der Begriff **Debugging** bezeichnet also die Beseitigung von Ursachen, welche einen Bug auslösen.
+
 ### Einen Bug finden
 
-Bugs kündigen sich nicht an. Sie können nur bemerkt werden.
-Es gibt zwei Möglichkeiten, wie ein Bug bemerkt werden kann.
+Bugs kündigen sich nicht an. Sie können nur durch die Fehlerwirkung bemerkt werden.
+Allgemein gibt es zwei Möglichkeiten, wie ein Bug bemerkt werden kann.
 
 1. Ein falsches Ergebnis wurde ausgegeben
 2. Eine Exception/Absturz des Programmes trat auf
 
 Beide Varianten werden in diesem Projekt vorgestellt.
-Im Beispiel "summeVonBis" wird ein falscher Wert ausgegeben. Die zweite Variante wird primär in den darauffolgenden Beispielen behandelt.
+Im Beispiel "summeVonBis" wird ein falscher Wert ausgegeben.
+Die zweite Variante wird primär in den darauffolgenden Beispielen behandelt.
 Leider kann besonders die erste Variante sehr schnell übersehen werden, weshalb genau dafür **Tests** existieren.
 Deshalb wird im zweiten Teil dieser Einführung das Thema 'Tests' behandelt.
 
@@ -52,9 +58,10 @@ Wie diese Nachricht zu interpretieren ist, wird im folgenden Kapitel ["Stack tra
 In der Datei *Breakpoint.java* ist eine Funktion summeVonBis(a, b).
 Diese Funktion soll die Summe von a bis b (inklusive beider Zahlen) zurückgeben.
 Jedoch ist ein Fehler in dem Programm und das Ergebnis ist falsch.
-Auch die dazugehörigen Tests (`src/test/java/BreakpointTest.java`) schlagen fehl.
-Analysiert man jetzt den Code, so findet man ziemlich schnell den Fehler.
-Doch um den zu verstehen, wozu ein Debugger gebraucht wird, sei jetzt mal angenommen der Fehler wird nicht auf den ersten Blick gefunden.
+Dementsprechend schlagen die dazugehörigen Tests (`src/test/java/BreakpointTest.java`) fehl.
+Es wurde also durch die Fehlerwirkung bemerkt, dass ein Bug im Programm ist.
+Analysiert man jetzt den Code, so findet man ziemlich schnell die Ursache.
+Doch um zu verstehen, wozu ein Debugger gebraucht wird, sei jetzt mal angenommen der Fehler wird nicht auf den ersten Blick gefunden.
 
 ```Java
 public class Breakpoint {
@@ -80,15 +87,16 @@ public class Breakpoint {
 Wenn der Fehler nicht ersichtlich ist, würde ein erster Gedanke sein, die Werte, die sich in der Schleife verändern, auf
 der Konsole auszugeben.
 Das wäre beispielsweise ```System.out.println("run ist: " + run);```.
-*BreakpointPrint.java* zeigt eine Möglichkeit, wie `print` zur Fehlersuche genutzt werden kann.
+*BreakpointPrint.java* zeigt eine Möglichkeit, wie `print` zur Fehlersuche genutzt werden kann.\
 In der Konsole fällt auf, dass "run" höchstens 6 ist.
 Damit fehlt ein Durchlauf und es ist klar, wo der Fehler ist.
 Er ist im Schleifenkopf. Es handelt sich um einen sogenannten "Off by one"-Fehler.
-Das bedeutet, das große Ganze ist korrekt, nur ist die Berechnung um eins falsch.
+Das bedeutet, das große Ganze ist korrekt, nur ist die Berechnung ist um eins falsch.
 Eine Lösung wäre demnach entweder die Bedingung in ```i < b + 1``` oder ```i <= b``` zu ändern.
 
 #### Probleme
 
+Bei diesem Vorgehen gibt es jedoch einige Probleme.
 Für jede Variable, die ausgegeben werden soll, muss eine print-Anweisung geschrieben werden.
 Zudem sind alle print-Anweisungen mit extra Informationen zu versehen, damit der Entwickler überhaupt weiß, welche
 Variable jetzt ausgegeben wurde.
@@ -102,11 +110,11 @@ wurde müssen alle print-Statements entfernt werden und dabei können leicht Anw
 Ein weiteres Problem ist, dass das Programm durchläuft und nicht angehalten werden kann.
 Es muss die gesamte Ausgabe durchsucht und verstanden werden, um zu wissen, was an welcher Stelle passiert ist.
 Es wäre also gut auf Wunsch anzuhalten und dann Schritt für Schritt voranzugehen.
-Das Könnte mit einer Input-Abfrage programmiert werden, aber auch das muss am Ende wieder entfernt werden.
+Das Könnte mit einer Input-Abfrage an bestimmten stellen programmiert werden, aber auch das muss am Ende wieder entfernt werden.
 
 Das nächste Problem ist, dass die Werte nicht verändert werden können.
-Das klingt erst mal nutzlos, es gibt aber Situationen, in denen man zu Testzwecken den Wert einer Variable ändern möchte, um ein anderes Verhalten als normal zu
-erhalten.
+Das klingt erst mal nutzlos, es gibt aber Situationen, in denen man zu Testzwecken den Wert einer Variable ändern möchte,
+um ein anderes Verhalten als normal zu erhalten.
 Des Weiteren ist die Übersicht, durch die vielen Ausgaben, sehr schwer.
 Eine Filterung der Ausgaben muss deshalb mit programmiert werden.
 
@@ -114,8 +122,8 @@ Eine Filterung der Ausgaben muss deshalb mit programmiert werden.
 
 Zumindest zwei Probleme lassen sich mit **Loggern** lösen.
 Durch Logger kann die Filterung deutlich einfacher programmiert werden.
-Auch durch die Nutzung mehrerer Logger bzw. durch die Nutzung der verschiedenen **Level
-** ist die zusätzliche Information und Filterung kein Problem mehr.
+Auch durch die Nutzung mehrerer Logger bzw. durch die Nutzung der verschiedenen
+**Level** ist die zusätzliche Information und Filterung kein Problem mehr.
 Ein Beispiel für das Nutzen eines Loggers ist in der Datei `BreakpointLogging.java` zu finden.
 
 Es bleiben aber die Probleme, dass Code geschrieben und (gegebenenfalls) wieder entfernt werden muss und das Programm nicht unterbrechbar
@@ -128,17 +136,18 @@ Allgemein sollte Logging im Projekt genutzt werden.
 So sollte jede Exception in einem Log stehen und mit dem richtigen Level versehen sein.
 Jedoch hilft Logging beim Debugging nur die Ursache bzw. den Ort des Fehlers zu finden, wenn das Log informativ ist.
 Die Wahl des Logging-Levels und der mitgelieferten Informationen sollten deshalb gut gewählt sein.
-Logging sollte aber eben **nicht genutzt
-** werden, um einen Fehler zu finden und nach dem Beheben des Fehlers das Logging **wieder zu entfernen**.
+Logging sollte aber eben **nicht genutzt** werden, um einen Fehler zu finden und nach dem
+Beheben des Fehlers das Logging **wieder zu entfernen**.
 
 <hr>
 
 ## Stack trace lesen und verstehen
 
+Die Variante, die am ehesten auffällt, wenn ein Bug auftritt, ist die Exception.
 Wenn eine nicht gefangene Exception in Java auftritt, dann wird ein sogenannter **Stack Trace** ausgegeben.
 Dieser enthält 4 wichtige Informationen:
 
-1. Name des Threads, in dem die Exception auftrat
+1. Name des Threads in dem die Exception auftrat
 2. Typ der Exception
 3. Beschreibung/Grund der Exception
 4. "Trace" bzw. Call Stack
@@ -184,9 +193,8 @@ Die Information, in welcher Zeile der Fehler geworfen wurde, steht im "**Trace**
 <p style="background-color: #a4ff98; border-left: 6px solid #2196F3; padding: 10px;">
     Offiziell gibt es keine Bezeichnung dafür. 
 Es sind viele <i>StackTraceElemente</i>, die alle etwas repräsentieren. 
-Wenn keine weitere Exception geworfen wurde (siehe weiter unten) ist er identisch zum call stack, der auch execution stack genannt wird, zu dem
-Zeitpunkt, als
-die Exception auftrat. 
+Wenn keine weitere Exception geworfen wurde (siehe weiter unten), ist er identisch zum call stack, der auch execution stack genannt wird, zu dem
+Zeitpunkt, als die Exception auftrat. 
 Der Name wird hier verwendet, um eine Bezeichnung dafür zu haben
 </p>
 
@@ -196,8 +204,8 @@ Dort findet man auch die entsprechende Zeile ```throw new NoSuchElementException
 Das sagt uns jetzt aber nur wo sie geworfen wurde.
 Das ist aber nicht die Zeile, die den Fehler verursacht.
 Deshalb muss eine Zeile weiter unten im "Trace" geschaut werden.
-Dort sieht man, dass in _Zeile 24_ der `ExceptionBeispiele.java` in der Methode `tiefeException` der Aufruf des Optionals
-war.
+Dort sieht man, dass in _Zeile 24_ der `ExceptionBeispiele.java` in der
+Methode `tiefeException` der Aufruf des Optionals war.
 Da man im Normalfall davon ausgehen kann, dass die Klassen im JDK korrekt sind, muss der Fehler in der Nähe dieser
 Zeile 24 liegen.\
 Eine weitere Hilfe bietet hier die JavaDoc von ```Optional.get()```.
@@ -224,24 +232,30 @@ sollten.
 
 ## Grundlagen des Debuggen mit einer IDE
 
-Da die Änderungen direkt am Code nicht ideal sind, um Fehler zu finden, muss eine ander Lösung gefunden werden.
+Weil Änderungen direkt am Code nicht ideal sind, um Fehler zu finden, muss eine ander Lösung gefunden werden.
 Anstatt das Programm normal laufen zu lassen, wäre es cleverer das Programm in eine Umgebung zu setzen, in der der
-Nutzer bestimmt, wann etwas geschieht und alles überwachen zu können.
+Nutzer bestimmt, wann etwas geschieht und alle Geschehnisse überwachen zu können.
 Genau das macht ein **Debugger**.
-Ein Debugger ist also ein Programm, das ein anderes Programm ausführt und dabei die Möglichkeit gibt, den Ablauf zu steuern und zu überwachen.
+Ein Debugger ist also ein Programm, das ein anderes Programm ausführt und dabei die Möglichkeit gibt, den Ablauf des Programmes zu steuern und zu überwachen.
 
 ### Debug-Modus
 
-Der Debugger ist bei Java im JDK enthalten.
+Bei Java ist ein Debugger im JDK enthalten.
 Dieser lässt sich über die Kommandozeile starten.
+
+![Debugger](images/JDB-Beispiel.png)
+
 Allerdings ist das sehr unbequem zu handhaben.
 Deshalb haben vile IDEs einen **Debug-Modus**.
-Dieser Modus ist deutlich langsamer, als der normale Modus.
+Dieser startet den Debugger im Hintergrund, erlaubt aber die leichte Steuerung und Darstellung des zu debuggenden Programmes innerhalb der GUI.
+Dieser Modus ist oft langsamer, als der normale Modus, was aber logisch ist, da der Debugger ja noch zusätzliche Arbeit leisten muss.
+Allerdings ist der Unterschied in der Regel nur in wenigen Situationen bemerkbar.\
 In IDEs ist dieser Modus durch das Klicken auf einen
 extra Button (meist ein Käfer-Symbol) startbar.
 Überwiegend ändert sich dabei nur die Ansicht in der IDE oder ein extra Fenster erscheint.
 
-**Aufgabe:** Finden Sie diesen Button zum Starten des Debug-Modus in ihrer IDE.
+**Aufgabe:**
+Finden Sie diesen Button zum Starten des Debug-Modus in ihrer IDE.
 Hier kann wieder die Datei `Breakpoint.java` genommen werden.
 
 ### Breakpoints
@@ -250,21 +264,25 @@ Wenn der Debug-Modus gestartet wurde, dann sollte nichts besonders passieren.
 Lediglich in der Konsole stehen zwei extra Zeilen.
 Das liegt daran, dass der Debugger nicht weiß, wann er was tun soll.
 So läuft er einfach ganz normal durch das Programm.\
-Es wird also eine Markierung benötigt, die dem Debugger sagt: "Hier bitte halten!" Das erledigt ein **Breakpoint**.
+Beim Debuggen ist es aber wichtig zu wissen, wann erreichen wir den Fehlerzustand, also wann haben wir den Bug ausgelöst.
+Dazu solle das Programm an bestimmten Stellen anhalten.
+Es wird also eine Markierung benötigt, die dem Debugger sagt: "Hier bitte halten!"
+Das erledigt ein **Breakpoint**.
 
-Breakpoints sind Haltepunkte im Code, die der Entwickler selbständig setzt. Sie werden gesetzt, indem man links neben
-Zeile im Programmcode einfach oder doppelt klickt.
+Breakpoints sind Haltepunkte im Code, die der Entwickler selbständig setzt.
+Sie werden gesetzt, indem man links neben Zeile im Programmcode einfach oder doppelt klickt.
 Dort sollte dan eine Markierung auftauchen. Dies ist dann ein gesetzter Breakpoint.
-Breakpoints lassen sich beliebig an und ausschalten oder auch wieder entfernen. Ein Breakpoint ist ausgeschaltet, wenn
-er (je nach IDE) ausgegraut oder durchgestrichen ist.
+Breakpoints lassen sich beliebig an und ausschalten oder auch wieder entfernen.
+Ein Breakpoint ist ausgeschaltet, wenn er (je nach IDE) ausgegraut oder durchgestrichen ist.
 Viele IDEs besitzen eine Breakpoint-Übersicht, in der listen artig steht, wo welcher Breakpoint ist und ob dieser
 aktiviert ist.
 
 **Wichtig!** Ein Breakpoint hält **vor** der markierten Zeile.
 Die Zeile wurde also noch nicht ausgeführt.
 
-**Aufgabe:** Setzen Sie an den Anfang eines Programms (*Breakpoint.java*) einen Breakpoint und starten Sie den
-Debug-Modus. Das Programm sollte an dieser Stelle halten und die Fenster, des Debug-Modus, sollten nun gefüllt sein.
+**Aufgabe:**
+Setzen Sie an den Anfang eines Programms (*Breakpoint.java*) einen Breakpoint und starten Sie den Debug-Modus.
+Das Programm sollte an dieser Stelle halten und die Fenster, des Debug-Modus, sollten nun etwas anderes anzeigen, als sonst.
 
 #### Breakpoint Arten
 
@@ -272,46 +290,49 @@ Der normale Breakpoint ist ein **Line-Breakpoint**. Dieser hält in der bzw. vor
 Es gibt aber auch andere Breakpoints.
 Z.B. die nur für den Lambda-Ausdruck einer Zeile hält.\
 Auch Methoden können einen Breakpoint besitzen.
-Jedoch können Methoden-Breakpoints das System sehr verlangsamen und
-sollten deswegen nur begrenzt eingesetzt werden.
+Jedoch können Methoden-Breakpoints das System sehr verlangsamen und sollten deswegen nur begrenzt eingesetzt werden.
 Ein normaler Line-Breakpoint in der ersten Zeile des Rumpfes funktioniert genauso.\
 Die letzte Art sind bedingte Breakpoints.
 Diese können beispielsweise bei einem Schleifendurchlauf erst nach fünfmaligem passieren aktiv werden und eben erst den sechsten Lauf pausieren.
 
-**Aufgaben:** In der Datei *BreakpointArten.java* ist eine Methode mit Kommentaren.
-Diese Kommentare beschreiben die Breakpoint Arten. Setzen Sie diese in die entsprechende Zeile ein. Testen Sie die Breakpoints.
+**Aufgaben:**
 
-Für bedingte-Breakpoints gibt es eine extra Datei.\
-In *BreakpointBedingung.java* ist es das Ziel sich pi zu näheren.
-Jedoch ist ein Fehler im Programm.
-Um zumindest das letzte Ergebnis vor dem Fehler zu erhalten, soll der Breakpoint nur vor dem Ausführen der bösen Aktion
-halten.
-Es könnte auch anders gelöst werden, jedoch soll hier ein bedingter Breakpoint genutzt werden, der nur ein mal hält und
-sonst ignoriert wird.
-Die entsprechende zeile ist im Code mit einem Kommentar markiert.
+1. In der Datei *BreakpointArten.java* ist eine Methode mit Kommentaren.
+   Diese Kommentare beschreiben die Breakpoint Arten. Setzen Sie diese in die entsprechende Zeile ein.
+   Testen Sie die Breakpoints.
+
+2. Für bedingte-Breakpoints gibt es eine extra Datei.
+   In *BreakpointBedingung.java* ist es das Ziel sich pi zu näheren.
+   Jedoch ist ein Fehler im Programm.
+   Um zumindest das letzte Ergebnis vor dem Fehler zu erhalten, soll der Breakpoint nur vor dem Ausführen der bösen Aktion
+   halten.
+   Es könnte auch anders gelöst werden, jedoch soll hier ein bedingter Breakpoint genutzt werden, der nur ein mal hält und
+   sonst ignoriert wird.
+   Die entsprechende Zeile ist im Code mit einem Kommentar markiert.
 
 ### Im Code vorangehen
 
 Wenn ein Breakpoint erreicht wurde, dann hält das Programm an.
 Ab diesen Zeitpunkt kann der Entwickler bestimmen, wie weiter im Code vorgegangen wird.
 Es gibt viele verschiedene Möglichkeiten im Code voranzukommen.
-Die Gängigsten sind:
+Die gängigsten Möglichkeiten sind:
 
-- Step over → geht zum nächsten Befehl, der folgt.
-- Step into → springt in die folgende Methode hinein und wird dort weiter geführt.
-- Step out → Gegenteil zu step into. Spring aus der Methode und landet in der Methode die im Stack "darunter" liegt.
-- Continue → führt das Program so lange fort bis der nächste Breakpoint erreicht ist.
+- **Step over** → geht zum nächsten Befehl, der folgt.
+- **Step into** → springt in die folgende Methode hinein und hält dort an der ersten Zeile.
+- **Step out** → Gegenteil zu step into. Spring aus der Methode und landet in der Methode die im Stack "darunter" liegt.
+- **Continue** → führt das Program so lange fort bis der nächste Breakpoint erreicht ist.
 
 Weitere Optionen, die aber nur manche IDEs haben, sind:
 
-- Run to Cursor → Das Programm läuft bis zum Cursor weiter, oder zum nächsten Breakpoint.
-- Drop Frame → Dies verwirft eine Methode und "setzt sie zurück".
-  Es startet also die Methode neu.
+- **Run to Cursor** → Das Programm läuft bis zum Cursor weiter, oder zum nächsten Breakpoint.
+- **Drop Frame** → Dies verwirft die momentane Methode und "setzt sie zurück".
+  Es startet also die aktuelle Methode neu.
   Dabei können aber Änderungen, die Objekte außerhalb der Methode betreffen, erhalten bleiben und so das Programm kaputt
   machen.
 
-**Aufgabe:** Finden Sie diese Möglichkeiten in der IDE ihrer Wahl. Die Datei *Breakpoint.java* kann dabei helfen die
-Funktion dieser Buttons zu verstehen.
+**Aufgabe:**
+Finden Sie diese Möglichkeiten in der IDE ihrer Wahl.
+Die Datei *Breakpoint.java* kann dabei helfen die Funktion dieser Buttons zu verstehen.
 
 Zu finden ist:
 
@@ -335,24 +356,24 @@ und manipuliert werden.
 Im Normalfall sollte im Debug-Modus ein "Variablen"-Fenster auftauchen.
 In diesem sind Bezeichnungen wie this, args usw zu finden.
 Das sind die momentanen Objekte, die in dem aktuellen Scope genutzt werden können.
-Da Objekte, aus mehreren Teilen bestehen, können auch diese in dem Variablen-Fenster angesehen werden.
+Alle Objekte, die aus mehreren Attributen bestehen, können auch diese in dem Variablen-Fenster angesehen werden.
+Oft ist es so, dass der Wert der `toString()`-Methode aufgerufen wird und das Ergebnis angezeigt wird.
+Es können aber auch die einzelnen Attribute angesehen werden.
 
 #### Manipulation
 
 Manchmal ist es sinnvoll die Objekte während des Debugging zu ändern.
-Damit kann beispielsweise
-ein ```assert condition;``` geprüft werden.
-Eine andere Möglichkeit wäre es in einem if-Statement die Variablen in der
-_Condition_ zu ändern und damit in den anderen
-Zweig zu gehen, als eigentlich vorgesehen.
+Damit kann beispielsweise ein ```assert condition;``` geprüft werden.
+Eine andere Möglichkeit wäre es in einem if-Statement die Variablen in der _Condition_ zu ändern und damit
+in den anderen Zweig zu gehen, als eigentlich vorgesehen.
 Leider lassen sich nicht alle Variablen ändern.
-Variablen/Attribute, die mit ```final``` gekennzeichnet sind, können
-nicht geändert werden.
+Variablen/Attribute, die mit ```final``` gekennzeichnet sind, können nicht geändert werden.
 Auch ein Debugger kann das nicht umgehen.
 
-**Aufgabe:** Öffnen Sie *WerteManipulation.java*. Dieser Code darf **nicht** verändert werden.
-Wählen Sie ein Level durch die Angabe eines zusätzlichen Programmargumentes. Ziel ist es das Level zu absolvieren, indem
-durch den Debugger die Werte der Variablen geändert werden.
+**Aufgabe:**
+Öffnen Sie *WerteManipulation.java*. Dieser Code darf **nicht** verändert werden.
+Wählen Sie ein Level durch die Angabe eines zusätzlichen Programmargumentes.
+Ziel ist es das Level zu absolvieren, indem durch den Debugger die Werte der Variablen geändert werden.
 Ein Level ist geschafft, wenn am Ende "Glückwunsch! Du hast Level X abgeschlossen!" auf der Konsole ausgegeben wird.
 **Achtung!** Level 4 ist sehr schwer und benötigt deswegen etwas an Überlegung.
 
@@ -365,24 +386,76 @@ Die letzte Methode müsste die Main-Methode sein.
 In Java werden alle Methoden in Frames realisiert.
 Diese Frames haben neben den Argumenten der Methode, sowie den lokalen Variablen noch die Rücksprungadresse und ein paar anderen Objekten.
 Diese Frames werden in einem Stapel (Stack) abgelegt.
-Das "oberste Element" ist dabei immer die Methode, die aktuell
-ausgeführt wird.
+Das "oberste Element" ist dabei immer die Methode, die aktuell ausgeführt wird.
 Der darunter liegende Frame ist die Methode, die die aktuelle Methode aufgerufen hat usw.
 In diesem Frame können aber auch alle Argumente und lokalen Variablen gelesen und verändert werden, auch wenn sie gerade
 nicht im Scope der aktuell ausgeführten Methode sind.
 
-**Aufgabe:** In der Datei *FrameStack.java* ist eine Klasse mit drei Methoden, die alle eine lokale Variable "a"
-besitzen.
+**Aufgabe:**
+In der Datei *FrameStack.java* ist eine Klasse mit drei Methoden, die alle eine lokale Variable "a" besitzen.
 Gehen Sie Schrittweise von der ersten Methoden bis zur letzten!
-Wenn Sie die tiefste Methode erreicht haben,
-nutzen Sie das Frame-Fenster um den Wert der "a" Variable in der "höchsten Methode" (erste aufgerufene) zu ändern.
+Wenn Sie die tiefste Methode erreicht haben, nutzen Sie das Frame-Fenster um den Wert der "a" Variable in
+der "höchsten Methode" (erste aufgerufene) zu ändern.
 Kehren Sie dann zu der Methode, in der das Programm hält zurück und gehen sie im Programm voran.
 **Beobachten Sie das Variablen-Fenster über die ganze Zeit!**
 
 ### Zusammenfassung
 
-To-do - wird noch geschrieben
+Bis hier hin wurden die Grundlagen des Debuggens mit einer IDE erklärt.
+Es gibt noch viele weitere Funktionen, die in einer IDE genutzt werden können.
+Das geht allerdings über den Rahmen dieses Projektes hinaus.
+Die Inhalte, die hier behandelt wurden, sollten aber ausreichen, um die meisten Bugs zu finden und zu beheben.
+Deshalb hier noch einmal die wichtigsten Punkte zusammengefasst.
+Eine Hilfe sind auch die beiden Dateien [CheatSheet.md](CheatSheet.md) und [Lernzettel.md](Lernzettel.md).
 
+#### Begriffe zum Debuggen
+
+* Bug - Fehlerzustand. Das Programm befindet sich in einem unerwünschten Zustand.
+* Ursache - Handlung/Grund, die zu einem Bug führt. Dies kann etwas im Code sein oder eine Handlung/Eingabe von der Welt
+* Fehlerwirkung - Die Folgen eines Bugs. z.B. Ein falscher Wert oder ein Absturz des Programmes.
+* Debugging - Die Suche nach der Ursache eines Bugs.
+* Test - Eine Methode, um Fehlerwirkungen zu finden/wahrzunehmen. Tests beseitigen Bugs nicht, sie bemerken sie nur.
+
+#### Fehlerwirkung Exception ➡️ Stack Trace
+
+Bei einer Excption wird ein Stack Trace ausgegeben. Dieser enthält 4 wichtige Informationen:
+
+* Name des Threads - Der Name des Threads, in dem die Exception auftrat.
+* Typ der Exception - Der Typ der Exception, die geworfen wurde.
+* Beschreibung - Der Grund der Exception.
+* Trace - Der Call Stack. Hier steht, wo die Exception geworfen wurde.
+
+Durch die 4 Informationen kann der Ort des Fehlers eingegrenzt werden.
+Im Trace steht die Zeile, in der die Exception geworfen wurde.
+Es kann aber auch sein, dass die Exception durch eine andere Exception verursacht wurde.
+Dies wird durch "Caused by" angezeigt.
+
+#### Debugging
+
+In einer IDE wird der Debugger gestartet um den Ablauf des Programmes zu steuern und zu überwachen.
+Dabei werden Breakpoints gesetzt, die das Programm anhalten.
+Arten von Breakpoints sind:
+
+* Line-Breakpoint - Hält in der Zeile, die markiert wurde. Die Zeile wurde noch nicht ausgeführt.
+* Methoden-Breakpoint - Hält am Anfang der Methode. Kann sehr langsam sein.
+* Bedingter Breakpoint - Hält nur, wenn eine Bedingung erfüllt ist.
+* Lambda-Breakpoint - Hält innerhalb eines Lambda-Ausdrucks, wenn er ausgeführt wird.
+
+Von einem Breakpoint aus kann das Programm weitergeführt werden.
+Möglichkeiten sind:
+
+* Step over - Geht zum nächsten Befehl/Zeile
+* Step into - Springt in die nächste Methode hinein
+* Step out - Springt aus der momentanen Methode heraus
+* Continue - Führt das Programm fort bis zum nächsten Breakpoint
+* Run to Cursor - Führt das Programm bis zum Cursor fort
+* Drop Frame - Verwirft die momentane Methode und startet sie neu; Gefährlich bei globalen Änderungen!
+
+Beim Debuggen können Variablen und Objekte eingesehen und verändert werden.
+Dazu gibt es das Variablen-Fenster und das Frame-Fenster.
+Das Frame-Fenster zeigt die momentanen Methoden und deren Aufrufe an.
+Das Variablen-Fenster zeigt die momentanen Objekte und Variablen an.
+Diese können bis ins Detail eingesehen und auch verändert werden.
 
 <hr>
 
@@ -459,47 +532,47 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("Unit")
 public class MeineKlasseTest {
 
-  // def der privaten attribute die zum test gebraucht werden.
-  private MeineKlasse getestetesObjekt;
+	// def der privaten attribute die zum test gebraucht werden.
+	private MeineKlasse getestetesObjekt;
 
 	// Mock-Objekte
 	@Mock
 	private AndereKlasse mockObjekt;
 
-  @BeforeEach
-  void setup() {
-    // init der privaten Attribute
-    MockitoAnnotations.openMocks(this);
-    getestetesObjekt = new MeineKlasse(mockObjekt);
-    // eventuelles Stubbing
-    when(getestetsObjekt.isX()).then(true);
-  }
+	@BeforeEach
+	void setup() {
+		// init der privaten Attribute
+		MockitoAnnotations.openMocks(this);
+		getestetesObjekt = new MeineKlasse(mockObjekt);
+		// eventuelles Stubbing
+		when(getestetsObjekt.isX()).then(true);
+	}
 
-  @AfterEach
-  void tearDown() {
-    // Optionaler Reset von Objekten. 
-  }
+	@AfterEach
+	void tearDown() {
+		// Optionaler Reset von Objekten. 
+	}
 
-  @Test
-  void meineTestMethode1() {
-    getestetesObjekt.m1();
-    assertTrue(getestetesObjekt.isGut(), "Nach m1 muss das Objekt als gut gelten!");
-  }
+	@Test
+	void meineTestMethode1() {
+		getestetesObjekt.m1();
+		assertTrue(getestetesObjekt.isGut(), "Nach m1 muss das Objekt als gut gelten!");
+	}
 
-  @Test
-  void meineTestMethode2() {
-    assertEquals(mockObjekt, getestetesObjekt.getAndereKlasse(), "Der Getter muss das passende Objekt zurückgeben");
-  }
+	@Test
+	void meineTestMethode2() {
+		assertEquals(mockObjekt, getestetesObjekt.getAndereKlasse(), "Der Getter muss das passende Objekt zurückgeben");
+	}
 
-  @Test
-  void meineTestMethode3() {
-    try {
-      getestetesObjekt.methodeMitException();
-      fail("Die Exception muss ausgelöst werden");
-    }catch(NoSuchElementException ne){
-    // Alles Okay
-    }
-  }
+	@Test
+	void meineTestMethode3() {
+		try {
+			getestetesObjekt.methodeMitException();
+			fail("Die Exception muss ausgelöst werden");
+		} catch (NoSuchElementException ne) {
+			// Alles Okay
+		}
+	}
 }
 ```
 
@@ -546,16 +619,16 @@ Wie diese Methoden genutzt werden sollten, ist im nächsten Kapitel erklärt.
 
 `asserX(...)`-Methoden, aus JUnit, sicheren etwas zu.
 Sie können Vor-, Zwischen- und Nachbedingungen realisieren.\
-Es sei mal angenommen, dass für eine Methode, die getestet werden soll, die Vorbedingung: "der Parameter x muss größer 3
-sein" gilt.
+Es sei mal angenommen, dass für eine Methode, die getestet werden soll, die Vorbedingung:
+"der Parameter x muss größer 3 sein" gilt.
 Dann kann dies durch die Codezeile `assertTrue(x > 3, "Der Parameter x muss größer 3 sein!");` umgesetzt werden.
 In diesem Fall wurde die `asssertTrue(...)`-Methode genommen.
 Diese nimmt den Booleschen-Ausdruck (Expression) `x > 3`
 und wertet ihn zur Laufzeit aus.
 Wenn der Ausdruck zu `true` evaluiert wird, dann ist alles okay und die Vorbedingung gilt als erfüllt.
 Wenn der Ausdruck hingegen zu `false` ausgewertet wird, dann wirft die `assertTrue(...)`-Methode eine Exception und das
-JUnit-Framework bricht den Test-Case ab un markiert ihn als Fehlschlag und gibt den angegeben String "Der Parameter x
-muss größer 3 sein!" im Testergebnis-Bericht ausgegeben.
+JUnit-Framework bricht den Test-Case ab un markiert ihn als Fehlschlag und gibt den angegeben String
+"Der Parameter x muss größer 3 sein!" im Testergebnis-Bericht ausgegeben.
 
 Es gibt viele verschiedene `asserX(...)`-Methoden.
 So gibt es auch noch `asserEquals` mit zwei oder drei Parametern.
@@ -650,6 +723,7 @@ bekommen.
 Nun soll es auch möglich sein, dass Kunden Bücher ausleihen können und auch zurückgeben können.
 Bücher werden dabei in Regale gestellt.
 Werden Bücher ausgeliehen, so werden sie aus dem entsprechenden Regal genommen.
+Bei der Nutzung der Bücher kann es passieren, dass sie beschädigt werden.
 
 Zwei SHKs haben diese Anwendung gebaut.
 Der eine hat die Tests, der andere den Quellcode geschrieben.
@@ -693,8 +767,19 @@ Es gibt drei Arten von Mitarbeitern.
 
 ### Besucher
 
-Zurzeit kenn die Bibliothek zwei Arten von Besuchern. Studierende und Dozenten.
-Beide haben die gleichen Möglichkeiten, jedoch müssen Dozenten keine Strafgebühren zahlen.
+Zurzeit kennt die Bibliothek zwei Arten von Besuchern. **Studierende** und **Dozenten**.
+Beide haben die gleichen Möglichkeiten.
+Das sind:
+
+* Buch ausleihen
+* Nach Buch suchen (verschiedene Kriterien)
+* Buch zurückgeben
+* Leseraum reservieren
+* Leseraum verlassen
+* Strafen zahlen
+
+Zusätzlich können Dozenten ihre Bücher länger ausleihen und zahlen keine
+Strafgebühren.
 
 ### Ausleihe
 
@@ -732,11 +817,16 @@ Das ist jedoch kein Fehler und vereinfacht lediglich das Programm.
 #### Ausleihbar
 
 Ein Buch ist ausleihbar. Dies ist dann einem Besucher zugeordnet.
+Ein Buch kann nicht mehreren Personen ausgeliehen werden.
 
 ### Bestand
 
 Im Bestand sind *alle* Bücher der Bibliothek hinterlegt.
 Jedes Buch wird in ein Regal eingeordnet.
+Jedes Regal hat eine feste Anzahl an Büchern, die es aufnehmen kann.
+Diese Bücher werden in Regalbrettern aufbewahrt.
+Jedes Regalbrett eines Regals hat die gleiche Anzahl an Büchern, die es aufnehmen kann.
+
 Der Bestand kann nach folgenden Kriterien durchsucht werden,
 
 1. nach Author
@@ -748,8 +838,8 @@ Der Bestand kann nach folgenden Kriterien durchsucht werden,
 
 ### Leseräume
 
-Ein Leseraum ist für eine feste Anzahl an Personen ausgelegt.
-Diese können den Raum bei einem Bibliothekar am Computer reservieren.
+Ein Leseraum ist für eine feste Anzahl an Personen ausgelegt. Diese kann je nach Raum variieren.
+Eine Reservierung für einen Raum kann bei einem Bibliothekar am Computer vorgenommen werden.
 Je nach Nutzung wird der Leseraum verschmutzt.
 
 ### Angestelltenverwaltung
