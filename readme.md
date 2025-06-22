@@ -30,15 +30,123 @@ titlepage: false
 <div style="page-break-after: always;"></div>
 
 
-Dies ist eine Einführung in das Debugging mit IDEs.
-Es soll anhand mehrerer kleiner Beispiele die Grundlagen, für Bugs
-und Debugging, verständlich beigebracht werden.
+<h2> Inhaltsverzeichnis </h2>
+
+<!-- TOC -->
+
+* [Bugs](#bugs)
+    * ["Klassifizierung" von Bugs](#klassifizierung-von-bugs)
+    * [Einen Bug finden](#einen-bug-finden)
+* [Wie es nicht geht!](#wie-es-nicht-geht)
+    * [Was man instinktiv tut](#was-man-instinktiv-tut)
+        * [Probleme](#probleme)
+    * [Etwas besser aber ...](#etwas-besser-aber-)
+        * [Logging ist dennoch wichtig](#logging-ist-dennoch-wichtig)
+* [Stack Trace lesen und verstehen](#stack-trace-lesen-und-verstehen)
+    * [Passende Beschreibung wählen](#passende-beschreibung-wählen)
+    * [Den Ort des Fehlers einschränken](#den-ort-des-fehlers-einschränken)
+    * [Exception durch Exception](#exception-durch-exception)
+* [Grundlagen des Debuggen mit einer IDE](#grundlagen-des-debuggen-mit-einer-ide)
+    * [Debug-Modus](#debug-modus)
+    * [Breakpoints](#breakpoints)
+        * [Breakpoint Arten](#breakpoint-arten)
+    * [Im Code vorangehen](#im-code-vorangehen)
+    * [Auslesen/Manipulation des Speichers](#auslesenmanipulation-des-speichers)
+        * [Auslesen](#auslesen)
+        * [Manipulation](#manipulation)
+    * [Frame stack](#frame-stack)
+    * [Zusammenfassung](#zusammenfassung)
+        * [Begriffe zum Debuggen](#begriffe-zum-debuggen)
+        * [Fehlerwirkung Exception ➡️ Stack Trace](#fehlerwirkung-exception--stack-trace)
+        * [Debugging](#debugging)
+* [Tests](#tests)
+    * [Mehr als public](#mehr-als-public)
+    * [Kein private](#kein-private)
+        * [Die Ausnahme](#die-ausnahme)
+    * [JUnit](#junit)
+        * [Testklassen/Unit-Tests schreiben](#testklassenunit-tests-schreiben)
+        * [Struktur der Testklasse](#struktur-der-testklasse)
+        * [assertX](#assertx)
+        * [JUnit-Annotationen](#junit-annotationen)
+    * [Tests in IDEs](#tests-in-ides)
+        * [Übersicht der Tests](#übersicht-der-tests)
+        * [Übersicht filtern](#übersicht-filtern)
+* [Bibliothek](#bibliothek)
+    * [Situation](#situation)
+    * [Aufgabe](#aufgabe)
+    * [Die Bibliothek](#die-bibliothek)
+    * [Verschmutzbare Objekte](#verschmutzbare-objekte)
+    * [Personal](#personal)
+    * [Besucher](#besucher)
+    * [Ausleihe](#ausleihe)
+    * [Bücher](#bücher)
+        * [ISBN](#isbn)
+        * [Beschädigung](#beschädigung)
+        * [Ausleihbar](#ausleihbar)
+    * [Bestand](#bestand)
+    * [Leseräume](#leseräume)
+    * [Angestelltenverwaltung](#angestelltenverwaltung)
+
+<!-- TOC -->
+
+<div class="toc-pagebreak"></div>
+
+<h1>Debug-Tutorial</h1>
+
+<h2>Einleitung</h2>
+
+Dies ist eine Einführung in das Thema **Debugging** und der Umgang mit IDEs damit.
+Es soll anhand mehrerer kleiner Beispiele die Grundlagen, für Bugs und Debugging, verständlich beigebracht werden.
 Wenn die Grundlagen abgeschlossen wurden, dann soll in einem großen Beispiel das Erlernte geübt werden.
 Alle Beispiele und Erklärungen sind in Java geschrieben bzw. beziehen sich auf Java.
 In anderen Programmiersprachen kann es sein, dass manche Konzepte etwas anders funktionieren.
 
+Alle Beispiele sind in dem Projekt  [Debug-Tutorial](https://github.com/OliverGeisel/Debug-Tutorial) unter [https://github.com/OliverGeisel/Debug-Tutorial](https://github.com/OliverGeisel/Debug-Tutorial) zu finden.
 Die Einführung, mit den entsprechenden Java-Dateien, ist in dem Ordner `start/src/main/java` zu finden.
-Das große Beispiel, mit den entsprechenden Java-Dateien, ist in dem Ordner `bibliothek-beispiel/src/main/java` zu finden.
+Das große Beispiel, mit den entsprechenden Java-Dateien, ist in dem Ordner
+`bibliothek-beispiel/src/main/java` zu finden.
+
+Dieses Dokument ist in mehrere thematische Abschnitte unterteilt.
+Zuerst wird erklärt, was ein Bug ist und wie er entsteht.
+Danach wird erklärt wie ein Stack Trace gelesen und verstanden wird.
+Anschließend wird erklärt, wie ein Debugger funktioniert und wie er in einer IDE genutzt wird.
+Anhand einiger Beispiele wird das Debuggen mit einer IDE erklärt.
+Im zweiten thematischen Abschnitt wird erklärt, wie Tests helfen können Bugs zu finden.
+Zudem wird auch an einem konkreten Beispiel gezeigt, wie man die Ergebnisse von Tests nutzen kann und damit das Debugging entsprechend vereinfacht wird.
+Zum Abschluss wird ein großes Beispiel vorgestellt, in dem das Debuggen und die Tests geübt werden können.
+
+<h3>Anforderungen und benötige Werkzeuge</h3>
+
+Weil sich dieses Projekt mit dem Debuggen mit der Hilfe von IDEs beschäftigt, wird eine IDE benötigt.
+Alle Beispiele und Erklärungen in diesem Projekt werden an der IDE IntelliJ IDEA von JetBrains erklärt.
+Auch andere IDEs für Java können genutzt werden.
+Das sind unter anderem:
+
+* **Eclipse**
+* **NetBeans**
+* **Visual Studio Code** mit Java-Plugin; Kurz VSCode oder nur Code
+
+Zudem ist für das Einführungsbeispiel **Java 8** oder höher notwendig.
+Für das große Beispiel wird **Java 21** oder höher benötigt.\
+
+**Maven** oder **Git** sind für dieses Projekt nicht notwendig, es ist aber hilfreich.
+Das Projekt besitzen einen Maven-Wrapper und kann damit mit `mvnw` alle Maven-Befehle ausführen.
+Git bietet sich an, weil es einen Lösungs-Branch gibt, wo die Fehler in der Bibliothek hervorgehoben sind.
+
+<h3>Ziele</h3>
+Die Ziele dieses Projektes sind:
+
+* Die Notwendigkeit von Debugging zu verstehen
+* Was ein Bug ist und wie er entsteht
+* Wie ein Debugger funktioniert
+* Wie ein Debugger in einer IDE funktioniert
+* Wie Tests beim Debuggen helfen
+* Ein paar "neuere" Funktionen in Java erkunden
+
+In mehreren Kapiteln gibt es Aufgaben, die das Konzept oder die Funktionalität durch üben am Einführungsbeispiel oder am großen Beispiel festigen sollen.
+Im Repository gibt es zudem ein [CheatSheet](CheatSheet.md) und eine [Checkliste](Lernzettel.md), die als Hilfe dienen sollen.
+
+<hr>
 
 ## Bugs
 
@@ -875,3 +983,33 @@ Je nach Nutzung wird der Leseraum verschmutzt.
 ### Angestelltenverwaltung
 
 Die Angestelltenverwaltung kann Angestellte einstellen und wieder entlassen. 
+
+<hr>
+
+## Literatur und Quellen
+
+Für die vorgestellten Konzepte und Methoden gibt es viele verschiedene Quellen.
+Deshalb sei hier eine Auflistung von Quellen, die für dieses Projekt genutzt wurden.
+Zudem wird auch weitere Literatur genannt, die genutzt werden kann, um die Konzepte zu vertiefen.
+
+### Debugging
+
+- Debugger für Java [Java Debugger](https://docs.oracle.com/en/java/javase/21/docs/specs/man/jdb.html)
+- Funktion des Java Debuggers [JPDA](https://docs.oracle.com/en/java/javase/21/docs/specs/jpda/architecture.html)
+
+### Tests
+
+- JUnit 5 [JUnit5](https://junit.org/junit5/docs/current/user-guide/)
+- Mockito [Mockito](https://site.mockito.org)
+- International Software Testing Qualifications Board [ISTQB](https://www.istqb.org/)
+- German Testing Board [GTB](https://www.gtb.de/)
+- Lehrplan des ISTQB [ISTQB Lehrplan](https://istqb.org/?sdm_process_download=1&download_id=3345)
+- Lehrpläne des GTB [GTB Lehrplan](https://www.gtb.de/der-certified-tester/lehrplaene/)
+
+### IDEs
+
+- [IntelliJ IDEA](https://www.jetbrains.com/de-de/idea/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [NetBeans](https://netbeans.apache.org/)
+- [Eclipse](https://www.eclipse.org/)
+
