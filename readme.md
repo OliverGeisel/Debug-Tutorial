@@ -1,5 +1,5 @@
 ---
-toc: false
+toc: true
 toc-title: Inhaltsverzeichnis
 toc-depth: 3
 numbersections: true
@@ -8,21 +8,22 @@ papersize: a4
 monofont: "Fira Code"
 css: pandoc.css
 author: "Oliver Geisel"
-date: "2025-06-17"
+date: "2025-06-23"
 title: "Debug-Tutorial"
 subtitle: "Einführung ins Debuggen von Code und das Finden von Fehlern"
 pdf-engine: wkhtmltopdf
 highlight-style: pygments
 lang: de
-titlepage: false
-
+titlepage: true
 ---
+
+<div style="page-break-after: always;"></div>
 
 <div class="titlepage">
   <h1 class="title">Debugging mit IDEs</h1>
   <h2 class="subtitle">Einführung ins Debuggen von Code und das Finden von Fehlern</h2>
   <p class="author">Oliver Geisel</p>
-  <p class="date">Version: 2025-06-17</p>
+  <p class="date">Version: 2025-06-23</p>
 <br>
   <img src="images/logo.png" class="logo" alt="Logo">
 </div>
