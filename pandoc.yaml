@@ -1,0 +1,23 @@
+from: markdown
+to: pdf
+
+pdf-engine: wkhtmltopdf  # oder luatex/pdflatex/xelatex
+
+highlight-style: zenburn  # oder z.B. kate, pygments, breezeDark ...
+toc: true
+css: pandoc.css
+author: "Oliver Geisel"
+date: 2025-05-16
+title: Mein Dokument
+
+
+#include-in-header: header.tex
+
+variables:
+  geometry: margin=0.5cm
+  fontsize: 12pt
+  colorlinks: true
+  linkcolor: blue
+  urlcolor: blue
+
+

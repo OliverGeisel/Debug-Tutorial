@@ -1,4 +1,34 @@
-# Debug-Tutorial
+---
+toc: false
+toc-title: Inhaltsverzeichnis
+toc-depth: 3
+numbersections: true
+numberdepth: 4
+papersize: a4
+monofont: "Fira Code"
+css: pandoc.css
+author: "Oliver Geisel"
+date: "2025-06-17"
+title: "Debug-Tutorial"
+subtitle: "Einführung ins Debuggen von Code und das Finden von Fehlern"
+pdf-engine: wkhtmltopdf
+highlight-style: pygments
+lang: de
+titlepage: false
+
+---
+
+<div class="titlepage">
+  <h1 class="title">Debugging mit IDEs</h1>
+  <h2 class="subtitle">Einführung ins Debuggen von Code und das Finden von Fehlern</h2>
+  <p class="author">Oliver Geisel</p>
+  <p class="date">Version: 2025-06-17</p>
+<br>
+  <img src="images/logo.png" class="logo" alt="Logo">
+</div>
+
+<div style="page-break-after: always;"></div>
+
 
 Dies ist eine Einführung in das Debugging mit IDEs.
 Es soll anhand mehrerer kleiner Beispiele die Grundlagen, für Bugs

@@ -1,0 +1,180 @@
+@page {
+    size: A4;
+    margin: 1cm 1.5cm 2cm 1.5cm;
+}
+
+body, p, li {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+html {
+    hyphens: auto;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 12pt;
+    color: #333;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+    color: #0055aa;
+}
+
+figure {
+    margin: 0.1em auto;
+    text-align: center;
+    max-width: 100%;
+    page-break-inside: avoid;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    display: block;
+    margin: 1em auto;
+}
+
+figcaption {
+    /* Text zentriert, falls nicht schon durch figure text-align: center */
+    text-align: center;
+    /* Schriftstil optional anpassen */
+    font-style: italic;
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 0.5em;
+}
+
+.titlepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    font-family: "Segoe UI", sans-serif;
+    color: #222;
+    padding: 2em;
+}
+
+
+.titlepage .title {
+    font-size: 3em;
+    margin: 0.3em 0;
+}
+
+.titlepage .subtitle {
+    font-size: 1.5em;
+    margin: 0.3em 0;
+    color: #555;
+}
+
+.titlepage .author,
+.titlepage .date {
+    font-size: 1.2em;
+    margin: 0.2em 0;
+}
+
+.titlepage .logo {
+    width: 400px;
+    margin-bottom: 1em;
+}
+
+
+nav#TOC {
+    page-break-before: always;
+    font-size: 10.5pt;
+    padding: 1em;
+    border: 1px solid #bbb;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin: 1em 0 2em 0;
+    counter-reset: toc-counter;
+}
+
+nav#TOC ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+nav#TOC li::before {
+    counter-increment: toc-counter;
+    content: counter(toc-counter) ". ";
+    color: #555;
+    font-weight: bold;
+}
+
+nav#TOC li {
+    margin: 3px 0;
+}
+
+/* TOC Links */
+nav#TOC a {
+    text-decoration: none;
+    color: #004488;
+}
+
+/* Seitenumbruch nach TOC */
+.toc-pagebreak {
+    page-break-after: always;
+}
+
+
+pre {
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    border: 1px solid #ccc;
+    font-family: "Fira Code", monospace;
+    font-size: 10pt;
+    tab-size: 2;
+    -moz-tab-size: 2;
+    -o-tab-size: 2;
+    white-space: pre;
+}
+
+code {
+    background-color: #f3f3f3;
+    color: #0d189e;
+    padding: 0.15em 0.3em;
+    border-radius: 3px;
+    font-family: "Fira Code", monospace;
+    font-size: 0.9em;
+}
+
+pre code {
+    background: none;
+    color: #434343;
+    padding: 0;
+    font-size: inherit;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* new chapter with page break */
+hr {
+    border: 0;
+    border-top: 1px solid #aaa;
+    margin: 1em 0;
+    page-break-after: always;
+}
+
+
+test {
+    font-weight: bold;
+    color: #427cff
+}
+
+blockquote {
+    margin: 1em 0;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-left: 4px solid #427cff;
+    color: #5a5b5c;
+    background-color: #e6e6e6;
+    font-style: italic;
+}
+
